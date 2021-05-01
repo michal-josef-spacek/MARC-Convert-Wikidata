@@ -5,11 +5,13 @@ use warnings;
 
 use Class::Utils qw(set_params);
 use Error::Pure qw(err);
+use MARC::Convert::Wikidata::Object;
 use Wikibase::Datatype::Item;
 use Wikibase::Datatype::Snak;
 use Wikibase::Datatype::Statement;
 use Wikibase::Datatype::Value::Item;
 use Wikibase::Datatype::Value::Monolingual;
+use Wikibase::Datatype::Value::String;
 use Wikibase::Datatype::Value::Time;
 
 our $VERSION = 0.01;
@@ -32,64 +34,167 @@ sub new {
 		err "Parameter 'marc_record' must be a MARC::Record object.";
 	}
 
+	$self->{'_object'} = MARC::Convert::Wikidata::Object->new(
+		'marc_record' => $self->{'marc_record'},
+	);
+
 	return $self;
 }
 
-sub full_name {
+sub wikidata_ccnb {
 	my $self = shift;
 
-	my $full_name = $self->title;
-	if ($self->subtitle) {
-		$full_name .= ': '.$self->subtitle;
+	if (! defined $self->{'_object'}->ccnb) {
+		return;
 	}
 
-	return $full_name;
+	return (
+		Wikibase::Datatype::Statement->new(
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'external-id',
+				'datavalue' => Wikibase::Datatype::Value::String->new(
+					'value' => $self->{'_object'}->ccnb,
+				),
+				'property' => 'P3184',
+			),
+			# TODO Reference.
+		),
+	);
 }
 
-sub publication_date {
+sub wikidata_isbn_10 {
 	my $self = shift;
 
-	my $publication_date;
-	my $field_264 = $self->{'marc_record'}->field('264');
-	if ($field_264) {
-		$publication_date = $field_264->subfield('c');
+	if (! defined $self->{'_object'}->isbn_10) {
+		return;
 	}
-	if (! $publication_date) {
-		my $field_260 = $self->{'marc_record'}->field('260');
-		if ($field_260) {
-			$publication_date = $field_260->subfield('c');
-		}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'external-id',
+				'datavalue' => Wikibase::Datatype::Value::String->new(
+					'value' => $self->{'_object'}->isbn_10,
+				),
+				'property' => 'P957',
+			),
+			# TODO Reference.
+		),
+	);
+}
+
+sub wikidata_isbn_13 {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->isbn_13) {
+		return;
 	}
 
-	return $publication_date;
+	return (
+		Wikibase::Datatype::Statement->new(
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'external-id',
+				'datavalue' => Wikibase::Datatype::Value::String->new(
+					'value' => $self->{'_object'}->isbn_13,
+				),
+				'property' => 'P212',
+			),
+			# TODO Reference.
+		),
+	);
 }
 
-sub subtitle {
-	my $self = shift;
+sub wikidata_labels {
+	my ($self, $lang) = @_;;
 
-	return $self->{'marc_record'}->field(245)->subfield('b');
+	if (! defined $self->{'_object'}->full_name) {
+		return ();
+	}
+
+	return (
+		'labels' => [
+			Wikibase::Datatype::Value::Monolingual->new(
+				'language' => 'cs',
+				'value' => $self->{'_object'}->full_name,
+			),
+			Wikibase::Datatype::Value::Monolingual->new(
+				'language' => 'en',
+				'value' => $self->{'_object'}->full_name,
+			),
+		],
+	);
 }
 
-sub title {
+sub wikidata_publication_date {
 	my $self = shift;
 
-	return $self->{'marc_record'}->field(245)->subfield('a');
+	if (! defined $self->{'_object'}->publication_date) {
+		return;
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'time',
+				'datavalue' => Wikibase::Datatype::Value::Time->new(
+					'value' => '+'.$self->{'_object'}->publication_date,
+				),
+				'property' => 'P577',
+			),
+			# TODO Reference.
+		),
+	);
+}
+
+sub wikidata_subtitle {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->subtitle) {
+		return;
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'monolingualtext',
+				'datavalue' => Wikibase::Datatype::Value::Monolingual->new(
+					'value' => $self->{'_object'}->subtitle,
+					# TODO Language
+				),
+				'property' => 'P1680',
+			),
+			# TODO Reference.
+		),
+	);
+}
+
+sub wikidata_title {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->title) {
+		return;
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'monolingualtext',
+				'datavalue' => Wikibase::Datatype::Value::Monolingual->new(
+					'value' => $self->{'_object'}->title,
+					# TODO Language
+				),
+				'property' => 'P1476',
+			),
+			# TODO Reference.
+		),
+	);
 }
 
 sub wikidata {
 	my $self = shift;
 
 	my $wikidata = Wikibase::Datatype::Item->new(
-		'labels' => [
-			Wikibase::Datatype::Value::Monolingual->new(
-				'language' => 'cs',
-				'value' => $self->full_name,
-			),
-			Wikibase::Datatype::Value::Monolingual->new(
-				'language' => 'en',
-				'value' => $self->full_name,
-			),
-		],
+		$self->wikidata_labels,
 		'statements' => [
 			# instance of: version, edition, or translation
 			Wikibase::Datatype::Statement->new(
@@ -102,43 +207,12 @@ sub wikidata {
 				),
 			),
 
-			# title: ...
-			Wikibase::Datatype::Statement->new(
-				'snak' => Wikibase::Datatype::Snak->new(
-					'datatype' => 'monolingualtext',
-					'datavalue' => Wikibase::Datatype::Value::Monolingual->new(
-						'value' => $self->title,
-					),
-					'property' => 'P1476',
-				),
-				# TODO Reference.
-			),
-
-			# subtitle: ...
-			$self->subtitle ? (
-				Wikibase::Datatype::Statement->new(
-					'snak' => Wikibase::Datatype::Snak->new(
-						'datatype' => 'monolingualtext',
-						'datavalue' => Wikibase::Datatype::Value::Monolingual->new(
-							'value' => $self->subtitle,
-						),
-						'property' => 'P1680',
-					),
-					# TODO Reference.
-				),
-			) : (),
-
-			# publication name: ...
-			Wikibase::Datatype::Statement->new(
-				'snak' => Wikibase::Datatype::Snak->new(
-					'datatype' => 'time',
-					'datavalue' => Wikibase::Datatype::Value::Time->new(
-						'value' => '+'.$self->publication_date,
-					),
-					'property' => 'P577',
-				),
-				# TODO Reference.
-			),
+			$self->wikidata_ccnb,
+			$self->wikidata_isbn_10,
+			$self->wikidata_isbn_13,
+			$self->wikidata_publication_date,
+			$self->wikidata_subtitle,
+			$self->wikidata_title,
 
 			# number of pages: ...
 			# TODO
@@ -162,15 +236,6 @@ sub wikidata {
 			# TODO
 
 			# editor: ...
-			# TODO
-
-			# isbn-10: ...
-			# TODO
-
-			# isbn-13: ...
-			# TODO
-
-			# ccnb: ...
 			# TODO
 		],
 	);
