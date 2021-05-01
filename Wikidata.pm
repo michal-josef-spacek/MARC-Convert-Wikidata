@@ -24,6 +24,7 @@ sub new {
 	# Create object.
 	my $self = bless {}, $class;
 
+	# MARC::Record object.
 	$self->{'marc_record'} = undef;
 
 	# Process parameters.
