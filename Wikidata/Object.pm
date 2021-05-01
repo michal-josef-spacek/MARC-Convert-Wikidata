@@ -35,7 +35,7 @@ sub new {
 sub ccnb {
 	my $self = shift;
 
-	return $self->{'marc_record'}->field('015')->subfield('a');
+	return $self->_subfield('015', 'a');
 }
 
 sub edition_number {
@@ -69,12 +69,7 @@ sub full_name {
 sub isbn {
 	my $self = shift;
 
-	my $field = $self->{'marc_record'}->field('020');
-	if ($field) {
-		return $field->subfield('a');
-	} else {
-		return;
-	}
+	return $self->_subfield('020', 'a');
 }
 
 sub isbn_10 {
@@ -112,11 +107,7 @@ sub isbn_13 {
 sub number_of_pages {
 	my $self = shift;
 
-	my $field_300 = $self->{'marc_record'}->field('300');
-	my $number_of_pages;
-	if ($field_300) {
-		$number_of_pages = $field_300->subfield('a');
-	}
+	my $number_of_pages = $self->_subfield('300', 'a');
 
 	# XXX Remove trailing characters.
 	if (defined $number_of_pages) {
@@ -133,16 +124,9 @@ sub number_of_pages {
 sub publication_date {
 	my $self = shift;
 
-	my $publication_date;
-	my $field_264 = $self->{'marc_record'}->field('264');
-	if ($field_264) {
-		$publication_date = $field_264->subfield('c');
-	}
+	my $publication_date = $self->_subfield('264', 'c');
 	if (! $publication_date) {
-		my $field_260 = $self->{'marc_record'}->field('260');
-		if ($field_260) {
-			$publication_date = $field_260->subfield('c');
-		}
+		$publication_date = $self->_subfield('260', 'c');
 	}
 
 	# Supposition.
@@ -158,7 +142,7 @@ sub publication_date {
 sub subtitle {
 	my $self = shift;
 
-	my $subtitle = $self->{'marc_record'}->field('245')->subfield('b');
+	my $subtitle = $self->_subfield('245', 'b');
 
 	# XXX Remove traling characters like 'Subtitle /'.
 	if ($subtitle) {
@@ -173,7 +157,7 @@ sub subtitle {
 sub title {
 	my $self = shift;
 
-	my $title = $self->{'marc_record'}->field('245')->subfield('a');
+	my $title = $self->_subfield('245', 'a');
 
 	# XXX Remove traling characters like 'Title :', 'Title /'.
 	$title =~ s/\s+$//g;
