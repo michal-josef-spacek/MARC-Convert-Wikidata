@@ -29,6 +29,9 @@ sub new {
 	# Place of publication Wikidata lookup callback.
 	$self->{'callback_place'} = undef;
 
+	# Publisher Wikidata lookup callback.
+	$self->{'callback_publisher'} = undef;
+
 	# Retrieved date.
 	$self->{'date_retrieved'} = undef;
 
@@ -232,6 +235,34 @@ sub wikidata_publication_date {
 	);
 }
 
+sub wikidata_publisher {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->publisher) {
+		return;
+	}
+
+	my $publisher_qid;
+	if (! defined $self->{'callback_publisher'}) {
+		return;
+	} else {
+		$publisher_qid = $self->{'callback_publisher'}->($self->{'_object'});
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'wikibase-item',
+				'datavalue' => Wikibase::Datatype::Value::Item->new(
+					'value' => $publisher_qid,
+				),
+				'property' => 'P123',
+			),
+		),
+	);
+}
+
 sub wikidata_reference {
 	my $self = shift;
 
@@ -337,13 +368,11 @@ sub wikidata {
 			$self->wikidata_number_of_pages,
 			$self->wikidata_place_of_publication,
 			$self->wikidata_publication_date,
+			$self->wikidata_publisher,
 			$self->wikidata_subtitle,
 			$self->wikidata_title,
 
 			# language of work or name: ...
-			# TODO
-
-			# publisher: ...
 			# TODO
 
 			# author: ...
