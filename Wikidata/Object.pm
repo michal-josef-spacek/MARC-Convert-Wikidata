@@ -91,6 +91,27 @@ sub isbn_13 {
 	}
 }
 
+sub number_of_pages {
+	my $self = shift;
+
+	my $field_300 = $self->{'marc_record'}->field('300');
+	my $number_of_pages;
+	if ($field_300) {
+		$number_of_pages = $field_300->subfield('a');
+	}
+
+	# XXX Remove trailing characters.
+	if (defined $number_of_pages) {
+		$number_of_pages =~ s/\s+$//g;
+		$number_of_pages =~ s/\s*:$//g;
+		$number_of_pages =~ s/\s*;$//g;
+		$number_of_pages =~ s/\s*s\.$//g;
+		$number_of_pages =~ s/\s*stran$//g;
+	}
+
+	return $number_of_pages;
+}
+
 sub publication_date {
 	my $self = shift;
 
@@ -119,7 +140,7 @@ sub publication_date {
 sub subtitle {
 	my $self = shift;
 
-	my $subtitle = $self->{'marc_record'}->field(245)->subfield('b');
+	my $subtitle = $self->{'marc_record'}->field('245')->subfield('b');
 
 	# XXX Remove traling characters like 'Subtitle /'.
 	if ($subtitle) {
@@ -134,7 +155,7 @@ sub subtitle {
 sub title {
 	my $self = shift;
 
-	my $title = $self->{'marc_record'}->field(245)->subfield('a');
+	my $title = $self->{'marc_record'}->field('245')->subfield('a');
 
 	# XXX Remove traling characters like 'Title :', 'Title /'.
 	$title =~ s/\s+$//g;

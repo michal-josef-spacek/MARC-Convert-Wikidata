@@ -11,6 +11,7 @@ use Wikibase::Datatype::Snak;
 use Wikibase::Datatype::Statement;
 use Wikibase::Datatype::Value::Item;
 use Wikibase::Datatype::Value::Monolingual;
+use Wikibase::Datatype::Value::Quantity;
 use Wikibase::Datatype::Value::String;
 use Wikibase::Datatype::Value::Time;
 
@@ -125,6 +126,27 @@ sub wikidata_labels {
 	);
 }
 
+sub wikidata_number_of_pages {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->number_of_pages) {
+		return;
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'quantity',
+				'datavalue' => Wikibase::Datatype::Value::Quantity->new(
+					'value' => $self->{'_object'}->number_of_pages,
+				),
+				'property' => 'P1104',
+			),
+			# TODO Reference.
+		),
+	);
+}
+
 sub wikidata_publication_date {
 	my $self = shift;
 
@@ -132,6 +154,7 @@ sub wikidata_publication_date {
 		return;
 	}
 
+	# TODO Second parameter of publication_date().
 	return (
 		Wikibase::Datatype::Statement->new(
 			'snak' => Wikibase::Datatype::Snak->new(
@@ -210,12 +233,10 @@ sub wikidata {
 			$self->wikidata_ccnb,
 			$self->wikidata_isbn_10,
 			$self->wikidata_isbn_13,
+			$self->wikidata_number_of_pages,
 			$self->wikidata_publication_date,
 			$self->wikidata_subtitle,
 			$self->wikidata_title,
-
-			# number of pages: ...
-			# TODO
 
 			# language of work or name: ...
 			# TODO
