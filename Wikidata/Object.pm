@@ -6,6 +6,7 @@ use warnings;
 use Business::ISBN;
 use Class::Utils qw(set_params);
 use Error::Pure qw(err);
+use Roman;
 
 our $VERSION = 0.01;
 
@@ -35,6 +36,23 @@ sub ccnb {
 	my $self = shift;
 
 	return $self->{'marc_record'}->field('015')->subfield('a');
+}
+
+sub edition_number {
+	my $self = shift;
+
+	my $edition_number = $self->_subfield('250', 'a');
+
+	$edition_number =~ s/\s+$//g;
+	$edition_number =~ s/\.\s+vyd\.$//g;
+	if (isroman($edition_number)) {
+		$edition_number = arabic($edition_number);
+	}
+	if ($edition_number !~ m/^\d$/ms) {
+		$edition_number = undef;
+	}
+
+	return $edition_number;
 }
 
 sub full_name {
@@ -164,6 +182,17 @@ sub title {
 	$title =~ s/\s+$//g;
 
 	return $title;
+}
+
+sub _subfield {
+	my ($self, $field, $subfield) = @_;
+
+	my $field_value = $self->{'marc_record'}->field($field);
+	if (! defined $field_value) {
+		return;
+	}
+
+	return $field_value->subfield($subfield);
 }
 
 1;

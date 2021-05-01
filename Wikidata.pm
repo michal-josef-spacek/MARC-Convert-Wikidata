@@ -63,6 +63,27 @@ sub wikidata_ccnb {
 	);
 }
 
+sub wikidata_edition_number {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->edition_number) {
+		return;
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'string',
+				'datavalue' => Wikibase::Datatype::Value::String->new(
+					'value' => $self->{'_object'}->edition_number,
+				),
+				'property' => 'P393',
+			),
+			# TODO Reference.
+		),
+	);
+}
+
 sub wikidata_isbn_10 {
 	my $self = shift;
 
@@ -231,6 +252,7 @@ sub wikidata {
 			),
 
 			$self->wikidata_ccnb,
+			$self->wikidata_edition_number,
 			$self->wikidata_isbn_10,
 			$self->wikidata_isbn_13,
 			$self->wikidata_number_of_pages,
@@ -242,9 +264,6 @@ sub wikidata {
 			# TODO
 
 			# place of publication: ...
-			# TODO
-
-			# edition number: ...
 			# TODO
 
 			# publisher: ...
