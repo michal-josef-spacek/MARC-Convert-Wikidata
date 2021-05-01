@@ -121,6 +121,23 @@ sub number_of_pages {
 	return $number_of_pages;
 }
 
+sub place_of_publication {
+	my $self = shift;
+
+	my $place_of_publication = $self->_subfield('260', 'a');
+	if (! defined $place_of_publication) {
+		$place_of_publication = $self->_subfield('264', 'a');
+	}
+
+	# XXX Remove trailings characters.
+	if (defined $place_of_publication) {
+		$place_of_publication =~ s/\s+$//g;
+		$place_of_publication =~ s/\s*:$//g;
+	}
+
+	return $place_of_publication;
+}
+
 sub publication_date {
 	my $self = shift;
 
