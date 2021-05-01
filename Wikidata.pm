@@ -4,9 +4,11 @@ use strict;
 use warnings;
 
 use Class::Utils qw(set_params);
+use DateTime;
 use Error::Pure qw(err);
 use MARC::Convert::Wikidata::Object;
 use Wikibase::Datatype::Item;
+use Wikibase::Datatype::Reference;
 use Wikibase::Datatype::Snak;
 use Wikibase::Datatype::Statement;
 use Wikibase::Datatype::Value::Item;
@@ -27,6 +29,9 @@ sub new {
 	# Place of publication Wikidata lookup callback.
 	$self->{'callback_place'} = undef;
 
+	# Retrieved date.
+	$self->{'date_retrieved'} = undef;
+
 	# MARC::Record object.
 	$self->{'marc_record'} = undef;
 
@@ -43,6 +48,11 @@ sub new {
 		'marc_record' => $self->{'marc_record'},
 	);
 
+	# TODO Check 'date_retrieved' parameter. Must be a ISO8601 format.
+	if (! defined $self->{'date_retrieved'}) {
+		$self->{'date_retrieved'} = '+'.DateTime->now->strftime('%Y-%m-%dT%H:%M:%S');
+	}
+
 	return $self;
 }
 
@@ -55,6 +65,7 @@ sub wikidata_ccnb {
 
 	return (
 		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'external-id',
 				'datavalue' => Wikibase::Datatype::Value::String->new(
@@ -62,7 +73,6 @@ sub wikidata_ccnb {
 				),
 				'property' => 'P3184',
 			),
-			# TODO Reference.
 		),
 	);
 }
@@ -76,6 +86,7 @@ sub wikidata_edition_number {
 
 	return (
 		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'string',
 				'datavalue' => Wikibase::Datatype::Value::String->new(
@@ -83,7 +94,6 @@ sub wikidata_edition_number {
 				),
 				'property' => 'P393',
 			),
-			# TODO Reference.
 		),
 	);
 }
@@ -97,6 +107,7 @@ sub wikidata_isbn_10 {
 
 	return (
 		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'external-id',
 				'datavalue' => Wikibase::Datatype::Value::String->new(
@@ -104,7 +115,6 @@ sub wikidata_isbn_10 {
 				),
 				'property' => 'P957',
 			),
-			# TODO Reference.
 		),
 	);
 }
@@ -118,6 +128,7 @@ sub wikidata_isbn_13 {
 
 	return (
 		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'external-id',
 				'datavalue' => Wikibase::Datatype::Value::String->new(
@@ -125,7 +136,6 @@ sub wikidata_isbn_13 {
 				),
 				'property' => 'P212',
 			),
-			# TODO Reference.
 		),
 	);
 }
@@ -160,6 +170,7 @@ sub wikidata_number_of_pages {
 
 	return (
 		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'quantity',
 				'datavalue' => Wikibase::Datatype::Value::Quantity->new(
@@ -167,7 +178,6 @@ sub wikidata_number_of_pages {
 				),
 				'property' => 'P1104',
 			),
-			# TODO Reference.
 		),
 	);
 }
@@ -188,6 +198,7 @@ sub wikidata_place_of_publication {
 
 	return (
 		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'wikibase-item',
 				'datavalue' => Wikibase::Datatype::Value::Item->new(
@@ -209,6 +220,7 @@ sub wikidata_publication_date {
 	# TODO Second parameter of publication_date().
 	return (
 		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'time',
 				'datavalue' => Wikibase::Datatype::Value::Time->new(
@@ -216,7 +228,43 @@ sub wikidata_publication_date {
 				),
 				'property' => 'P577',
 			),
-			# TODO Reference.
+		),
+	);
+}
+
+sub wikidata_reference {
+	my $self = shift;
+
+	return (
+		Wikibase::Datatype::Reference->new(
+			'snaks' => [
+				# Stated in NKČR AUT
+				Wikibase::Datatype::Snak->new(
+					'datatype' => 'wikibase-item',
+					'datavalue' => Wikibase::Datatype::Value::Item->new(
+						'value' => 'Q13550863',
+					),
+					'property' => 'P248',
+				),
+
+				# Czech National Bibliography book ID
+				Wikibase::Datatype::Snak->new(
+					'datatype' => 'external-id',
+					'datavalue' => Wikibase::Datatype::Value::String->new(
+						'value' => $self->{'_object'}->ccnb,
+					),
+					'property' => 'P3184',
+				),
+
+				# Retrieved.
+				Wikibase::Datatype::Snak->new(
+					'datatype' => 'time',
+					'datavalue' => Wikibase::Datatype::Value::Time->new(
+						'value' => $self->{'date_retrieved'},
+					),
+					'property' => 'P813',
+				),
+			],
 		),
 	);
 }
@@ -230,6 +278,7 @@ sub wikidata_subtitle {
 
 	return (
 		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'monolingualtext',
 				'datavalue' => Wikibase::Datatype::Value::Monolingual->new(
@@ -238,7 +287,6 @@ sub wikidata_subtitle {
 				),
 				'property' => 'P1680',
 			),
-			# TODO Reference.
 		),
 	);
 }
@@ -252,6 +300,7 @@ sub wikidata_title {
 
 	return (
 		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'monolingualtext',
 				'datavalue' => Wikibase::Datatype::Value::Monolingual->new(
@@ -260,7 +309,6 @@ sub wikidata_title {
 				),
 				'property' => 'P1476',
 			),
-			# TODO Reference.
 		),
 	);
 }
