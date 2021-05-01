@@ -15,10 +15,13 @@ Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
-t/data/cnb000087983
-t/data/cnb000573607
-t/data/cnb000750997
-t/data/cnb002981333
+t/data/cnb000087983.mrc
+t/data/cnb000573607.mrc
+t/data/cnb000750997.mrc
+t/data/cnb000754547.mrc
+t/data/cnb002536669.mrc
+t/data/cnb002981333.mrc
+t/data/cnb003059138.mrc
 t/MARC-Convert-Wikidata-Object/01-use.t
 t/MARC-Convert-Wikidata-Object/02-version.t
 t/MARC-Convert-Wikidata-Object/03-new.t

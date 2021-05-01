@@ -13,7 +13,7 @@ use Unicode::UTF8 qw(decode_utf8);
 my $data = File::Object->new->up->dir('data');
 
 # Test.
-my $marc_data = slurp($data->file('cnb000750997')->s);
+my $marc_data = slurp($data->file('cnb000750997.mrc')->s);
 my $obj = MARC::Convert::Wikidata::Object->new(
 	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
 );
@@ -21,7 +21,7 @@ my $ret = $obj->subtitle;
 is($ret, decode_utf8('Román'), 'Get subtitle of book edition.');
 
 # Test.
-$marc_data = slurp($data->file('cnb000087983')->s);
+$marc_data = slurp($data->file('cnb000087983.mrc')->s);
 $obj = MARC::Convert::Wikidata::Object->new(
 	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
 );

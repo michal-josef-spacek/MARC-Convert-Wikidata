@@ -12,7 +12,7 @@ use Test::NoWarnings;
 my $data = File::Object->new->up->dir('data');
 
 # Test.
-my $marc_data = slurp($data->file('cnb000750997')->s);
+my $marc_data = slurp($data->file('cnb000750997.mrc')->s);
 my $obj = MARC::Convert::Wikidata::Object->new(
 	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
 );
@@ -20,7 +20,7 @@ my $ret = $obj->isbn;
 is($ret, undef, 'Get ISBN (undef).');
 
 # Test.
-$marc_data = slurp($data->file('cnb002981333')->s);
+$marc_data = slurp($data->file('cnb002981333.mrc')->s);
 $obj = MARC::Convert::Wikidata::Object->new(
 	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
 );
@@ -28,7 +28,7 @@ $ret = $obj->isbn;
 is($ret, '978-80-270-3565-6', 'Get ISBN (ISBN-13).');
 
 # Test.
-$marc_data = slurp($data->file('cnb000087983')->s);
+$marc_data = slurp($data->file('cnb000087983.mrc')->s);
 $obj = MARC::Convert::Wikidata::Object->new(
 	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
 );

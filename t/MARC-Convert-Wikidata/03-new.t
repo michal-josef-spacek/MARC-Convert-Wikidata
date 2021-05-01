@@ -22,7 +22,7 @@ is($EVAL_ERROR, "Parameter 'marc_record' must be a MARC::Record object.\n",
 clean();
 
 # Test.
-my $marc_data = slurp($data->file('cnb000750997')->s);
+my $marc_data = slurp($data->file('cnb000750997.mrc')->s);
 my $obj = MARC::Convert::Wikidata->new(
 	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
 );

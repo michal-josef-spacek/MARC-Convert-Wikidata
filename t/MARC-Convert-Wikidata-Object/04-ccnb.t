@@ -12,7 +12,7 @@ use Test::NoWarnings;
 my $data = File::Object->new->up->dir('data');
 
 # Test.
-my $marc_data = slurp($data->file('cnb000750997')->s);
+my $marc_data = slurp($data->file('cnb000750997.mrc')->s);
 my $obj = MARC::Convert::Wikidata::Object->new(
 	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
 );
