@@ -24,6 +24,9 @@ sub new {
 	# Create object.
 	my $self = bless {}, $class;
 
+	# Place of publication Wikidata lookup callback.
+	$self->{'callback_place'} = undef;
+
 	# MARC::Record object.
 	$self->{'marc_record'} = undef;
 
@@ -169,6 +172,33 @@ sub wikidata_number_of_pages {
 	);
 }
 
+sub wikidata_place_of_publication {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->place_of_publication) {
+		return;
+	}
+
+	my $place_qid;
+	if (! defined $self->{'callback_place'}) {
+		return;
+	} else {
+		$place_qid = $self->{'callback_place'}->($self->{'object'});
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'wikibase-item',
+				'datavalue' => Wikibase::Datatype::Value::Item->new(
+					'value' => $place_qid,
+				),
+				'property' => 'P291',
+			),
+		),
+	);
+}
+
 sub wikidata_publication_date {
 	my $self = shift;
 
@@ -257,14 +287,12 @@ sub wikidata {
 			$self->wikidata_isbn_10,
 			$self->wikidata_isbn_13,
 			$self->wikidata_number_of_pages,
+			$self->wikidata_place_of_publication,
 			$self->wikidata_publication_date,
 			$self->wikidata_subtitle,
 			$self->wikidata_title,
 
 			# language of work or name: ...
-			# TODO
-
-			# place of publication: ...
 			# TODO
 
 			# publisher: ...
