@@ -193,7 +193,7 @@ sub wikidata_place_of_publication {
 	if (! defined $self->{'callback_place'}) {
 		return;
 	} else {
-		$place_qid = $self->{'callback_place'}->($self->{'object'});
+		$place_qid = $self->{'callback_place'}->($self->{'_object'});
 	}
 
 	return (
