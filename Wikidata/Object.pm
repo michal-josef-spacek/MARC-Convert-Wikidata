@@ -6,7 +6,15 @@ use warnings;
 use Business::ISBN;
 use Class::Utils qw(set_params);
 use Error::Pure qw(err);
+use Readonly;
 use Roman;
+
+Readonly::Hash our %PEOPLE_TYPE => {
+	'aut' => 'authors',
+	'com' => 'editors',
+	'ill' => 'illustrators',
+	'trl' => 'translators',
+};
 
 our $VERSION = 0.01;
 
@@ -29,7 +37,23 @@ sub new {
 		err "Parameter 'marc_record' must be a MARC::Record object.";
 	}
 
+	# Process people in 100, 700.
+	$self->{'_people'} = {
+		'authors' => [],
+		'editors' => [],
+		'illustrators' => [],
+		'translators' => [],
+	};
+	$self->_process_people_100;
+	$self->_process_people_700;
+
 	return $self;
+}
+
+sub authors {
+	my $self = shift;
+
+	return @{$self->{'_people'}->{'authors'}};
 }
 
 sub ccnb {
@@ -55,6 +79,12 @@ sub edition_number {
 	return $edition_number;
 }
 
+sub editors {
+	my $self = shift;
+
+	return @{$self->{'_people'}->{'editors'}};
+}
+
 sub full_name {
 	my $self = shift;
 
@@ -64,6 +94,12 @@ sub full_name {
 	}
 
 	return $full_name;
+}
+
+sub illustrators {
+	my $self = shift;
+
+	return @{$self->{'_people'}->{'illustrators'}};
 }
 
 sub isbn {
@@ -200,6 +236,84 @@ sub title {
 	$title =~ s/\s+$//g;
 
 	return $title;
+}
+
+sub translators {
+	my $self = shift;
+
+	return @{$self->{'_people'}->{'translators'}};
+}
+
+sub _process_people {
+	my ($self, $field) = @_;
+
+	my $type = $field->subfield('4');
+	my $type_key = $self->_process_people_type($type);
+
+	my $full_name = $field->subfield('a');
+	# TODO Only if type 1. Fix for type 0 and 2.
+	my ($surname, $name) = split m/,\s*/ms, $full_name;
+	my $people_hr = {
+		'surname' => $surname,
+		'name' => $name,
+	};
+
+	my $nkcr_aut = $field->subfield('7');
+	if ($nkcr_aut) {
+		$people_hr->{'nkcr_aut'} = $nkcr_aut;
+	}
+
+	my $dates = $field->subfield('d');
+	my $date_of_birth;
+	my $date_of_death;
+	if (defined $dates) {
+		($date_of_birth, $date_of_death) = split m/-/ms, $dates;
+		if (! $date_of_death) {
+			$date_of_death = undef;
+		}
+	}
+	if (defined $date_of_birth) {
+		$people_hr->{'date_of_birth'} = $date_of_birth;
+	}
+	if (defined $date_of_death) {
+		$people_hr->{'date_of_death'} = $date_of_death;
+	}
+
+	push @{$self->{'_people'}->{$type_key}}, $people_hr;
+
+	return;
+}
+
+sub _process_people_100 {
+	my $self = shift;
+
+	my @field_100 = $self->{'marc_record'}->field('100');
+	foreach my $field (@field_100) {
+		$self->_process_people($field);
+	}
+
+	return;
+}
+
+sub _process_people_700 {
+	my $self = shift;
+
+	my @field_700 = $self->{'marc_record'}->field('700');
+	foreach my $field (@field_700) {
+		$self->_process_people($field);
+	}
+
+	return;
+}
+
+sub _process_people_type {
+	my ($self, $type) = @_;
+
+	if (exists $PEOPLE_TYPE{$type}) {
+		return $PEOPLE_TYPE{$type};
+	} else {
+		err "People type doesn't exist.";
+	}
 }
 
 sub _subfield {
