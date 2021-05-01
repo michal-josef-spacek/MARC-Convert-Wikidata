@@ -29,9 +29,11 @@ t/MARC-Convert-Wikidata-Object/07-isbn.t
 t/MARC-Convert-Wikidata-Object/08-isbn_10.t
 t/MARC-Convert-Wikidata-Object/09-isbn_13.t
 t/MARC-Convert-Wikidata-Object/10-number_of_pages.t
-t/MARC-Convert-Wikidata-Object/11-publication_date.t
-t/MARC-Convert-Wikidata-Object/12-subtitle.t
-t/MARC-Convert-Wikidata-Object/13-title.t
+t/MARC-Convert-Wikidata-Object/11-place_of_publication.t
+t/MARC-Convert-Wikidata-Object/12-publication_date.t
+t/MARC-Convert-Wikidata-Object/13-publisher.t
+t/MARC-Convert-Wikidata-Object/14-subtitle.t
+t/MARC-Convert-Wikidata-Object/15-title.t
 t/MARC-Convert-Wikidata/01-use.t
 t/MARC-Convert-Wikidata/02-version.t
 t/MARC-Convert-Wikidata/03-new.t

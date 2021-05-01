@@ -156,6 +156,23 @@ sub publication_date {
 	return wantarray ? ($publication_date, $supposition) : $publication_date;
 }
 
+sub publisher {
+	my $self = shift;
+
+	my $publisher = $self->_subfield('260', 'b');
+	if (! defined $publisher) {
+		$publisher = $self->_subfield('264', 'b');
+	}
+
+	# XXX Remove trailing characters.
+	if (defined $publisher) {
+		$publisher =~ s/\s+$//g;
+		$publisher =~ s/\s*,$//g;
+	}
+
+	return $publisher;
+}
+
 sub subtitle {
 	my $self = shift;
 
