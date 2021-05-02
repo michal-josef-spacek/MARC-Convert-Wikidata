@@ -26,6 +26,9 @@ sub new {
 	# Create object.
 	my $self = bless {}, $class;
 
+	# People callback.
+	$self->{'callback_people'} = undef;
+
 	# Place of publication Wikidata lookup callback.
 	$self->{'callback_place'} = undef;
 
@@ -57,6 +60,12 @@ sub new {
 	}
 
 	return $self;
+}
+
+sub wikidata_authors {
+	my $self = shift;
+
+	return $self->wikidata_people('authors', 'P50');
 }
 
 sub wikidata_ccnb {
@@ -99,6 +108,18 @@ sub wikidata_edition_number {
 			),
 		),
 	);
+}
+
+sub wikidata_editors {
+	my $self = shift;
+
+	return $self->wikidata_people('editors', 'P98');
+}
+
+sub wikidata_illustrators {
+	my $self = shift;
+
+	return $self->wikidata_people('illustrators', 'P110');
 }
 
 sub wikidata_isbn_10 {
@@ -183,6 +204,42 @@ sub wikidata_number_of_pages {
 			),
 		),
 	);
+}
+
+sub wikidata_people {
+	my ($self, $people_method, $people_property) = @_;
+
+	if (! defined $self->{'_object'}->$people_method) {
+		return;
+	}
+
+	my @people_qids;
+	if (! defined $self->{'callback_people'}) {
+		return;
+	} else {
+		my @people = $self->{'_object'}->$people_method;
+		foreach my $people_hr (@people) {
+			my $people_qid = $self->{'callback_people'}->($people_hr);
+			if (defined $people_qid) {
+				push @people_qids, $people_qid;
+			}
+		}
+	}
+
+	my @people;
+	foreach my $people_qid (@people_qids) {
+		push @people, Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'wikibase-item',
+				'datavalue' => Wikibase::Datatype::Value::Item->new(
+					'value' => $people_qid,
+				),
+				'property' => $people_property,
+			),
+		),
+	}
+	return @people;
 }
 
 sub wikidata_place_of_publication {
@@ -352,6 +409,12 @@ sub wikidata_title {
 	);
 }
 
+sub wikidata_translators {
+	my $self = shift;
+
+	return $self->wikidata_people('translators', 'P655');
+}
+
 sub wikidata {
 	my $self = shift;
 
@@ -369,8 +432,11 @@ sub wikidata {
 				),
 			),
 
+			$self->wikidata_authors,
 			$self->wikidata_ccnb,
 			$self->wikidata_edition_number,
+			$self->wikidata_editors,
+			$self->wikidata_illustrators,
 			$self->wikidata_isbn_10,
 			$self->wikidata_isbn_13,
 			$self->wikidata_number_of_pages,
@@ -379,17 +445,9 @@ sub wikidata {
 			$self->wikidata_publisher,
 			$self->wikidata_subtitle,
 			$self->wikidata_title,
+			$self->wikidata_translators,
 
 			# language of work or name: ...
-			# TODO
-
-			# author: ...
-			# TODO
-
-			# translator: ...
-			# TODO
-
-			# editor: ...
 			# TODO
 		],
 	);
