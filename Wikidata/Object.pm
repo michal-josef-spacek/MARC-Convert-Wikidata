@@ -66,14 +66,15 @@ sub edition_number {
 	my $self = shift;
 
 	my $edition_number = $self->_subfield('250', 'a');
-
-	$edition_number =~ s/\s+$//g;
-	$edition_number =~ s/\.\s+vyd\.$//g;
-	if (isroman($edition_number)) {
-		$edition_number = arabic($edition_number);
-	}
-	if ($edition_number !~ m/^\d$/ms) {
-		$edition_number = undef;
+	if (defined $edition_number) {
+		$edition_number =~ s/\s+$//g;
+		$edition_number =~ s/\.\s+vyd\.$//g;
+		if (isroman($edition_number)) {
+			$edition_number = arabic($edition_number);
+		}
+		if ($edition_number !~ m/^\d$/ms) {
+			$edition_number = undef;
+		}
 	}
 
 	return $edition_number;
