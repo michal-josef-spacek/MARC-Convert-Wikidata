@@ -199,6 +199,10 @@ sub wikidata_place_of_publication {
 		$place_qid = $self->{'callback_place'}->($self->{'_object'});
 	}
 
+	if (! defined $place_qid) {
+		return;
+	}
+
 	return (
 		Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
@@ -247,6 +251,10 @@ sub wikidata_publisher {
 		return;
 	} else {
 		$publisher_qid = $self->{'callback_publisher'}->($self->{'_object'});
+	}
+
+	if (! defined $publisher_qid) {
+		return;
 	}
 
 	return (
