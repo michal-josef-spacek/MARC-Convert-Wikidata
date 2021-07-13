@@ -141,6 +141,16 @@ sub isbn_13 {
 	}
 }
 
+sub language {
+	my $self = shift;
+
+	# TODO In 008 is some other language.
+
+	my $cataloging_lang = $self->_subfield('040', 'b');
+
+	return $cataloging_lang;
+}
+
 sub number_of_pages {
 	my $self = shift;
 
