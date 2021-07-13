@@ -62,6 +62,12 @@ sub new {
 	return $self;
 }
 
+sub object {
+	my $self = shift;
+
+	return $self->{'_object'};
+}
+
 sub wikidata_authors {
 	my $self = shift;
 
