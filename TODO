@@ -2,7 +2,9 @@ TODO
 ====
 2. Nvrhnout nejaky system pro dotazovani na QID pro autory, mista, etc.
 3. Zjednodusit kod.
-4.
+4. Object neni skutecne datovy objekt, ale zaroven transformace + data
+Patri vyresit, rozdelit.
+5.
 
 Applied
 =======
