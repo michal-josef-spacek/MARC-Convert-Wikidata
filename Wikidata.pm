@@ -248,6 +248,44 @@ sub wikidata_language {
 	);
 }
 
+sub wikidata_krameriuses {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->krameriuses) {
+		return;
+	}
+
+	my @krameriuses;
+	foreach my $k (@{$self->{'_object'}->krameriuses}) {
+		if ($k->kramerius_id eq 'mzk') {
+			push @krameriuses, Wikibase::Datatype::Statement->new(
+				'references' => [$self->wikidata_reference],
+				'snak' => Wikibase::Datatype::Snak->new(
+					'datatype' => 'wikibase-item',
+					'datavalue' => Wikibase::Datatype::Value::Item->new(
+						'value' => $k->object_id,
+					),
+					'property' => 'P8752',
+				),
+			),
+		} else {
+			push @krameriuses, Wikibase::Datatype::Statement->new(
+				'references' => [$self->wikidata_reference],
+				'snak' => Wikibase::Datatype::Snak->new(
+					'datatype' => 'url',
+					'datavalue' => Wikibase::Datatype::Value::String->new(
+						'value' => $k->url,
+					),
+					'property' => 'P953',
+				),
+				# TODO Language of work or name: Czech
+			),
+		}
+	}
+
+	return @krameriuses;
+}
+
 sub wikidata_number_of_pages {
 	my $self = shift;
 
@@ -503,6 +541,7 @@ sub wikidata {
 			$self->wikidata_illustrators,
 			$self->wikidata_isbn_10,
 			$self->wikidata_isbn_13,
+			$self->wikidata_krameriuses,
 			$self->wikidata_language,
 			$self->wikidata_number_of_pages,
 			$self->wikidata_place_of_publication,

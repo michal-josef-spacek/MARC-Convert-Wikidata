@@ -5,11 +5,14 @@ use warnings;
 
 use Business::ISBN;
 use Class::Utils qw(set_params);
+use Data::Kramerius;
 use Error::Pure qw(err);
 use MARC::Convert::Wikidata::Object;
+use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use Readonly;
 use Roman;
+use URI;
 
 Readonly::Hash our %PEOPLE_TYPE => {
 	'aut' => 'authors',
@@ -39,6 +42,8 @@ sub new {
 		err "Parameter 'marc_record' must be a MARC::Record object.";
 	}
 
+	$self->{'_kramerius'} = Data::Kramerius->new;
+
 	# Process people in 100, 700.
 	$self->{'_people'} = {
 		'authors' => [],
@@ -59,6 +64,30 @@ sub object {
 	my $self = shift;
 
 	return $self->{'_object'};
+}
+
+sub _construct_kramerius {
+	my ($self, $kramerius_uri) = @_;
+
+	# XXX krameriusndk.nkp.cz is virtual project domain.
+	$kramerius_uri =~ s/krameriusndk\.nkp\.cz/kramerius.mzk.cz/ms;
+
+	my $u = URI->new($kramerius_uri);
+	my $authority = $u->authority;
+	foreach my $k ($self->{'_kramerius'}->list) {
+		if ($k->url =~ m/$authority\/$/ms) {
+			my @path_seg = $u->path_segments;
+			my $uuid = $path_seg[-1];
+			$uuid =~ s/^uuid://ms;
+			return MARC::Convert::Wikidata::Object::Kramerius->new(
+				'kramerius_id' => $k->id,
+				'object_id' => $uuid,
+				'url' => $kramerius_uri,
+			);
+		}
+	}
+
+	return;
 }
 
 sub _edition_number {
@@ -115,6 +144,14 @@ sub _isbn_13 {
 	} else {
 		return;
 	}
+}
+
+sub _krameriuses {
+	my $self = shift;
+
+	return map {
+		$self->_construct_kramerius($_);
+	} $self->_subfield('856', 'u');
 }
 
 sub _language {
@@ -175,6 +212,7 @@ sub _process_object {
 		defined $self->_isbn_10 ? ('isbn_10' => $self->_isbn_10) : (),
 		defined $self->_isbn_13 ? ('isbn_13' => $self->_isbn_13) : (),
 		'illustrators' => $self->{'_people'}->{'illustrators'},
+		'krameriuses' => [$self->_krameriuses],
 		'language' => $self->_language,
 		'number_of_pages' => $self->_number_of_pages,
 		'place_of_publication' => $self->_place_of_publication,

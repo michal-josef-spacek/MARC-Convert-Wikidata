@@ -5,7 +5,7 @@ use File::Object;
 use MARC::Convert::Wikidata::Transform;
 use MARC::Record;
 use Perl6::Slurp qw(slurp);
-use Test::More 'tests' => 43;
+use Test::More 'tests' => 47;
 use Test::NoWarnings;
 use Unicode::UTF8 qw(decode_utf8);
 
@@ -31,6 +31,13 @@ is_deeply($ret->illustrators, [], 'Masa a moc: Get illustrators.');
 is($ret->language, 'cze', 'Masa a moc: Get language.');
 is($ret->isbn_10, '80-85812-08-8', 'Masa a moc: Get ISBN-10.');
 is($ret->isbn_13, undef, 'Masa a moc: Get ISBN-13.');
+my $kramerius = $ret->krameriuses->[0];
+is($kramerius->kramerius_id, 'mzk', 'Masa a moc: Get Kramerius system id.');
+is($kramerius->object_id, 'dec885c0-51fc-11e5-bf4b-005056827e51',
+	'Masa a moc: Get Kramerius object id.');
+is($kramerius->url,
+	'http://kramerius.mzk.cz/search/handle/uuid:dec885c0-51fc-11e5-bf4b-005056827e51',
+	'Masa a moc: Get Kramerius object link.');
 is($ret->number_of_pages, 575, 'Masa a moc: Get number of pages.');
 is($ret->place_of_publication, 'Praha', 'Masa a moc: Get place of publication.');
 is($ret->publication_date, 1994, 'Masa a moc: Get publication date.');
@@ -65,6 +72,7 @@ is_deeply($ret->editors, [], 'Krakatit: Get editors.');
 is_deeply($ret->illustrators, [], 'Krakatit: Get illustrators.');
 is($ret->isbn_10, undef, 'Krakatit: Get ISBN-10.');
 is($ret->isbn_13, undef, 'Krakatit: Get ISBN-13.');
+is_deeply($ret->krameriuses, [], 'Krakatit: Get Kramerius objects.');
 is($ret->language, 'cze', 'Krakatit: Get language.');
 is($ret->number_of_pages, 377, 'Krakatit: Get number of pages.');
 is($ret->place_of_publication, 'Praha', 'Krakatit: Get place of publication.');
