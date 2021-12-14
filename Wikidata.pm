@@ -7,6 +7,7 @@ use Class::Utils qw(set_params);
 use DateTime;
 use Error::Pure qw(err);
 use MARC::Convert::Wikidata::Transform;
+use Unicode::UTF8 qw(decode_utf8);
 use Wikibase::Datatype::Item;
 use Wikibase::Datatype::Reference;
 use Wikibase::Datatype::Snak;
@@ -95,6 +96,27 @@ sub wikidata_ccnb {
 				'property' => 'P3184',
 			),
 		),
+	);
+}
+
+sub wikidata_descriptions {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->full_name) {
+		return ();
+	}
+
+	return (
+		'descriptions' => [
+			Wikibase::Datatype::Value::Monolingual->new(
+				'language' => 'cs',
+				'value' => $self->_description('cs'),
+			),
+			Wikibase::Datatype::Value::Monolingual->new(
+				'language' => 'en',
+				'value' => $self->_description('cs'),
+			),
+		],
 	);
 }
 
@@ -461,6 +483,7 @@ sub wikidata {
 
 	my $wikidata = Wikibase::Datatype::Item->new(
 		$self->wikidata_labels,
+		$self->wikidata_descriptions,
 		'statements' => [
 			# instance of: version, edition, or translation
 			Wikibase::Datatype::Statement->new(
@@ -492,6 +515,28 @@ sub wikidata {
 	);
 
 	return $wikidata;
+}
+
+sub _description {
+	my ($self, $lang) = @_;
+
+	my $ret;
+	if ($lang eq 'cs') {
+		# XXX Czech
+		$ret = decode_utf8('české knižní vydání');
+		if (defined $self->{'_object'}->publication_date) {
+			$ret .= ' z roku '.$self->{'_object'}->publication_date;
+		}
+
+	} elsif ($lang eq 'en') {
+		if (defined $self->{'_object'}->publication_date) {
+			$ret = $self->{'_object'}->publication_date.' ';
+		}
+		# XXX Czech
+		$ret .= 'Czech book edition';
+	}
+
+	return $ret;
 }
 
 sub _marc_lang_to_wd_lang {
