@@ -18,8 +18,15 @@ name 'MARC-Convert-Wikidata';
 perl_version 5.006002;
 readme_from 'Wikidata.pm';
 recursive_author_tests('xt');
+requires 'Business::ISBN' => 0;
 requires 'Class::Utils' => 0.03;
+requires 'DateTime' => 0;
+requires 'Error::Pure' => 0;
+requires 'MARC::Convert::Wikidata::Object' => 0;
+requires 'Readonly' => 0;
+requires 'Roman' => 0;
 requires 'Unicode::UTF8' => 0;
+requires 'Wikibase::Datatype' => 0;
 resources 'bugtracker' => 'https://github.com/michal-josef-spacek/MARC-Convert-Wikidata/issues',
 resources 'homepage' => 'https://github.com/michal-josef-spacek/MARC-Convert-Wikidata';
 resources 'repository' => 'git://github.com/michal-josef-spacek/MARC-Convert-Wikidata';
