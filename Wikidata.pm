@@ -174,7 +174,7 @@ sub wikidata_isbn_13 {
 }
 
 sub wikidata_labels {
-	my ($self, $lang) = @_;;
+	my $self = shift;
 
 	if (! defined $self->{'_object'}->full_name) {
 		return ();
