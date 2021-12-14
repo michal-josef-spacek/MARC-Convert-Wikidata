@@ -6,7 +6,7 @@ use warnings;
 use Class::Utils qw(set_params);
 use DateTime;
 use Error::Pure qw(err);
-use MARC::Convert::Wikidata::Object;
+use MARC::Convert::Wikidata::Transform;
 use Wikibase::Datatype::Item;
 use Wikibase::Datatype::Reference;
 use Wikibase::Datatype::Snak;
@@ -25,6 +25,9 @@ sub new {
 
 	# Create object.
 	my $self = bless {}, $class;
+
+	# Lang callback.
+	$self->{'callback_lang'} = undef;
 
 	# People callback.
 	$self->{'callback_people'} = undef;
@@ -50,9 +53,9 @@ sub new {
 		err "Parameter 'marc_record' must be a MARC::Record object.";
 	}
 
-	$self->{'_object'} = MARC::Convert::Wikidata::Object->new(
+	$self->{'_object'} = MARC::Convert::Wikidata::Transform->new(
 		'marc_record' => $self->{'marc_record'},
-	);
+	)->object;
 
 	# TODO Check 'date_retrieved' parameter. Must be a ISO8601 format.
 	if (! defined $self->{'date_retrieved'}) {
@@ -188,6 +191,38 @@ sub wikidata_labels {
 				'value' => $self->{'_object'}->full_name,
 			),
 		],
+	);
+}
+
+sub wikidata_language {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->language) {
+		return;
+	}
+
+	my $lang_qid;
+	if (! defined $self->{'callback_lang'}) {
+		return;
+	} else {
+		$lang_qid = $self->{'callback_lang'}->($self->{'_object'});
+	}
+
+	if (! defined $lang_qid) {
+		return;
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'wikibase-item',
+				'datavalue' => Wikibase::Datatype::Value::Quantity->new(
+					'value' => $lang_qid,
+				),
+				'property' => 'P407',
+			),
+		),
 	);
 }
 
@@ -384,8 +419,8 @@ sub wikidata_subtitle {
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'monolingualtext',
 				'datavalue' => Wikibase::Datatype::Value::Monolingual->new(
+					'language' => $self->_marc_lang_to_wd_lang,
 					'value' => $self->{'_object'}->subtitle,
-					# TODO Language
 				),
 				'property' => 'P1680',
 			),
@@ -406,8 +441,8 @@ sub wikidata_title {
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'monolingualtext',
 				'datavalue' => Wikibase::Datatype::Value::Monolingual->new(
+					'language' => $self->_marc_lang_to_wd_lang,
 					'value' => $self->{'_object'}->title,
-					# TODO Language
 				),
 				'property' => 'P1476',
 			),
@@ -445,6 +480,7 @@ sub wikidata {
 			$self->wikidata_illustrators,
 			$self->wikidata_isbn_10,
 			$self->wikidata_isbn_13,
+			$self->wikidata_language,
 			$self->wikidata_number_of_pages,
 			$self->wikidata_place_of_publication,
 			$self->wikidata_publication_date,
@@ -452,13 +488,23 @@ sub wikidata {
 			$self->wikidata_subtitle,
 			$self->wikidata_title,
 			$self->wikidata_translators,
-
-			# language of work or name: ...
-			# TODO
 		],
 	);
 
 	return $wikidata;
+}
+
+sub _marc_lang_to_wd_lang {
+	my $self = shift;
+
+	my $wd_lang;
+	my $marc_lang = $self->object->language;
+	# TODO Common way.
+	if ($marc_lang eq 'cze') {
+		$wd_lang = 'cs';
+	}
+
+	return $wd_lang;
 }
 
 1;

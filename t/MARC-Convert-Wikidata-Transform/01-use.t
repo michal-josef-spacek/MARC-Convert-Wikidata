@@ -7,8 +7,8 @@ use Test::NoWarnings;
 BEGIN {
 
 	# Test.
-	use_ok('MARC::Convert::Wikidata::Object');
+	use_ok('MARC::Convert::Wikidata::Transform');
 }
 
 # Test.
-require_ok('MARC::Convert::Wikidata::Object');
+require_ok('MARC::Convert::Wikidata::Transform');

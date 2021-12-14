@@ -1,11 +1,13 @@
-package MARC::Convert::Wikidata::Object;
+package MARC::Convert::Wikidata::Transform;
 
 use strict;
 use warnings;
 
-use Business::ISBN;
 use Class::Utils qw(set_params);
+use Business::ISBN;
 use Error::Pure qw(err);
+use MARC::Convert::Wikidata::Object;
+use MARC::Convert::Wikidata::Object::People;
 use Readonly;
 use Roman;
 
@@ -47,22 +49,19 @@ sub new {
 	$self->_process_people_100;
 	$self->_process_people_700;
 
+	$self->{'_object'} = undef;
+	$self->_process_object;
+
 	return $self;
 }
 
-sub authors {
+sub object {
 	my $self = shift;
 
-	return @{$self->{'_people'}->{'authors'}};
+	return $self->{'_object'};
 }
 
-sub ccnb {
-	my $self = shift;
-
-	return $self->_subfield('015', 'a');
-}
-
-sub edition_number {
+sub _edition_number {
 	my $self = shift;
 
 	my $edition_number = $self->_subfield('250', 'a');
@@ -80,68 +79,45 @@ sub edition_number {
 	return $edition_number;
 }
 
-sub editors {
-	my $self = shift;
-
-	return @{$self->{'_people'}->{'editors'}};
-}
-
-sub full_name {
-	my $self = shift;
-
-	my $full_name = $self->title;
-	if ($self->subtitle) {
-		$full_name .= ': '.$self->subtitle;
-	}
-
-	return $full_name;
-}
-
-sub illustrators {
-	my $self = shift;
-
-	return @{$self->{'_people'}->{'illustrators'}};
-}
-
-sub isbn {
+sub _isbn {
 	my $self = shift;
 
 	return $self->_subfield('020', 'a');
 }
 
-sub isbn_10 {
+sub _isbn_10 {
 	my $self = shift;
 
-	if (! defined $self->isbn) {
+	if (! defined $self->_isbn) {
 		return;
 	}
 
-	my $isbn_o = Business::ISBN->new($self->isbn);
+	my $isbn_o = Business::ISBN->new($self->_isbn);
 
-	if ($isbn_o->as_isbn10->as_string eq $self->isbn) {
-		return $self->isbn;
+	if ($isbn_o->as_isbn10->as_string eq $self->_isbn) {
+		return $self->_isbn;
 	} else {
 		return;
 	}
 }
 
-sub isbn_13 {
+sub _isbn_13 {
 	my $self = shift;
 
-	if (! defined $self->isbn) {
+	if (! defined $self->_isbn) {
 		return;
 	}
 
-	my $isbn_o = Business::ISBN->new($self->isbn);
+	my $isbn_o = Business::ISBN->new($self->_isbn);
 
-	if ($isbn_o->as_isbn13->as_string eq $self->isbn) {
-		return $self->isbn;
+	if ($isbn_o->as_isbn13->as_string eq $self->_isbn) {
+		return $self->_isbn;
 	} else {
 		return;
 	}
 }
 
-sub language {
+sub _language {
 	my $self = shift;
 
 	# TODO In 008 is some other language.
@@ -151,7 +127,8 @@ sub language {
 	return $cataloging_lang;
 }
 
-sub number_of_pages {
+
+sub _number_of_pages {
 	my $self = shift;
 
 	my $number_of_pages = $self->_subfield('300', 'a');
@@ -168,7 +145,7 @@ sub number_of_pages {
 	return $number_of_pages;
 }
 
-sub place_of_publication {
+sub _place_of_publication {
 	my $self = shift;
 
 	my $place_of_publication = $self->_subfield('260', 'a');
@@ -185,74 +162,30 @@ sub place_of_publication {
 	return $place_of_publication;
 }
 
-sub publication_date {
+
+sub _process_object {
 	my $self = shift;
 
-	my $publication_date = $self->_subfield('264', 'c');
-	if (! $publication_date) {
-		$publication_date = $self->_subfield('260', 'c');
-	}
+	$self->{'_object'} = MARC::Convert::Wikidata::Object->new(
+		'authors' => $self->{'_people'}->{'authors'},
+		'ccnb' => $self->_subfield('015', 'a'),
+		'edition_number' => $self->_edition_number,
+		'editors' => $self->{'_people'}->{'editors'},
+		# XXX Why?
+		defined $self->_isbn_10 ? ('isbn_10' => $self->_isbn_10) : (),
+		defined $self->_isbn_13 ? ('isbn_13' => $self->_isbn_13) : (),
+		'illustrators' => $self->{'_people'}->{'illustrators'},
+		'language' => $self->_language,
+		'number_of_pages' => $self->_number_of_pages,
+		'place_of_publication' => $self->_place_of_publication,
+		'publication_date' => scalar $self->_publication_date,
+		'publisher' => $self->_publisher,
+		'subtitle' => $self->_subtitle,
+		'title' => $self->_title,
+		'translators' => $self->{'_people'}->{'translators'},
+	);
 
-	# Supposition.
-	my $supposition = 0;
-	if ($publication_date =~ m/^\[(\d+)\]$/ms) {
-		$publication_date = $1;
-		$supposition = 1;
-	}
-
-	return wantarray ? ($publication_date, $supposition) : $publication_date;
-}
-
-sub publisher {
-	my $self = shift;
-
-	my $publisher = $self->_subfield('260', 'b');
-	if (! defined $publisher) {
-		$publisher = $self->_subfield('264', 'b');
-	}
-
-	# XXX Remove trailing characters.
-	if (defined $publisher) {
-		$publisher =~ s/\s+$//g;
-		$publisher =~ s/\s*,$//g;
-	}
-
-	return $publisher;
-}
-
-sub subtitle {
-	my $self = shift;
-
-	my $subtitle = $self->_subfield('245', 'b');
-
-	# XXX Remove traling characters like 'Subtitle /'.
-	if ($subtitle) {
-		$subtitle =~ s/\s+$//g;
-		$subtitle =~ s/\/$//g;
-		$subtitle =~ s/\s+$//g;
-	}
-
-	return $subtitle;
-}
-
-sub title {
-	my $self = shift;
-
-	my $title = $self->_subfield('245', 'a');
-
-	# XXX Remove traling characters like 'Title :', 'Title /'.
-	$title =~ s/\s+$//g;
-	$title =~ s/\/$//g;
-	$title =~ s/\:$//g;
-	$title =~ s/\s+$//g;
-
-	return $title;
-}
-
-sub translators {
-	my $self = shift;
-
-	return @{$self->{'_people'}->{'translators'}};
+	return;
 }
 
 sub _process_people {
@@ -264,15 +197,8 @@ sub _process_people {
 	my $full_name = $field->subfield('a');
 	# TODO Only if type 1. Fix for type 0 and 2.
 	my ($surname, $name) = split m/,\s*/ms, $full_name;
-	my $people_hr = {
-		'surname' => $surname,
-		'name' => $name,
-	};
 
 	my $nkcr_aut = $field->subfield('7');
-	if ($nkcr_aut) {
-		$people_hr->{'nkcr_aut'} = $nkcr_aut;
-	}
 
 	my $dates = $field->subfield('d');
 	my $date_of_birth;
@@ -283,14 +209,15 @@ sub _process_people {
 			$date_of_death = undef;
 		}
 	}
-	if (defined $date_of_birth) {
-		$people_hr->{'date_of_birth'} = $date_of_birth;
-	}
-	if (defined $date_of_death) {
-		$people_hr->{'date_of_death'} = $date_of_death;
-	}
 
-	push @{$self->{'_people'}->{$type_key}}, $people_hr;
+	push @{$self->{'_people'}->{$type_key}},
+		MARC::Convert::Wikidata::Object::People->new(
+			'date_of_birth' => $date_of_birth,
+			'date_of_death' => $date_of_death,
+			'name' => $name,
+			'nkcr_aut' => $nkcr_aut,
+			'surname' => $surname,
+		);
 
 	return;
 }
@@ -327,6 +254,41 @@ sub _process_people_type {
 	}
 }
 
+sub _publication_date {
+	my $self = shift;
+
+	my $publication_date = $self->_subfield('264', 'c');
+	if (! $publication_date) {
+		$publication_date = $self->_subfield('260', 'c');
+	}
+
+	# Supposition.
+	my $supposition = 0;
+	if ($publication_date =~ m/^\[(\d+)\]$/ms) {
+		$publication_date = $1;
+		$supposition = 1;
+	}
+
+	return wantarray ? ($publication_date, $supposition) : $publication_date;
+}
+
+sub _publisher {
+	my $self = shift;
+
+	my $publisher = $self->_subfield('260', 'b');
+	if (! defined $publisher) {
+		$publisher = $self->_subfield('264', 'b');
+	}
+
+	# XXX Remove trailing characters.
+	if (defined $publisher) {
+		$publisher =~ s/\s+$//g;
+		$publisher =~ s/\s*,$//g;
+	}
+
+	return $publisher;
+}
+
 sub _subfield {
 	my ($self, $field, $subfield) = @_;
 
@@ -336,6 +298,35 @@ sub _subfield {
 	}
 
 	return $field_value->subfield($subfield);
+}
+
+sub _subtitle {
+	my $self = shift;
+
+	my $subtitle = $self->_subfield('245', 'b');
+
+	# XXX Remove traling characters like 'Subtitle /'.
+	if ($subtitle) {
+		$subtitle =~ s/\s+$//g;
+		$subtitle =~ s/\/$//g;
+		$subtitle =~ s/\s+$//g;
+	}
+
+	return $subtitle;
+}
+
+sub _title {
+	my $self = shift;
+
+	my $title = $self->_subfield('245', 'a');
+
+	# XXX Remove traling characters like 'Title :', 'Title /'.
+	$title =~ s/\s+$//g;
+	$title =~ s/\/$//g;
+	$title =~ s/\:$//g;
+	$title =~ s/\s+$//g;
+
+	return $title;
 }
 
 1;

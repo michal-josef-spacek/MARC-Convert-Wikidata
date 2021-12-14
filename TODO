@@ -2,8 +2,6 @@ TODO
 ====
 2. Nvrhnout nejaky system pro dotazovani na QID pro autory, mista, etc.
 3. Zjednodusit kod.
-4. Object neni skutecne datovy objekt, ale zaroven transformace + data
-Patri vyresit, rozdelit.
 5. Do Transform pridat Kramerius
 6. Do Transform pridat knizni edici
 7.
@@ -12,3 +10,7 @@ Applied
 =======
 1. Prvni verze.
 OK [20210502] skim
+
+4. Object neni skutecne datovy objekt, ale zaroven transformace + data
+Patri vyresit, rozdelit.
+OK [20211214] skim
