@@ -261,8 +261,8 @@ sub wikidata_krameriuses {
 			push @krameriuses, Wikibase::Datatype::Statement->new(
 				'references' => [$self->wikidata_reference],
 				'snak' => Wikibase::Datatype::Snak->new(
-					'datatype' => 'wikibase-item',
-					'datavalue' => Wikibase::Datatype::Value::Item->new(
+					'datatype' => 'external-id',
+					'datavalue' => Wikibase::Datatype::Value::String->new(
 						'value' => $k->object_id,
 					),
 					'property' => 'P8752',
