@@ -3,8 +3,8 @@ package MARC::Convert::Wikidata::Transform;
 use strict;
 use warnings;
 
-use Class::Utils qw(set_params);
 use Business::ISBN;
+use Class::Utils qw(set_params);
 use Error::Pure qw(err);
 use MARC::Convert::Wikidata::Object;
 use MARC::Convert::Wikidata::Object::People;
