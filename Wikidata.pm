@@ -310,20 +310,20 @@ sub wikidata_number_of_pages {
 sub wikidata_people {
 	my ($self, $people_method, $people_property) = @_;
 
-	if (! defined $self->{'_object'}->$people_method) {
+	if (! @{$self->{'_object'}->$people_method}) {
+		return;
+	}
+
+	if (! defined $self->{'callback_people'}) {
+		warn "No callback method for translation of people in '$people_method' method.";
 		return;
 	}
 
 	my @people_qids;
-	if (! defined $self->{'callback_people'}) {
-		return;
-	} else {
-		my @people = $self->{'_object'}->$people_method;
-		foreach my $people_hr (@people) {
-			my $people_qid = $self->{'callback_people'}->($people_hr);
-			if (defined $people_qid) {
-				push @people_qids, $people_qid;
-			}
+	foreach my $people_hr (@{$self->{'_object'}->$people_method}) {
+		my $people_qid = $self->{'callback_people'}->($people_hr);
+		if (defined $people_qid) {
+			push @people_qids, $people_qid;
 		}
 	}
 
@@ -340,6 +340,7 @@ sub wikidata_people {
 			),
 		),
 	}
+
 	return @people;
 }
 
