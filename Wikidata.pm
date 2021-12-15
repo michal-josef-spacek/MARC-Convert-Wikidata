@@ -320,8 +320,8 @@ sub wikidata_people {
 	}
 
 	my @people_qids;
-	foreach my $people_hr (@{$self->{'_object'}->$people_method}) {
-		my $people_qid = $self->{'callback_people'}->($people_hr);
+	foreach my $people (@{$self->{'_object'}->$people_method}) {
+		my $people_qid = $self->{'callback_people'}->($people);
 		if (defined $people_qid) {
 			push @people_qids, $people_qid;
 		}
