@@ -288,7 +288,7 @@ sub _process_people_type {
 	if (exists $PEOPLE_TYPE{$type}) {
 		return $PEOPLE_TYPE{$type};
 	} else {
-		err "People type doesn't exist.";
+		err "People type '$type' doesn't exist.";
 	}
 }
 
