@@ -295,6 +295,7 @@ sub _process_publisher_field {
 		$publisher_name =~ s/\s+$//g;
 		$publisher_name =~ s/\s*,$//g;
 		$publisher_name =~ s/\s*:$//g;
+		$publisher_name =~ s/\s*;$//g;
 
 		my @places = $field->subfield('a');
 		my $place;
