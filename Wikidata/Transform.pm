@@ -267,6 +267,11 @@ sub _process_people_700 {
 sub _process_people_type {
 	my ($self, $type) = @_;
 
+	if (! defined $type || $type eq '') {
+		warn "People type set to 'aut'.";
+		$type = 'aut';
+	}
+
 	if (exists $PEOPLE_TYPE{$type}) {
 		return $PEOPLE_TYPE{$type};
 	} else {
