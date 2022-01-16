@@ -3,7 +3,9 @@ TODO
 2. Nvrhnout nejaky system pro dotazovani na QID pro autory, mista, etc.
 3. Zjednodusit kod.
 6. Do Transform pridat knizni edici
-7.
+7. Fix Transform for more ISBNs
+8. Add publisher to ISBN if more than 1.
+9.
 
 Applied
 =======
