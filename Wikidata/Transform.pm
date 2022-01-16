@@ -227,6 +227,8 @@ sub _process_people {
 		($date_of_birth, $date_of_death) = split m/-/ms, $dates;
 		if (! $date_of_death) {
 			$date_of_death = undef;
+		} else {
+			$date_of_death =~ s/\s*\.$//ms;
 		}
 	}
 
