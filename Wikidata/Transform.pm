@@ -10,6 +10,7 @@ use Error::Pure qw(err);
 use MARC::Convert::Wikidata::Object;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
+use MARC::Convert::Wikidata::Object::Publisher;
 use Readonly;
 use Roman;
 use URI;
@@ -182,24 +183,6 @@ sub _number_of_pages {
 	return $number_of_pages;
 }
 
-sub _place_of_publication {
-	my $self = shift;
-
-	my $place_of_publication = $self->_subfield('260', 'a');
-	if (! defined $place_of_publication) {
-		$place_of_publication = $self->_subfield('264', 'a');
-	}
-
-	# XXX Remove trailings characters.
-	if (defined $place_of_publication) {
-		$place_of_publication =~ s/\s+$//g;
-		$place_of_publication =~ s/\s*:$//g;
-	}
-
-	return $place_of_publication;
-}
-
-
 sub _process_object {
 	my $self = shift;
 
@@ -215,9 +198,8 @@ sub _process_object {
 		'krameriuses' => [$self->_krameriuses],
 		'language' => $self->_language,
 		'number_of_pages' => $self->_number_of_pages,
-		'place_of_publication' => $self->_place_of_publication,
 		'publication_date' => scalar $self->_publication_date,
-		'publisher' => $self->_publisher,
+		'publishers' => [$self->_publishers],
 		'subtitle' => $self->_subtitle,
 		'title' => $self->_title,
 		'translators' => $self->{'_people'}->{'translators'},
@@ -292,6 +274,40 @@ sub _process_people_type {
 	}
 }
 
+sub _process_publisher_field {
+	my ($self, $field_num) = @_;
+
+	my $field = $self->{'marc_record'}->field($field_num);
+	if (! defined $field) {
+		return ();
+	}
+	my @publisher_names = $field->subfield('b');
+	my @publishers;
+	for (my $i = 0; $i < @publisher_names; $i++) {
+		my $publisher_name = $publisher_names[$i];
+		$publisher_name =~ s/\s+$//g;
+		$publisher_name =~ s/\s*,$//g;
+		$publisher_name =~ s/\s*:$//g;
+
+		my @places = $field->subfield('a');
+		my $place;
+		if (defined $places[$i]) {
+			$place = $places[$i];
+		} else {
+			$place = $places[0];
+		}
+		$place =~ s/\s+$//g;
+		$place =~ s/\s*:$//g;
+
+		push @publishers, MARC::Convert::Wikidata::Object::Publisher->new(
+			'name' => $publisher_name,
+			'place' => $place,
+		);
+	}
+
+	return @publishers;
+}
+
 sub _publication_date {
 	my $self = shift;
 
@@ -310,21 +326,13 @@ sub _publication_date {
 	return wantarray ? ($publication_date, $supposition) : $publication_date;
 }
 
-sub _publisher {
+sub _publishers {
 	my $self = shift;
 
-	my $publisher = $self->_subfield('260', 'b');
-	if (! defined $publisher) {
-		$publisher = $self->_subfield('264', 'b');
-	}
+	my @publishers = $self->_process_publisher_field('260');
+	push @publishers, $self->_process_publisher_field('264');
 
-	# XXX Remove trailing characters.
-	if (defined $publisher) {
-		$publisher =~ s/\s+$//g;
-		$publisher =~ s/\s*,$//g;
-	}
-
-	return $publisher;
+	return @publishers;
 }
 
 sub _subfield {
@@ -360,9 +368,8 @@ sub _title {
 
 	# XXX Remove traling characters like 'Title :', 'Title /'.
 	$title =~ s/\s+$//g;
-	$title =~ s/\/$//g;
-	$title =~ s/\:$//g;
-	$title =~ s/\s+$//g;
+	$title =~ s/\s*\/$//g;
+	$title =~ s/\s*\:$//g;
 
 	return $title;
 }

@@ -39,9 +39,9 @@ is($kramerius->url,
 	'http://kramerius.mzk.cz/search/handle/uuid:dec885c0-51fc-11e5-bf4b-005056827e51',
 	'Masa a moc: Get Kramerius object link.');
 is($ret->number_of_pages, 575, 'Masa a moc: Get number of pages.');
-is($ret->place_of_publication, 'Praha', 'Masa a moc: Get place of publication.');
 is($ret->publication_date, 1994, 'Masa a moc: Get publication date.');
-is($ret->publisher, 'Arcadia', 'Masa a moc: Get publisher.');
+is($ret->publishers->[0]->name, 'Arcadia', 'Masa a moc: Get publisher.');
+is($ret->publishers->[0]->place, 'Praha', 'Masa a moc: Get publisher place.');
 is($ret->subtitle, undef, 'Masa a moc: Get subtitle.');
 is($ret->title, 'Masa a moc', 'Masa a moc: Get title.');
 my $translator = $ret->translators->[0];
@@ -75,9 +75,9 @@ is($ret->isbn_13, undef, 'Krakatit: Get ISBN-13.');
 is_deeply($ret->krameriuses, [], 'Krakatit: Get Kramerius objects.');
 is($ret->language, 'cze', 'Krakatit: Get language.');
 is($ret->number_of_pages, 377, 'Krakatit: Get number of pages.');
-is($ret->place_of_publication, 'Praha', 'Krakatit: Get place of publication.');
 is($ret->publication_date, 1939, 'Krakatit: Get publication date.');
-is($ret->publisher, decode_utf8('Fr. Borový'), 'Krakatit: Get publisher.');
+is($ret->publishers->[0]->name, decode_utf8('Fr. Borový'), 'Krakatit: Get publisher.');
+is($ret->publishers->[0]->place, 'Praha', 'Krakatit: Get publisher place.');
 is($ret->subtitle, decode_utf8('Román'), 'Krakatit: Get subtitle.');
 is($ret->title, 'Krakatit', 'Krakatit: Get title.');
 is_deeply($ret->translators, [], 'Krakatit: Get translators.');

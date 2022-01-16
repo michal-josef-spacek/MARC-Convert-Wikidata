@@ -34,10 +34,10 @@ sub new {
 	$self->{'callback_people'} = undef;
 
 	# Place of publication Wikidata lookup callback.
-	$self->{'callback_place'} = undef;
+	$self->{'callback_publisher_place'} = undef;
 
 	# Publisher Wikidata lookup callback.
-	$self->{'callback_publisher'} = undef;
+	$self->{'callback_publisher_name'} = undef;
 
 	# Retrieved date.
 	$self->{'date_retrieved'} = undef;
@@ -347,33 +347,41 @@ sub wikidata_people {
 sub wikidata_place_of_publication {
 	my $self = shift;
 
-	if (! defined $self->{'_object'}->place_of_publication) {
+	if (! @{$self->{'_object'}->publishers}) {
 		return;
 	}
 
-	my $place_qid;
-	if (! defined $self->{'callback_place'}) {
+	my @places;
+	if (! defined $self->{'callback_publisher_place'}) {
 		return;
 	} else {
-		$place_qid = $self->{'callback_place'}->($self->{'_object'});
+		foreach my $publisher (@{$self->{'_object'}->publishers}) {
+			my $place_qid = $self->{'callback_publisher_place'}->($publisher);
+			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher);
+			if ($place_qid) {
+				push @places, [$publisher_qid, $place_qid];
+			}
+		}
 	}
 
-	if (! defined $place_qid) {
+	if (! @places) {
 		return;
 	}
 
-	return (
+	my $multiple = @places > 1 ? 1 : 0;
+	return map {
 		Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'wikibase-item',
 				'datavalue' => Wikibase::Datatype::Value::Item->new(
-					'value' => $place_qid,
+					'value' => $_->[1],
 				),
 				'property' => 'P291',
 			),
-		),
-	);
+			# TODO property snak with publisher if multiples = 1;
+		);
+	} @places;
 }
 
 sub wikidata_publication_date {
@@ -398,26 +406,32 @@ sub wikidata_publication_date {
 	);
 }
 
-sub wikidata_publisher {
+sub wikidata_publishers {
 	my $self = shift;
 
-	if (! defined $self->{'_object'}->publisher) {
+	if (! @{$self->{'_object'}->publishers}) {
 		return;
 	}
 
-	my $publisher_qid;
-	if (! defined $self->{'callback_publisher'}) {
+	my @publisher_qids;
+	if (! defined $self->{'callback_publisher_name'}) {
 		return;
 	} else {
-		$publisher_qid = $self->{'callback_publisher'}->($self->{'_object'});
+		foreach my $publisher (@{$self->{'_object'}->publishers}) {
+			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher);
+			if ($publisher_qid) {
+				push @publisher_qids, $publisher_qid;
+			}
+		}
 	}
 
-	if (! defined $publisher_qid) {
+	if (! @publisher_qids) {
 		return;
 	}
 
-	return (
-		Wikibase::Datatype::Statement->new(
+	my @publishers;
+	foreach my $publisher_qid (@publisher_qids) {
+		push @publishers, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'wikibase-item',
@@ -426,8 +440,10 @@ sub wikidata_publisher {
 				),
 				'property' => 'P123',
 			),
-		),
-	);
+		);
+	}
+
+	return @publishers;
 }
 
 sub wikidata_reference {
@@ -547,7 +563,7 @@ sub wikidata {
 			$self->wikidata_number_of_pages,
 			$self->wikidata_place_of_publication,
 			$self->wikidata_publication_date,
-			$self->wikidata_publisher,
+			$self->wikidata_publishers,
 			$self->wikidata_subtitle,
 			$self->wikidata_title,
 			$self->wikidata_translators,
