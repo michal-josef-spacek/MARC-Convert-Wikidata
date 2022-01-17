@@ -11,6 +11,7 @@ use Unicode::UTF8 qw(decode_utf8);
 Readonly::Array our @EXPORT_OK => qw(clean_edition_number clean_number_of_pages);
 
 our $VERSION = 0.01;
+our $DEBUG = 0;
 
 sub clean_edition_number {
 	my $edition_number = shift;
@@ -32,7 +33,9 @@ sub clean_edition_number {
 	}
 
 	if ($ret_edition_number !~ m/^\d+$/ms) {
-		warn "Edition number '$edition_number' couldn't clean.";
+		if ($DEBUG) {
+			warn "Edition number '$edition_number' couldn't clean.";
+		}
 		$ret_edition_number = undef;
 	}
 
@@ -56,7 +59,9 @@ sub clean_number_of_pages {
 	$ret_number_of_pages =~ s/\s*$trail$//g;
 
 	if ($ret_number_of_pages !~ m/^\d+$/ms) {
-		warn "Number of pages '$number_of_pages' couldn't clean.";
+		if ($DEBUG) {
+			warn "Number of pages '$number_of_pages' couldn't clean.";
+		}
 		$ret_number_of_pages = undef;
 	}
 
