@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_number_of_pages);
-use Test::More 'tests' => 8;
+use Test::More 'tests' => 5;
 use Test::NoWarnings;
 
 # Test.
