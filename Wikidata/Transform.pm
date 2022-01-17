@@ -11,8 +11,8 @@ use MARC::Convert::Wikidata::Object;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
+use MARC::Convert::Wikidata::Utils qw(clean_edition_number);
 use Readonly;
-use Roman;
 use URI;
 use Unicode::UTF8 qw(decode_utf8);
 
@@ -96,16 +96,7 @@ sub _edition_number {
 	my $self = shift;
 
 	my $edition_number = $self->_subfield('250', 'a');
-	if (defined $edition_number) {
-		$edition_number =~ s/\s+$//g;
-		$edition_number =~ s/\.\s+vyd\.$//g;
-		if (isroman($edition_number)) {
-			$edition_number = arabic($edition_number);
-		}
-		if ($edition_number !~ m/^\d$/ms) {
-			$edition_number = undef;
-		}
-	}
+	$edition_number = clean_edition_number($edition_number);
 
 	return $edition_number;
 }
