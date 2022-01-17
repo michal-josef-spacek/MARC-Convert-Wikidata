@@ -227,7 +227,7 @@ sub wikidata_language {
 	if (! defined $self->{'callback_lang'}) {
 		return;
 	} else {
-		$lang_qid = $self->{'callback_lang'}->($self->{'_object'});
+		$lang_qid = $self->{'callback_lang'}->($self->{'_object'}->language);
 	}
 
 	if (! defined $lang_qid) {
