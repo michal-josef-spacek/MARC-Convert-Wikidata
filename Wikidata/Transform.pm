@@ -11,10 +11,9 @@ use MARC::Convert::Wikidata::Object;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
-use MARC::Convert::Wikidata::Utils qw(clean_edition_number);
+use MARC::Convert::Wikidata::Utils qw(clean_edition_number clean_number_of_pages);
 use Readonly;
 use URI;
-use Unicode::UTF8 qw(decode_utf8);
 
 Readonly::Hash our %PEOPLE_TYPE => {
 	'aut' => 'authors',
@@ -162,17 +161,7 @@ sub _number_of_pages {
 	my $self = shift;
 
 	my $number_of_pages = $self->_subfield('300', 'a');
-
-	# XXX Remove trailing characters.
-	if (defined $number_of_pages) {
-		$number_of_pages =~ s/\s+$//g;
-		$number_of_pages =~ s/\s*:$//g;
-		$number_of_pages =~ s/\s*;$//g;
-		$number_of_pages =~ s/\s*s\.$//g;
-		$number_of_pages =~ s/\s*stran$//g;
-		my $trail = decode_utf8('nečíslovaných');
-		$number_of_pages =~ s/\s*$trail$//g;
-	}
+	$number_of_pages = clean_number_of_pages($number_of_pages);
 
 	return $number_of_pages;
 }
