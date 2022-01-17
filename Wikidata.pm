@@ -239,7 +239,7 @@ sub wikidata_language {
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'wikibase-item',
-				'datavalue' => Wikibase::Datatype::Value::Quantity->new(
+				'datavalue' => Wikibase::Datatype::Value::Item->new(
 					'value' => $lang_qid,
 				),
 				'property' => 'P407',
