@@ -114,7 +114,7 @@ sub wikidata_descriptions {
 			),
 			Wikibase::Datatype::Value::Monolingual->new(
 				'language' => 'en',
-				'value' => $self->_description('cs'),
+				'value' => $self->_description('en'),
 			),
 		],
 	);
