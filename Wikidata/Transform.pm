@@ -14,6 +14,7 @@ use MARC::Convert::Wikidata::Object::Publisher;
 use Readonly;
 use Roman;
 use URI;
+use Unicode::UTF8 qw(decode_utf8);
 
 Readonly::Hash our %PEOPLE_TYPE => {
 	'aut' => 'authors',
@@ -178,6 +179,8 @@ sub _number_of_pages {
 		$number_of_pages =~ s/\s*;$//g;
 		$number_of_pages =~ s/\s*s\.$//g;
 		$number_of_pages =~ s/\s*stran$//g;
+		my $trail = decode_utf8('nečíslovaných');
+		$number_of_pages =~ s/\s*$trail$//g;
 	}
 
 	return $number_of_pages;
