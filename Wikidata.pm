@@ -421,13 +421,20 @@ sub wikidata_publication_date {
 	}
 
 	# TODO Second parameter of publication_date().
+
+	# XXX Publication date is year? Probably not.
+	my $value = '+'.DateTime->new(
+		'year' => $self->{'_object'}->publication_date,
+	)->iso8601().'Z';
 	return (
 		Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'time',
 				'datavalue' => Wikibase::Datatype::Value::Time->new(
-					'value' => '+'.$self->{'_object'}->publication_date,
+					# Precision for year.
+					'precision' => 9,
+					'value' => $value,
 				),
 				'property' => 'P577',
 			),
