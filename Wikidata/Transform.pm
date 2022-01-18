@@ -67,6 +67,17 @@ sub object {
 	return $self->{'_object'};
 }
 
+sub _ccnb {
+	my $self = shift;
+
+	my $ccnb = $self->_subfield('015', 'a');
+	if (! defined $ccnb) {
+		$ccnb = $self->_subfield('015', 'z');
+	}
+
+	return $ccnb;
+}
+
 sub _construct_kramerius {
 	my ($self, $kramerius_uri) = @_;
 
@@ -171,7 +182,7 @@ sub _process_object {
 
 	$self->{'_object'} = MARC::Convert::Wikidata::Object->new(
 		'authors' => $self->{'_people'}->{'authors'},
-		'ccnb' => $self->_subfield('015', 'a'),
+		'ccnb' => $self->_ccnb,
 		'edition_number' => $self->_edition_number,
 		'editors' => $self->{'_people'}->{'editors'},
 		# XXX Why?
