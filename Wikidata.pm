@@ -58,9 +58,8 @@ sub new {
 		'marc_record' => $self->{'marc_record'},
 	)->object;
 
-	# TODO Check 'date_retrieved' parameter. Must be a ISO8601 format.
 	if (! defined $self->{'date_retrieved'}) {
-		$self->{'date_retrieved'} = '+'.DateTime->now->strftime('%Y-%m-%dT%H:%M:%S');
+		$self->{'date_retrieved'} = '+'.DateTime->now->iso8601().'Z';
 	}
 
 	return $self;
