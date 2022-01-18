@@ -307,6 +307,8 @@ sub _process_publisher_field {
 		}
 		$place =~ s/\s+$//g;
 		$place =~ s/\s*:$//g;
+		# [Praha]
+		$place =~ s/^\[(.*?)\]$/$1/ms;
 
 		push @publishers, MARC::Convert::Wikidata::Object::Publisher->new(
 			'name' => $publisher_name,
