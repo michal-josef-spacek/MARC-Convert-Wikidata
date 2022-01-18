@@ -152,6 +152,21 @@ sub wikidata_editors {
 	return $self->wikidata_people('editors', 'P98');
 }
 
+sub wikidata_compilers {
+	my $self = shift;
+
+	my $property_snaks_ar = [
+		Wikibase::Datatype::Snak->new(
+			'datatype' => 'wikibase-item',
+			'datavalue' => Wikibase::Datatype::Value::Item->new(
+				'value' => 'Q29514511',
+			),
+			'property' => 'P106',
+		),
+	];
+	return $self->wikidata_people('compilers', 'P98', $property_snaks_ar);
+}
+
 sub wikidata_illustrators {
 	my $self = shift;
 
@@ -313,7 +328,7 @@ sub wikidata_number_of_pages {
 }
 
 sub wikidata_people {
-	my ($self, $people_method, $people_property) = @_;
+	my ($self, $people_method, $people_property, $property_snaks_ar) = @_;
 
 	if (! @{$self->{'_object'}->$people_method}) {
 		return;
@@ -335,6 +350,9 @@ sub wikidata_people {
 	my @people;
 	foreach my $people_qid (@people_qids) {
 		push @people, Wikibase::Datatype::Statement->new(
+			defined $property_snaks_ar ? (
+				'property_snaks' => $property_snaks_ar,
+			) : (),
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'wikibase-item',
@@ -559,6 +577,7 @@ sub wikidata {
 			$self->wikidata_authors,
 			$self->wikidata_authors_of_introduction,
 			$self->wikidata_ccnb,
+			$self->wikidata_compilers,
 			$self->wikidata_edition_number,
 			$self->wikidata_editors,
 			$self->wikidata_illustrators,

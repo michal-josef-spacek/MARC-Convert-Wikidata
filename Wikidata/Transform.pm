@@ -18,7 +18,8 @@ use URI;
 Readonly::Hash our %PEOPLE_TYPE => {
 	'aui' => 'author_of_introductions',
 	'aut' => 'authors',
-	'com' => 'editors',
+	'com' => 'compilers',
+	'edt' => 'editors',
 	'ill' => 'illustrators',
 	'trl' => 'translators',
 };
@@ -50,6 +51,7 @@ sub new {
 	$self->{'_people'} = {
 		'authors' => [],
 		'authors_of_introduction' => [],
+		'compilers' => [],
 		'editors' => [],
 		'illustrators' => [],
 		'translators' => [],
@@ -186,6 +188,7 @@ sub _process_object {
 		'authors' => $self->{'_people'}->{'authors'},
 		'authors_of_introduction' => $self->{'_people'}->{'authors_of_introduction'},
 		'ccnb' => $self->_ccnb,
+		'compilers' => $self->{'_people'}->{'compilers'},
 		'edition_number' => $self->_edition_number,
 		'editors' => $self->{'_people'}->{'editors'},
 		# XXX Why?
