@@ -77,6 +77,12 @@ sub wikidata_authors {
 	return $self->wikidata_people('authors', 'P50');
 }
 
+sub wikidata_authors_of_introduction {
+	my $self = shift;
+
+	return $self->wikidata_people('authors', 'P2679');
+}
+
 sub wikidata_ccnb {
 	my $self = shift;
 
@@ -551,6 +557,7 @@ sub wikidata {
 			),
 
 			$self->wikidata_authors,
+			$self->wikidata_authors_of_introduction,
 			$self->wikidata_ccnb,
 			$self->wikidata_edition_number,
 			$self->wikidata_editors,
