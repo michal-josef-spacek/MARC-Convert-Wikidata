@@ -214,6 +214,9 @@ sub _process_people {
 
 	my $type = $field->subfield('4');
 	my $type_key = $self->_process_people_type($type);
+	if (! defined $type_key) {
+		return;
+	}
 
 	my $full_name = $field->subfield('a');
 	# TODO Only if type 1. Fix for type 0 and 2.
@@ -273,6 +276,10 @@ sub _process_people_type {
 	if (! defined $type || $type eq '') {
 		warn "People type set to 'aut'.";
 		$type = 'aut';
+	}
+
+	if ($type eq 'art') {
+		return;
 	}
 
 	if (exists $PEOPLE_TYPE{$type}) {
