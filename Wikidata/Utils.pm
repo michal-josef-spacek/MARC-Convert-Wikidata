@@ -21,14 +21,14 @@ sub clean_edition_number {
 	}
 
 	my $ret_edition_number = $edition_number;
-	$ret_edition_number =~ s/\s+$//g;
 	$ret_edition_number =~ s/^Vyd. (\d+)./$1/ms;
+	$ret_edition_number =~ s/\s+$//ms;
 	$ret_edition_number =~ s/^První/1/ms;
 	$ret_edition_number =~ s/^Druhé/2/ms;
-	$ret_edition_number =~ s/\s*vyd\.$//g;
-	$ret_edition_number =~ s/\s*vydání$//g;
-	$ret_edition_number =~ s/\s*opr\. a rozmn\.$//g;
-	$ret_edition_number =~ s/\s*\.$//g;
+	$ret_edition_number =~ s/\s*vyd\.$//ms;
+	$ret_edition_number =~ s/\s*vydání$//ms;
+	$ret_edition_number =~ s/\s*opr\. a rozmn\.$//ms;
+	$ret_edition_number =~ s/\s*\.$//ms;
 	if (isroman($ret_edition_number)) {
 		$ret_edition_number = arabic($ret_edition_number);
 	}
