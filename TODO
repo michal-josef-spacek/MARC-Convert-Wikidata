@@ -1,6 +1,7 @@
 TODO
 ====
-2. Nvrhnout nejaky system pro dotazovani na QID pro autory, mista, etc.
+2. Navrhnout nejaky system pro dotazovani na QID pro autory, mista, etc.
+Wikibase::Cache
 3. Zjednodusit kod.
 6. Do Transform pridat knizni edici
 7. Fix Transform for more ISBNs
