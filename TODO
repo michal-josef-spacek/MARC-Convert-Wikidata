@@ -9,7 +9,8 @@ Wikibase::Cache
 10. Jak poznam vicesvazkove dilo? (cnb003059138)
 11. Move cleanup things from Transform to Utils.
 12. Add oclc to Transform
-13.
+13. Add hardback, paperback to isbn
+14.
 
 Applied
 =======
