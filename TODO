@@ -10,7 +10,8 @@ Wikibase::Cache
 11. Move cleanup things from Transform to Utils.
 12. Add oclc to Transform
 13. Add hardback, paperback to isbn
-14.
+14. Do publisher pridat policko 710
+15.
 
 Applied
 =======
