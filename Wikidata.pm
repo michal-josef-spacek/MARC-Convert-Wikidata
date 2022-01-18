@@ -59,7 +59,8 @@ sub new {
 	)->object;
 
 	if (! defined $self->{'date_retrieved'}) {
-		$self->{'date_retrieved'} = '+'.DateTime->now->iso8601().'Z';
+		$self->{'date_retrieved'} = '+'.DateTime->now
+			->truncate('to' => 'day')->iso8601().'Z';
 	}
 
 	return $self;
