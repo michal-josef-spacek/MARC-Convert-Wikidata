@@ -22,6 +22,7 @@ sub clean_edition_number {
 
 	my $ret_edition_number = $edition_number;
 	$ret_edition_number =~ s/\s+$//g;
+	$ret_edition_number =~ s/^Vyd. (\d+)./$1/ms;
 	$ret_edition_number =~ s/^První/1/ms;
 	$ret_edition_number =~ s/^Druhé/2/ms;
 	$ret_edition_number =~ s/\s*vyd\.$//g;

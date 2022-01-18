@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_edition_number);
-use Test::More 'tests' => 8;
+use Test::More 'tests' => 9;
 use Test::NoWarnings;
 
 # Test.
@@ -39,5 +39,10 @@ is($ret, 2, "Edition number '2. vyd.' after cleanup.");
 $input_edition_number = '2. opr. a rozmn. vyd.';
 $ret = clean_edition_number($input_edition_number);
 is($ret, 2, "Edition number '2. opr. a rozmn. vyd.' after cleanup.");
+
+# Test.
+$input_edition_number = 'Vyd. 1.';
+$ret = clean_edition_number($input_edition_number);
+is($ret, 1, "Edition number '$input_edition_number' after cleanup.");
 
 # TODO Lidové vydání
