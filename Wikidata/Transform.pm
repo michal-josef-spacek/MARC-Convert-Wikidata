@@ -161,14 +161,15 @@ sub _krameriuses {
 	} $self->_subfield('856', 'u');
 }
 
-sub _language {
+sub _languages {
 	my $self = shift;
 
-	# TODO In 008 is some other language.
+	my @lang = $self->_subfield('041', 'a');
+	if (! @lang) {
+		push @lang, $self->_subfield('040', 'b');
+	}
 
-	my $cataloging_lang = $self->_subfield('040', 'b');
-
-	return $cataloging_lang;
+	return @lang;
 }
 
 
@@ -196,7 +197,7 @@ sub _process_object {
 		defined $self->_isbn_13 ? ('isbn_13' => $self->_isbn_13) : (),
 		'illustrators' => $self->{'_people'}->{'illustrators'},
 		'krameriuses' => [$self->_krameriuses],
-		'language' => $self->_language,
+		'languages' => [$self->_languages],
 		'number_of_pages' => $self->_number_of_pages,
 		'publication_date' => scalar $self->_publication_date,
 		'publishers' => [$self->_publishers],

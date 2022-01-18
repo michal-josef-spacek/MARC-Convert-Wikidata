@@ -239,33 +239,38 @@ sub wikidata_labels {
 sub wikidata_language {
 	my $self = shift;
 
-	if (! defined $self->{'_object'}->language) {
+	if (! @{$self->{'_object'}->languages}) {
 		return;
 	}
 
-	my $lang_qid;
 	if (! defined $self->{'callback_lang'}) {
-		return;
-	} else {
-		$lang_qid = $self->{'callback_lang'}->($self->{'_object'}->language);
-	}
-
-	if (! defined $lang_qid) {
+		warn "No callback method for translation of language.";
 		return;
 	}
 
-	return (
-		Wikibase::Datatype::Statement->new(
+	my @language_qids;
+	foreach my $lang (@{$self->{'_object'}->languages}) {
+		my $language_qid = $self->{'callback_lang'}->($lang);
+		if (defined $language_qid) {
+			push @language_qids, $language_qid;
+		}
+	}
+
+	my @lang;
+	foreach my $language_qid (@language_qids) {
+		push @lang, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'wikibase-item',
 				'datavalue' => Wikibase::Datatype::Value::Item->new(
-					'value' => $lang_qid,
+					'value' => $language_qid,
 				),
 				'property' => 'P407',
 			),
-		),
-	);
+		);
+	}
+
+	return @lang;
 }
 
 sub wikidata_krameriuses {
@@ -624,10 +629,12 @@ sub _marc_lang_to_wd_lang {
 	my $self = shift;
 
 	my $wd_lang;
-	my $marc_lang = $self->object->language;
-	# TODO Common way.
+	my $marc_lang = $self->object->languages->[0];
+	# TODO Common way. ISO 639-2 code for bibliography
 	if ($marc_lang eq 'cze') {
 		$wd_lang = 'cs';
+	} elsif ($marc_lang eq 'eng') {
+		$wd_lang = 'en';
 	}
 
 	return $wd_lang;
