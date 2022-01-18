@@ -2,7 +2,6 @@ TODO
 ====
 2. Navrhnout nejaky system pro dotazovani na QID pro autory, mista, etc.
 Wikibase::Cache
-3. Zjednodusit kod.
 6. Do Transform pridat knizni edici
 7. Fix Transform for more ISBNs
 8. Add publisher to ISBN if more than 1.
@@ -22,3 +21,7 @@ OK [20211214] skim
 
 5. Do Transform pridat Kramerius
 OK [20211214] skim
+
+3. Zjednodusit kod.
+Obsolete
+NONE [20220118] skim
