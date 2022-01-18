@@ -58,6 +58,7 @@ sub clean_number_of_pages {
 	$ret_number_of_pages =~ s/\s*stran$//g;
 	my $trail = decode_utf8('nečíslovaných');
 	$ret_number_of_pages =~ s/\s*$trail$//g;
+	$ret_number_of_pages =~ s/^\[(.*?)\]$/$1/ms;
 
 	if ($ret_number_of_pages !~ m/^\d+$/ms) {
 		if ($DEBUG) {
