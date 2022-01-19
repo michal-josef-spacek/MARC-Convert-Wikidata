@@ -14,6 +14,7 @@ use MARC::Convert::Wikidata::Object::Publisher;
 use MARC::Convert::Wikidata::Utils qw(clean_edition_number clean_number_of_pages);
 use Readonly;
 use URI;
+use Unicode::UTF8 qw(decode_utf8);
 
 Readonly::Hash our %PEOPLE_TYPE => {
 	'aui' => 'author_of_introductions',
@@ -315,6 +316,8 @@ sub _process_publisher_field {
 		$place =~ s/\s+$//g;
 		$place =~ s/\s*:$//g;
 		$place =~ s/^V Praze$/Praha/ms;
+		my $brno = decode_utf8('V Brně');
+		$place =~ s/^$brno$/Brno/ms;
 		# [Praha]
 		$place =~ s/^\[(.*?)\]$/$1/ms;
 
