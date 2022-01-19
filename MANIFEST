@@ -15,6 +15,7 @@ Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
+t/data/cnb000036403.mrc
 t/data/cnb000087983.mrc
 t/data/cnb000103538.mrc
 t/data/cnb000403605.mrc
