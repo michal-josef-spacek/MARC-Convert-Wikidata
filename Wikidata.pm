@@ -81,7 +81,7 @@ sub wikidata_authors {
 sub wikidata_authors_of_introduction {
 	my $self = shift;
 
-	return $self->wikidata_people('authors', 'P2679');
+	return $self->wikidata_people('authors_of_introduction', 'P2679');
 }
 
 sub wikidata_ccnb {

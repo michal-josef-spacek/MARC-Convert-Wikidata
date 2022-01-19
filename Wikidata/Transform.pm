@@ -17,7 +17,7 @@ use URI;
 use Unicode::UTF8 qw(decode_utf8);
 
 Readonly::Hash our %PEOPLE_TYPE => {
-	'aui' => 'author_of_introductions',
+	'aui' => 'authors_of_introduction',
 	'aut' => 'authors',
 	'com' => 'compilers',
 	'edt' => 'editors',
