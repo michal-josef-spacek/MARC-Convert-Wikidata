@@ -333,6 +333,27 @@ sub wikidata_number_of_pages {
 	);
 }
 
+sub wikidata_oclc {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->oclc) {
+		return;
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'string',
+				'datavalue' => Wikibase::Datatype::Value::String->new(
+					'value' => $self->{'_object'}->oclc,
+				),
+				'property' => 'P243',
+			),
+		),
+	);
+}
+
 sub wikidata_people {
 	my ($self, $people_method, $people_property, $property_snaks_ar) = @_;
 
@@ -599,6 +620,7 @@ sub wikidata {
 			$self->wikidata_krameriuses,
 			$self->wikidata_language,
 			$self->wikidata_number_of_pages,
+			$self->wikidata_oclc,
 			$self->wikidata_place_of_publication,
 			$self->wikidata_publication_date,
 			$self->wikidata_publishers,

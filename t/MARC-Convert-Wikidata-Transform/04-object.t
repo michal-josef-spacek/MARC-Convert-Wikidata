@@ -5,7 +5,7 @@ use File::Object;
 use MARC::Convert::Wikidata::Transform;
 use MARC::Record;
 use Perl6::Slurp qw(slurp);
-use Test::More 'tests' => 47;
+use Test::More 'tests' => 49;
 use Test::NoWarnings;
 use Unicode::UTF8 qw(decode_utf8);
 
@@ -39,6 +39,7 @@ is($kramerius->url,
 	'http://kramerius.mzk.cz/search/handle/uuid:dec885c0-51fc-11e5-bf4b-005056827e51',
 	'Masa a moc: Get Kramerius object link.');
 is($ret->number_of_pages, 575, 'Masa a moc: Get number of pages.');
+is($ret->oclc, 39576885, 'Masa a moc: Get OCLC control number.');
 is($ret->publication_date, 1994, 'Masa a moc: Get publication date.');
 is($ret->publishers->[0]->name, 'Arcadia', 'Masa a moc: Get publisher.');
 is($ret->publishers->[0]->place, 'Praha', 'Masa a moc: Get publisher place.');
@@ -75,6 +76,7 @@ is($ret->isbn_13, undef, 'Krakatit: Get ISBN-13.');
 is_deeply($ret->krameriuses, [], 'Krakatit: Get Kramerius objects.');
 is_deeply($ret->languages, ['cze'], 'Krakatit: Get language.');
 is($ret->number_of_pages, 377, 'Krakatit: Get number of pages.');
+is($ret->oclc, 3791532, 'Krakatit: Get number of pages.');
 is($ret->publication_date, 1939, 'Krakatit: Get publication date.');
 is($ret->publishers->[0]->name, decode_utf8('Fr. Borový'), 'Krakatit: Get publisher.');
 is($ret->publishers->[0]->place, 'Praha', 'Krakatit: Get publisher place.');

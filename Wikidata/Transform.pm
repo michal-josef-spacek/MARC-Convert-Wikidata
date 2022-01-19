@@ -183,6 +183,20 @@ sub _number_of_pages {
 	return $number_of_pages;
 }
 
+sub _oclc {
+	my $self = shift;
+
+	my @oclc = $self->_subfield('035', 'a');
+	foreach my $oclc (@oclc) {
+		$oclc =~ s/^\(OCoLC\)//ms;
+	}
+	if (@oclc > 1) {
+		err 'Multiple OCLC control number.';
+	}
+
+	return $oclc[0];
+}
+
 sub _process_object {
 	my $self = shift;
 
@@ -200,6 +214,7 @@ sub _process_object {
 		'krameriuses' => [$self->_krameriuses],
 		'languages' => [$self->_languages],
 		'number_of_pages' => $self->_number_of_pages,
+		'oclc' => $self->_oclc,
 		'publication_date' => scalar $self->_publication_date,
 		'publishers' => [$self->_publishers],
 		'subtitle' => $self->_subtitle,
@@ -340,7 +355,7 @@ sub _publication_date {
 
 	# Supposition.
 	my $supposition = 0;
-	if ($publication_date =~ m/^\[(\d+)\]$/ms) {
+	if ($publication_date =~ m/^\[(\d+)\??\]$/ms) {
 		$publication_date = $1;
 		$supposition = 1;
 	}
