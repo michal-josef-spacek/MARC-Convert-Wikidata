@@ -314,6 +314,7 @@ sub _process_publisher_field {
 		}
 		$place =~ s/\s+$//g;
 		$place =~ s/\s*:$//g;
+		$place =~ s/^V Praze$/Praha/ms;
 		# [Praha]
 		$place =~ s/^\[(.*?)\]$/$1/ms;
 
