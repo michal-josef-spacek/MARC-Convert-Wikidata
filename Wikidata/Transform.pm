@@ -278,7 +278,7 @@ sub _process_people_type {
 		$type = 'aut';
 	}
 
-	if ($type eq 'art') {
+	if ($type eq 'art' || $type eq 'pht') {
 		return;
 	}
 
