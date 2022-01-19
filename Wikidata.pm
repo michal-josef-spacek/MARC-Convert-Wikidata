@@ -488,11 +488,11 @@ sub wikidata_reference {
 	return (
 		Wikibase::Datatype::Reference->new(
 			'snaks' => [
-				# Stated in NKČR AUT
+				# Stated in Czech National Bibliography
 				Wikibase::Datatype::Snak->new(
 					'datatype' => 'wikibase-item',
 					'datavalue' => Wikibase::Datatype::Value::Item->new(
-						'value' => 'Q13550863',
+						'value' => 'Q86914821',
 					),
 					'property' => 'P248',
 				),
