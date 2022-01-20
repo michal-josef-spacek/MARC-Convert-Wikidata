@@ -8,11 +8,47 @@ use Readonly;
 use Roman;
 use Unicode::UTF8 qw(decode_utf8);
 
-Readonly::Array our @EXPORT_OK => qw(clean_edition_number clean_number_of_pages clean_oclc
-	clean_subtitle clean_title);
+Readonly::Array our @EXPORT_OK => qw(clean_date clean_edition_number clean_number_of_pages
+	clean_oclc clean_subtitle clean_title);
 
 our $VERSION = 0.01;
 our $DEBUG = 0;
+
+sub clean_date {
+	my $date = shift;
+
+	if (! defined $date) {
+		return;
+	}
+	if (! $date) {
+		return;
+	}
+
+	my $months_hr = {
+		'leden' => '01',
+		decode_utf8('únor') => '02',
+		decode_utf8('březen') => '03',
+		'duben' => '04',
+		decode_utf8('květen') => '05',
+		decode_utf8('červen') => '06',
+		decode_utf8('červenec') => '07',
+		'srpen' => '08',
+		decode_utf8('září') => '09',
+		decode_utf8('říjen') => '10',
+		'listopad' => '11',
+		'prosinec' => '12',
+	};
+
+	my $ret_date = $date;
+	foreach my $month (keys %{$months_hr}) {
+		$ret_date =~ s/^(\d{4})\s*$month\s*(\d+)\.$/$1-$months_hr->{$month}-$2/ms;
+	}
+	my $bk = decode_utf8('př. Kr.');
+	$ret_date =~ s/^(\d+)\s*$bk/-$1/ms;
+	$ret_date =~ s/\s*\.$//ms;
+
+	return $ret_date;
+}
 
 sub clean_edition_number {
 	my $edition_number = shift;

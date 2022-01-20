@@ -11,8 +11,8 @@ use MARC::Convert::Wikidata::Object;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
-use MARC::Convert::Wikidata::Utils qw(clean_oclc clean_edition_number clean_number_of_pages
-	clean_subtitle clean_title);
+use MARC::Convert::Wikidata::Utils qw(clean_date clean_edition_number clean_number_of_pages
+	clean_oclc clean_subtitle clean_title);
 use Readonly;
 use URI;
 use Unicode::UTF8 qw(decode_utf8);
@@ -248,21 +248,11 @@ sub _process_people {
 	my $nkcr_aut = $field->subfield('7');
 
 	my $dates = $field->subfield('d');
-	my $date_of_birth;
-	my $date_of_death;
+	my ($date_of_birth, $date_of_death);
 	if (defined $dates) {
 		($date_of_birth, $date_of_death) = split m/-/ms, $dates;
-		# XXX common
-		my $march = decode_utf8('březen');
-		$date_of_birth =~ s/^(\d{4})\s*$march\s*(\d+)\.$/$1-03-$2/ms;
-		my $bk = decode_utf8('př. Kr.');
-		$date_of_birth =~ s/^(\d+)\s*$bk/-$1/ms;
-		$date_of_death =~ s/^(\d+)\s*$bk/-$1/ms;
-		if (! $date_of_death) {
-			$date_of_death = undef;
-		} else {
-			$date_of_death =~ s/\s*\.$//ms;
-		}
+		$date_of_birth = clean_date($date_of_birth);
+		$date_of_death = clean_date($date_of_death);
 	}
 
 	foreach my $type_key (@type_keys) {
