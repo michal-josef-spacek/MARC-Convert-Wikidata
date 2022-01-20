@@ -7,6 +7,7 @@ Wikibase::Cache
 8. Add publisher to ISBN if more than 1.
 9. Mezinarodni desetinne trideni
 10. Jak poznam vicesvazkove dilo? (cnb003059138)
+Je tam vice ccnb, jedno pro dilo, dalsi pro jednotlive svazky
 11. Move cleanup things from Transform to Utils.
 13. Add hardback, paperback to isbn
 14. Do publisher pridat policko 710
