@@ -5,7 +5,7 @@ use File::Object;
 use MARC::Convert::Wikidata::Transform;
 use MARC::Record;
 use Perl6::Slurp qw(slurp);
-use Test::More 'tests' => 49;
+use Test::More 'tests' => 47;
 use Test::NoWarnings;
 use Unicode::UTF8 qw(decode_utf8);
 
@@ -29,8 +29,7 @@ is($ret->edition_number, 1, 'Masa a moc: Get edition number.');
 is_deeply($ret->editors, [], 'Masa a moc: Get editors.');
 is_deeply($ret->illustrators, [], 'Masa a moc: Get illustrators.');
 is_deeply($ret->languages, ['cze'], 'Masa a moc: Get language.');
-is($ret->isbn_10, '80-85812-08-8', 'Masa a moc: Get ISBN-10.');
-is($ret->isbn_13, undef, 'Masa a moc: Get ISBN-13.');
+is($ret->isbns->[0]->isbn, '80-85812-08-8', 'Masa a moc: Get ISBN-10.');
 my $kramerius = $ret->krameriuses->[0];
 is($kramerius->kramerius_id, 'mzk', 'Masa a moc: Get Kramerius system id.');
 is($kramerius->object_id, 'dec885c0-51fc-11e5-bf4b-005056827e51',
@@ -71,8 +70,7 @@ is($ret->ccnb, 'cnb000750997', 'Krakatit: Get ČČNB number.');
 is($ret->edition_number, undef, 'Krakatit: Get edition number.');
 is_deeply($ret->editors, [], 'Krakatit: Get editors.');
 is_deeply($ret->illustrators, [], 'Krakatit: Get illustrators.');
-is($ret->isbn_10, undef, 'Krakatit: Get ISBN-10.');
-is($ret->isbn_13, undef, 'Krakatit: Get ISBN-13.');
+is_deeply($ret->isbns, [], 'Krakatit: Get ISBN-10.');
 is_deeply($ret->krameriuses, [], 'Krakatit: Get Kramerius objects.');
 is_deeply($ret->languages, ['cze'], 'Krakatit: Get language.');
 is($ret->number_of_pages, 377, 'Krakatit: Get number of pages.');

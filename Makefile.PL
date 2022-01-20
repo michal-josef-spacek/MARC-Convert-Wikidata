@@ -18,7 +18,6 @@ name 'MARC-Convert-Wikidata';
 perl_version 5.006002;
 readme_from 'Wikidata.pm';
 recursive_author_tests('xt');
-requires 'Business::ISBN' => 0;
 requires 'Class::Utils' => 0.03;
 requires 'DateTime' => 0;
 requires 'Error::Pure' => 0;

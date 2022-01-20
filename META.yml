@@ -26,7 +26,6 @@ no_index:
     - t
     - xt
 requires:
-  Business::ISBN: 0
   Class::Utils: 0.03
   DateTime: 0
   Error::Pure: 0

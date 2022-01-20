@@ -177,43 +177,55 @@ sub wikidata_illustrators {
 sub wikidata_isbn_10 {
 	my $self = shift;
 
-	if (! defined $self->{'_object'}->isbn_10) {
+	if (! @{$self->{'_object'}->isbns}) {
 		return;
 	}
 
-	return (
-		Wikibase::Datatype::Statement->new(
+	my @ret;
+	foreach my $isbn (@{$self->{'_object'}->isbns}) {
+		if ($isbn->type != 10) {
+			next;
+		}
+		push @ret, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'external-id',
 				'datavalue' => Wikibase::Datatype::Value::String->new(
-					'value' => $self->{'_object'}->isbn_10,
+					'value' => $isbn->isbn,
 				),
 				'property' => 'P957',
 			),
-		),
-	);
+		);
+	}
+
+	return @ret;
 }
 
 sub wikidata_isbn_13 {
 	my $self = shift;
 
-	if (! defined $self->{'_object'}->isbn_13) {
+	if (! @{$self->{'_object'}->isbns}) {
 		return;
 	}
 
-	return (
-		Wikibase::Datatype::Statement->new(
+	my @ret;
+	foreach my $isbn (@{$self->{'_object'}->isbns}) {
+		if ($isbn->type != 13) {
+			next;
+		}
+		push @ret, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'external-id',
 				'datavalue' => Wikibase::Datatype::Value::String->new(
-					'value' => $self->{'_object'}->isbn_13,
+					'value' => $isbn->isbn,
 				),
 				'property' => 'P212',
 			),
-		),
-	);
+		);
+	}
+
+	return @ret;
 }
 
 sub wikidata_labels {

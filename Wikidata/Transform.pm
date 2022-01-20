@@ -3,11 +3,11 @@ package MARC::Convert::Wikidata::Transform;
 use strict;
 use warnings;
 
-use Business::ISBN;
 use Class::Utils qw(set_params);
 use Data::Kramerius;
 use Error::Pure qw(err);
 use MARC::Convert::Wikidata::Object;
+use MARC::Convert::Wikidata::Object::ISBN;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
@@ -117,42 +117,21 @@ sub _edition_number {
 	return $edition_number;
 }
 
-sub _isbn {
+sub _isbns {
 	my $self = shift;
 
-	return $self->_subfield('020', 'a');
-}
-
-sub _isbn_10 {
-	my $self = shift;
-
-	if (! defined $self->_isbn) {
-		return;
+	my @isbns = $self->_subfield('020', 'a');
+	my @ret_isbns;
+	foreach my $isbn (@isbns) {
+		my $isbn_o = MARC::Convert::Wikidata::Object::ISBN->new(
+			'isbn' => $isbn,
+		);
+		if (defined $isbn_o) {
+			push @ret_isbns, $isbn_o;
+		}
 	}
 
-	my $isbn_o = Business::ISBN->new($self->_isbn);
-
-	if ($isbn_o->as_isbn10->as_string eq $self->_isbn) {
-		return $self->_isbn;
-	} else {
-		return;
-	}
-}
-
-sub _isbn_13 {
-	my $self = shift;
-
-	if (! defined $self->_isbn) {
-		return;
-	}
-
-	my $isbn_o = Business::ISBN->new($self->_isbn);
-
-	if ($isbn_o->as_isbn13->as_string eq $self->_isbn) {
-		return $self->_isbn;
-	} else {
-		return;
-	}
+	return (@ret_isbns);
 }
 
 sub _krameriuses {
@@ -208,9 +187,7 @@ sub _process_object {
 		'compilers' => $self->{'_people'}->{'compilers'},
 		'edition_number' => $self->_edition_number,
 		'editors' => $self->{'_people'}->{'editors'},
-		# XXX Why?
-		defined $self->_isbn_10 ? ('isbn_10' => $self->_isbn_10) : (),
-		defined $self->_isbn_13 ? ('isbn_13' => $self->_isbn_13) : (),
+		'isbns' => [$self->_isbns],
 		'illustrators' => $self->{'_people'}->{'illustrators'},
 		'krameriuses' => [$self->_krameriuses],
 		'languages' => [$self->_languages],
