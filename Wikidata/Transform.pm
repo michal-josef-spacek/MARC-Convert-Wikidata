@@ -11,7 +11,7 @@ use MARC::Convert::Wikidata::Object;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
-use MARC::Convert::Wikidata::Utils qw(clean_edition_number clean_number_of_pages clean_title);
+use MARC::Convert::Wikidata::Utils qw(clean_edition_number clean_number_of_pages clean_subtitle clean_title);
 use Readonly;
 use URI;
 use Unicode::UTF8 qw(decode_utf8);
@@ -401,13 +401,7 @@ sub _subtitle {
 	my $self = shift;
 
 	my $subtitle = $self->_subfield('245', 'b');
-
-	# XXX Remove traling characters like 'Subtitle /'.
-	if ($subtitle) {
-		$subtitle =~ s/\s+$//g;
-		$subtitle =~ s/\/$//g;
-		$subtitle =~ s/\s+$//g;
-	}
+	$subtitle = clean_subtitle($subtitle);
 
 	return $subtitle;
 }

@@ -42,7 +42,8 @@ t/MARC-Convert-Wikidata-Utils/01-use.t
 t/MARC-Convert-Wikidata-Utils/02-version.t
 t/MARC-Convert-Wikidata-Utils/03-clean_edition_number.t
 t/MARC-Convert-Wikidata-Utils/04-clean_number_of_pages.t
-t/MARC-Convert-Wikidata-Utils/05-clean_title.t
+t/MARC-Convert-Wikidata-Utils/05-clean_subtitle.t
+t/MARC-Convert-Wikidata-Utils/06-clean_title.t
 t/MARC-Convert-Wikidata/01-use.t
 t/MARC-Convert-Wikidata/02-version.t
 t/MARC-Convert-Wikidata/03-new.t

@@ -8,7 +8,7 @@ use Readonly;
 use Roman;
 use Unicode::UTF8 qw(decode_utf8);
 
-Readonly::Array our @EXPORT_OK => qw(clean_edition_number clean_number_of_pages clean_title);
+Readonly::Array our @EXPORT_OK => qw(clean_edition_number clean_number_of_pages clean_subtitle clean_title);
 
 our $VERSION = 0.01;
 our $DEBUG = 0;
@@ -68,6 +68,22 @@ sub clean_number_of_pages {
 	}
 
 	return $ret_number_of_pages;
+}
+
+sub clean_subtitle {
+	my $subtitle = shift;
+
+	if (! defined $subtitle) {
+		return;
+	}
+
+	my $ret_subtitle = $subtitle;
+	# XXX Remove traling characters like 'Subtitle /'.
+	$ret_subtitle =~ s/\s+$//g;
+	$ret_subtitle =~ s/\/$//g;
+	$ret_subtitle =~ s/\s+$//g;
+
+	return $ret_subtitle;
 }
 
 sub clean_title {
