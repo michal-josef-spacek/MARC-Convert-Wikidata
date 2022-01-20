@@ -11,7 +11,8 @@ use MARC::Convert::Wikidata::Object;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
-use MARC::Convert::Wikidata::Utils qw(clean_edition_number clean_number_of_pages clean_subtitle clean_title);
+use MARC::Convert::Wikidata::Utils qw(clean_oclc clean_edition_number clean_number_of_pages
+	clean_subtitle clean_title);
 use Readonly;
 use URI;
 use Unicode::UTF8 qw(decode_utf8);
@@ -188,7 +189,7 @@ sub _oclc {
 
 	my @oclc = $self->_subfield('035', 'a');
 	foreach my $oclc (@oclc) {
-		$oclc =~ s/^\(OCoLC\)//ms;
+		$oclc = clean_oclc($oclc);
 	}
 	if (@oclc > 1) {
 		err 'Multiple OCLC control number.';

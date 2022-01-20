@@ -8,7 +8,8 @@ use Readonly;
 use Roman;
 use Unicode::UTF8 qw(decode_utf8);
 
-Readonly::Array our @EXPORT_OK => qw(clean_edition_number clean_number_of_pages clean_subtitle clean_title);
+Readonly::Array our @EXPORT_OK => qw(clean_edition_number clean_number_of_pages clean_oclc
+	clean_subtitle clean_title);
 
 our $VERSION = 0.01;
 our $DEBUG = 0;
@@ -68,6 +69,19 @@ sub clean_number_of_pages {
 	}
 
 	return $ret_number_of_pages;
+}
+
+sub clean_oclc {
+	my $oclc = shift;
+
+	if (! defined $oclc) {
+		return;
+	}
+
+	my $ret_oclc = $oclc;
+	$ret_oclc =~ s/^\(OCoLC\)//ms;
+
+	return $ret_oclc;
 }
 
 sub clean_subtitle {
