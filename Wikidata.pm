@@ -477,7 +477,7 @@ sub wikidata_publishers {
 		foreach my $publisher (@{$self->{'_object'}->publishers}) {
 			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher);
 			if ($publisher_qid) {
-				push @publisher_qids, $publisher_qid;
+				push @publisher_qids, [$publisher_qid, $publisher->name];
 			}
 		}
 	}
@@ -487,16 +487,25 @@ sub wikidata_publishers {
 	}
 
 	my @publishers;
-	foreach my $publisher_qid (@publisher_qids) {
+	foreach my $publisher_ar (@publisher_qids) {
 		push @publishers, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'wikibase-item',
 				'datavalue' => Wikibase::Datatype::Value::Item->new(
-					'value' => $publisher_qid,
+					'value' => $publisher_ar->[0],
 				),
 				'property' => 'P123',
 			),
+			'property_snaks' => [
+				Wikibase::Datatype::Snak->new(
+					'datatype' => 'string',
+					'datavalue' => Wikibase::Datatype::Value::String->new(
+					'value' => $publisher_ar->[1],
+					),
+					'property' => 'P1810',
+				),
+			],
 		);
 	}
 

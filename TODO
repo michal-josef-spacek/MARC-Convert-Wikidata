@@ -12,7 +12,6 @@ Wikibase::Cache
 14. Do publisher pridat policko 710
 15. Implement supposition in publication date.
 16. U jednoho cloveka vice roli (com + trl) - cnb000040543
-17. Add "named as" qualifier to publisher
 18.
 
 Applied
@@ -33,3 +32,6 @@ NONE [20220118] skim
 
 12. Add oclc to Transform
 OK [20220119] skim
+
+17. Add "named as" qualifier to publisher
+OK [20220120] skim
