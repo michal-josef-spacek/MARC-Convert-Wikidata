@@ -513,7 +513,7 @@ sub wikidata_publishers {
 				Wikibase::Datatype::Snak->new(
 					'datatype' => 'string',
 					'datavalue' => Wikibase::Datatype::Value::String->new(
-					'value' => $publisher_ar->[1],
+						'value' => $publisher_ar->[1],
 					),
 					'property' => 'P1810',
 				),
