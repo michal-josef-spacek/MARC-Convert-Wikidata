@@ -11,7 +11,7 @@ use MARC::Convert::Wikidata::Object;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
-use MARC::Convert::Wikidata::Utils qw(clean_edition_number clean_number_of_pages);
+use MARC::Convert::Wikidata::Utils qw(clean_edition_number clean_number_of_pages clean_title);
 use Readonly;
 use URI;
 use Unicode::UTF8 qw(decode_utf8);
@@ -416,11 +416,7 @@ sub _title {
 	my $self = shift;
 
 	my $title = $self->_subfield('245', 'a');
-
-	# XXX Remove traling characters like 'Title :', 'Title /'.
-	$title =~ s/\s+$//g;
-	$title =~ s/\s*\/$//g;
-	$title =~ s/\s*\:$//g;
+	$title = clean_title($title);
 
 	return $title;
 }

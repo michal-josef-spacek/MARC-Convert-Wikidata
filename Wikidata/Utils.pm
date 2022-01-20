@@ -8,7 +8,7 @@ use Readonly;
 use Roman;
 use Unicode::UTF8 qw(decode_utf8);
 
-Readonly::Array our @EXPORT_OK => qw(clean_edition_number clean_number_of_pages);
+Readonly::Array our @EXPORT_OK => qw(clean_edition_number clean_number_of_pages clean_title);
 
 our $VERSION = 0.01;
 our $DEBUG = 0;
@@ -68,6 +68,22 @@ sub clean_number_of_pages {
 	}
 
 	return $ret_number_of_pages;
+}
+
+sub clean_title {
+	my $title = shift;
+
+	if (! defined $title) {
+		return;
+	}
+
+	my $ret_title = $title;
+	# XXX Remove traling characters like 'Title :', 'Title /'.
+	$ret_title =~ s/\s+$//g;
+	$ret_title =~ s/\s*\/$//g;
+	$ret_title =~ s/\s*\:$//g;
+
+	return $ret_title;
 }
 
 1;
