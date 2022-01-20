@@ -78,7 +78,6 @@ sub clean_subtitle {
 	}
 
 	my $ret_subtitle = $subtitle;
-	# XXX Remove traling characters like 'Subtitle /'.
 	$ret_subtitle =~ s/\s+$//g;
 	$ret_subtitle =~ s/\/$//g;
 	$ret_subtitle =~ s/\s+$//g;
@@ -94,7 +93,6 @@ sub clean_title {
 	}
 
 	my $ret_title = $title;
-	# XXX Remove traling characters like 'Title :', 'Title /'.
 	$ret_title =~ s/\s+$//g;
 	$ret_title =~ s/\s*\/$//g;
 	$ret_title =~ s/\s*\:$//g;
