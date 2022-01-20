@@ -228,9 +228,15 @@ sub _process_object {
 sub _process_people {
 	my ($self, $field) = @_;
 
-	my $type = $field->subfield('4');
-	my $type_key = $self->_process_people_type($type);
-	if (! defined $type_key) {
+	my @types = $field->subfield('4');
+	my @type_keys;
+	foreach my $type (@types) {
+		my $type_key = $self->_process_people_type($type);
+		if (defined $type_key) {
+			push @type_keys, $type_key;
+		}
+	}
+	if (! @type_keys) {
 		return;
 	}
 
@@ -258,14 +264,16 @@ sub _process_people {
 		}
 	}
 
-	push @{$self->{'_people'}->{$type_key}},
-		MARC::Convert::Wikidata::Object::People->new(
-			'date_of_birth' => $date_of_birth,
-			'date_of_death' => $date_of_death,
-			'name' => $name,
-			'nkcr_aut' => $nkcr_aut,
-			'surname' => $surname,
-		);
+	foreach my $type_key (@type_keys) {
+		push @{$self->{'_people'}->{$type_key}},
+			MARC::Convert::Wikidata::Object::People->new(
+				'date_of_birth' => $date_of_birth,
+				'date_of_death' => $date_of_death,
+				'name' => $name,
+				'nkcr_aut' => $nkcr_aut,
+				'surname' => $surname,
+			);
+	}
 
 	return;
 }
