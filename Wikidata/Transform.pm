@@ -245,6 +245,9 @@ sub _process_people {
 	my $date_of_death;
 	if (defined $dates) {
 		($date_of_birth, $date_of_death) = split m/-/ms, $dates;
+		# XXX common
+		my $march = decode_utf8('březen');
+		$date_of_birth =~ s/^(\d{4})\s*$march\s*(\d+)\.$/$1-03-$2/ms;
 		my $bk = decode_utf8('př. Kr.');
 		$date_of_birth =~ s/^(\d+)\s*$bk/-$1/ms;
 		$date_of_death =~ s/^(\d+)\s*$bk/-$1/ms;
