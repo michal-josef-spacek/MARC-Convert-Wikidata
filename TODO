@@ -2,7 +2,6 @@ TODO
 ====
 2. Navrhnout nejaky system pro dotazovani na QID pro autory, mista, etc.
 Wikibase::Cache
-7. Fix Transform for more ISBNs
 8. Add publisher to ISBN if more than 1.
 9. Mezinarodni desetinne trideni
 10. Jak poznam vicesvazkove dilo? (cnb003059138)
@@ -39,4 +38,7 @@ OK [20220120] skim
 OK [20220120] skim
 
 6. Do Transform pridat knizni edici
+OK [20220121] skim
+
+7. Fix Transform for more ISBNs
 OK [20220121] skim
