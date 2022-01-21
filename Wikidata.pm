@@ -39,6 +39,9 @@ sub new {
 	# Publisher Wikidata lookup callback.
 	$self->{'callback_publisher_name'} = undef;
 
+	# Book series Wikidata lookup callback.
+	$self->{'callback_series'} = undef;
+
 	# Retrieved date.
 	$self->{'date_retrieved'} = undef;
 
@@ -561,6 +564,74 @@ sub wikidata_reference {
 	);
 }
 
+sub wikidata_series {
+	my $self = shift;
+
+	if (! @{$self->{'_object'}->series}) {
+		return;
+	}
+
+	my @series_qids;
+	if (! defined $self->{'callback_series'}) {
+		return;
+	} else {
+		foreach my $series (@{$self->{'_object'}->series}) {
+			my $series_qid = $self->{'callback_series'}->($series);
+			if ($series_qid) {
+				push @series_qids, [
+					$series_qid,
+					$series->name,
+					$series->series_ordinal,
+				];
+			}
+		}
+	}
+
+	if (! @series_qids) {
+		return;
+	}
+
+	my @series;
+	foreach my $series_ar (@series_qids) {
+		push @series, Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'wikibase-item',
+				'datavalue' => Wikibase::Datatype::Value::Item->new(
+					'value' => $series_ar->[0],
+				),
+				'property' => 'P179',
+			),
+			'property_snaks' => [
+
+				# Publisher
+				$series_ar->[1] ? (
+					Wikibase::Datatype::Snak->new(
+						'datatype' => 'string',
+						'datavalue' => Wikibase::Datatype::Value::String->new(
+							'value' => $series_ar->[1],
+						),
+						'property' => 'P123',
+					),
+				) : (),
+
+				# Series ordinal.
+				$series_ar->[2] ? (
+					Wikibase::Datatype::Snak->new(
+						'datatype' => 'string',
+						'datavalue' => Wikibase::Datatype::Value::String->new(
+							'value' => $series_ar->[2],
+						),
+						'property' => 'P1545',
+					),
+				) : (),
+			],
+		);
+	}
+
+	return @series;
+}
+
 sub wikidata_subtitle {
 	my $self = shift;
 
@@ -645,6 +716,7 @@ sub wikidata {
 			$self->wikidata_place_of_publication,
 			$self->wikidata_publication_date,
 			$self->wikidata_publishers,
+			$self->wikidata_series,
 			$self->wikidata_subtitle,
 			$self->wikidata_title,
 			$self->wikidata_translators,

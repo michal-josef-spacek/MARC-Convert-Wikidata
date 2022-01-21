@@ -25,6 +25,7 @@ t/data/cnb000573607.mrc
 t/data/cnb000576456.mrc
 t/data/cnb000750997.mrc
 t/data/cnb000754547.mrc
+t/data/cnb001657758.mrc
 t/data/cnb002181872.mrc
 t/data/cnb002467522.mrc
 t/data/cnb002536669.mrc
@@ -44,8 +45,10 @@ t/MARC-Convert-Wikidata-Utils/03-clean_date.t
 t/MARC-Convert-Wikidata-Utils/04-clean_edition_number.t
 t/MARC-Convert-Wikidata-Utils/05-clean_number_of_pages.t
 t/MARC-Convert-Wikidata-Utils/06-clean_oclc.t
-t/MARC-Convert-Wikidata-Utils/07-clean_subtitle.t
-t/MARC-Convert-Wikidata-Utils/08-clean_title.t
+t/MARC-Convert-Wikidata-Utils/07-clean_series_name.t
+t/MARC-Convert-Wikidata-Utils/08-clean_series_ordinal.t
+t/MARC-Convert-Wikidata-Utils/09-clean_subtitle.t
+t/MARC-Convert-Wikidata-Utils/10-clean_title.t
 t/MARC-Convert-Wikidata/01-use.t
 t/MARC-Convert-Wikidata/02-version.t
 t/MARC-Convert-Wikidata/03-new.t

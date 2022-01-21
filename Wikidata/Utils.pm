@@ -9,7 +9,7 @@ use Roman;
 use Unicode::UTF8 qw(decode_utf8);
 
 Readonly::Array our @EXPORT_OK => qw(clean_date clean_edition_number clean_number_of_pages
-	clean_oclc clean_subtitle clean_title);
+	clean_oclc clean_series_name clean_series_ordinal clean_subtitle clean_title);
 
 our $VERSION = 0.01;
 our $DEBUG = 0;
@@ -118,6 +118,35 @@ sub clean_oclc {
 	$ret_oclc =~ s/^\(OCoLC\)//ms;
 
 	return $ret_oclc;
+}
+
+sub clean_series_name {
+	my $series_name = shift;
+
+	if (! defined $series_name) {
+		return;
+	}
+
+	my $ret_series_name = $series_name;
+	$ret_series_name =~ s/\s+$//g;
+	$ret_series_name =~ s/;$//g;
+	$ret_series_name =~ s/\s+$//g;
+
+	return $ret_series_name;
+}
+
+sub clean_series_ordinal {
+	my $series_ordinal = shift;
+
+	if (! defined $series_ordinal) {
+		return;
+	}
+
+	my $ret_series_ordinal = $series_ordinal;
+	$ret_series_ordinal =~ s/\s+$//g;
+	$ret_series_ordinal =~ s/sv\.\s*(\d+)$/$1/g;
+
+	return $ret_series_ordinal;
 }
 
 sub clean_subtitle {

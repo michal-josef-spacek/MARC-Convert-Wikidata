@@ -11,8 +11,9 @@ use MARC::Convert::Wikidata::Object::ISBN;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
+use MARC::Convert::Wikidata::Object::Series;
 use MARC::Convert::Wikidata::Utils qw(clean_date clean_edition_number clean_number_of_pages
-	clean_oclc clean_subtitle clean_title);
+	clean_oclc clean_series_name clean_series_ordinal clean_subtitle clean_title);
 use Readonly;
 use URI;
 use Unicode::UTF8 qw(decode_utf8);
@@ -195,6 +196,7 @@ sub _process_object {
 		'oclc' => $self->_oclc,
 		'publication_date' => scalar $self->_publication_date,
 		'publishers' => [$self->_publishers],
+		'series' => [$self->_series],
 		'subtitle' => $self->_subtitle,
 		'title' => $self->_title,
 		'translators' => $self->{'_people'}->{'translators'},
@@ -352,6 +354,26 @@ sub _publishers {
 	push @publishers, $self->_process_publisher_field('264');
 
 	return @publishers;
+}
+
+sub _series {
+	my $self = shift;
+
+	my @series_490 = $self->{'marc_record'}->field('490');
+	my @series;
+	foreach my $series_490 (@series_490) {
+		my $series_name = $series_490->subfield('a');
+		$series_name = clean_series_name($series_name);
+		my $series_ordinal = $series_490->subfield('v');
+		$series_ordinal = clean_series_ordinal($series_ordinal);
+		push @series, MARC::Convert::Wikidata::Object::Series->new(
+			'name' => $series_name,
+			# TODO publisher
+			'series_ordinal' => $series_ordinal,
+		);
+	}
+
+	return @series;
 }
 
 sub _subfield {
