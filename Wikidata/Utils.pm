@@ -145,6 +145,18 @@ sub clean_series_ordinal {
 	my $ret_series_ordinal = $series_ordinal;
 	$ret_series_ordinal =~ s/\s+$//g;
 	$ret_series_ordinal =~ s/sv\.\s*(\d+)$/$1/g;
+	my $c = decode_utf8('č');
+	$ret_series_ordinal =~ s/^$c\.\s*//ms;
+	if ($ret_series_ordinal =~ m/^(\d+)-(\d+)$/ms) {
+		my $first = $1;
+		my $second = $2;
+		if ($second < $first) {
+			my $first_len = length $first;
+			my $second_len = length $second;
+			my $first_addition = substr $first, 0, ($first_len - $second_len);
+			$ret_series_ordinal = $first.'-'.$first_addition.$second;
+		}
+	}
 
 	return $ret_series_ordinal;
 }

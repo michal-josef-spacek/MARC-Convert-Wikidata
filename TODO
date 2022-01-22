@@ -11,7 +11,6 @@ Je tam vice ccnb, jedno pro dilo, dalsi pro jednotlive svazky
 13. Add hardback, paperback to isbn
 14. Do publisher pridat policko 710
 15. Implement supposition in publication date.
-18. Series ordinal resit - cnb000641953.mrc
 19.
 
 Applied
@@ -44,3 +43,6 @@ OK [20220121] skim
 
 7. Fix Transform for more ISBNs
 OK [20220121] skim
+
+18. Series ordinal resit - cnb000641953.mrc
+OK [20220122] skim
