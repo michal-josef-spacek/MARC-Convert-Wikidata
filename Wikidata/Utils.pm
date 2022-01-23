@@ -60,8 +60,8 @@ sub clean_edition_number {
 	my $ret_edition_number = $edition_number;
 	$ret_edition_number =~ s/^Vyd. (\d+)./$1/ms;
 	$ret_edition_number =~ s/\s+$//ms;
-	$ret_edition_number =~ s/^První/1/ms;
-	$ret_edition_number =~ s/^Druhé/2/ms;
+	$ret_edition_number =~ s/^První.*$/1/ms;
+	$ret_edition_number =~ s/^Druhé.*$/2/ms;
 	$ret_edition_number =~ s/\s*vyd\.$//ms;
 	$ret_edition_number =~ s/\s*vydání$//ms;
 	$ret_edition_number =~ s/\s*opr\. a rozmn\.$//ms;
