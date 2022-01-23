@@ -60,10 +60,13 @@ sub clean_edition_number {
 	my $ret_edition_number = $edition_number;
 	$ret_edition_number =~ s/^Vyd. (\d+)./$1/ms;
 	$ret_edition_number =~ s/\s+$//ms;
-	$ret_edition_number =~ s/^První.*$/1/ms;
-	$ret_edition_number =~ s/^Druhé.*$/2/ms;
+	my $re = decode_utf8('První');
+	$ret_edition_number =~ s/^$re.*$/1/ms;
+	$re = decode_utf8('Druhé');
+	$ret_edition_number =~ s/^$re.*$/2/ms;
 	$ret_edition_number =~ s/\s*vyd\.$//ms;
-	$ret_edition_number =~ s/\s*vydání$//ms;
+	$re = decode_utf8('vydání');
+	$ret_edition_number =~ s/\s*$re$//ms;
 	$ret_edition_number =~ s/\s*opr\. a rozmn\.$//ms;
 	$ret_edition_number =~ s/\s*\.$//ms;
 	if (isroman($ret_edition_number)) {
