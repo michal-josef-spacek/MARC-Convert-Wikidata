@@ -152,6 +152,8 @@ sub clean_series_ordinal {
 	$ret_series_ordinal =~ s/Sv\.\s*(\d+)$/$1/g;
 	my $c = decode_utf8('č');
 	$ret_series_ordinal =~ s/^$c\.\s*//ms;
+	$c = decode_utf8('číslo');
+	$ret_series_ordinal =~ s/^$c\s*//ms;
 	if ($ret_series_ordinal =~ m/^(\d+)-(\d+)$/ms) {
 		my $first = $1;
 		my $second = $2;
