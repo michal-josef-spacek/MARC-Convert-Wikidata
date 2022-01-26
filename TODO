@@ -6,8 +6,6 @@ Wikibase::Cache
 9. Mezinarodni desetinne trideni
 10. Jak poznam vicesvazkove dilo? (cnb003059138)
 Je tam vice ccnb, jedno pro dilo, dalsi pro jednotlive svazky
-11. Move cleanup things from Transform to Utils.
-- publication_date
 13. Add hardback, paperback to isbn
 use cover()
 14. Do publisher pridat policko 710
@@ -47,3 +45,7 @@ OK [20220121] skim
 
 18. Series ordinal resit - cnb000641953.mrc
 OK [20220122] skim
+
+11. Move cleanup things from Transform to Utils.
+- publication_date
+OK [20220126] skim
