@@ -9,6 +9,7 @@ Je tam vice ccnb, jedno pro dilo, dalsi pro jednotlive svazky
 11. Move cleanup things from Transform to Utils.
 - publication_date
 13. Add hardback, paperback to isbn
+use cover()
 14. Do publisher pridat policko 710
 15. Implement supposition in publication date.
 19.
