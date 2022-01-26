@@ -8,11 +8,41 @@ use Readonly;
 use Roman;
 use Unicode::UTF8 qw(decode_utf8);
 
-Readonly::Array our @EXPORT_OK => qw(clean_date clean_edition_number clean_number_of_pages
-	clean_oclc clean_series_name clean_series_ordinal clean_subtitle clean_title);
+Readonly::Array our @EXPORT_OK => qw(clean_cover clean_date clean_edition_number
+	clean_number_of_pages clean_oclc clean_series_name clean_series_ordinal
+	clean_subtitle clean_title);
 
 our $VERSION = 0.01;
 our $DEBUG = 0;
+
+sub clean_cover {
+	my $cover = shift;
+
+	if (! defined $cover) {
+		return;
+	}
+
+	my $ret_cover = $cover;
+	$ret_cover =~ s/\s*:\s*$//ms;
+	my $c = decode_utf8('Váz');
+	$ret_cover =~ s/^\(($c).\)$/hardback/ms;
+	$c = decode_utf8('Vázáno');
+	$ret_cover =~ s/^\(($c)\)$/hardback/ms;
+	$c = decode_utf8('vázáno');
+	$ret_cover =~ s/^($c)\)$/hardback/ms;
+	$c = decode_utf8('váz');
+	$ret_cover =~ s/^\(($c).\)$/hardback/ms;
+	$c = decode_utf8('Brož');
+	$ret_cover =~ s/^\(($c).\)$/paperback/ms;
+	$c = decode_utf8('brož');
+	$ret_cover =~ s/^\(($c).\)$/paperback/ms;
+	$c = decode_utf8('Brožováno');
+	$ret_cover =~ s/^\(($c)\)$/paperback/ms;
+	$c = decode_utf8('brožováno');
+	$ret_cover =~ s/^($c)\)$/paperback/ms;
+
+	return $ret_cover;
+}
 
 sub clean_date {
 	my $date = shift;

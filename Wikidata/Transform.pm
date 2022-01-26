@@ -12,8 +12,9 @@ use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
 use MARC::Convert::Wikidata::Object::Series;
-use MARC::Convert::Wikidata::Utils qw(clean_date clean_edition_number clean_number_of_pages
-	clean_oclc clean_series_name clean_series_ordinal clean_subtitle clean_title);
+use MARC::Convert::Wikidata::Utils qw(clean_cover clean_date clean_edition_number
+	clean_number_of_pages clean_oclc clean_series_name clean_series_ordinal
+	clean_subtitle clean_title);
 use Readonly;
 use URI;
 use Unicode::UTF8 qw(decode_utf8);
@@ -109,6 +110,15 @@ sub _construct_kramerius {
 	return;
 }
 
+sub _cover {
+	my $self = shift;
+
+	my $cover = $self->_subfield('020', 'q');
+	$cover = clean_cover($cover);
+
+	return $cover;
+}
+
 sub _edition_number {
 	my $self = shift;
 
@@ -186,6 +196,7 @@ sub _process_object {
 		'authors_of_introduction' => $self->{'_people'}->{'authors_of_introduction'},
 		'ccnb' => $self->_ccnb,
 		'compilers' => $self->{'_people'}->{'compilers'},
+		'cover' => $self->_cover,
 		'edition_number' => $self->_edition_number,
 		'editors' => $self->{'_people'}->{'editors'},
 		'isbns' => [$self->_isbns],
