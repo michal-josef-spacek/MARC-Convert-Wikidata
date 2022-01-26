@@ -13,8 +13,8 @@ use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
 use MARC::Convert::Wikidata::Object::Series;
 use MARC::Convert::Wikidata::Utils qw(clean_cover clean_date clean_edition_number
-	clean_number_of_pages clean_oclc clean_series_name clean_series_ordinal
-	clean_subtitle clean_title);
+	clean_number_of_pages clean_oclc clean_publisher_name clean_series_name
+	clean_series_ordinal clean_subtitle clean_title);
 use Readonly;
 use URI;
 use Unicode::UTF8 qw(decode_utf8);
@@ -310,11 +310,7 @@ sub _process_publisher_field {
 	my @publisher_names = $field->subfield('b');
 	my @publishers;
 	for (my $i = 0; $i < @publisher_names; $i++) {
-		my $publisher_name = $publisher_names[$i];
-		$publisher_name =~ s/\s+$//g;
-		$publisher_name =~ s/\s*,$//g;
-		$publisher_name =~ s/\s*:$//g;
-		$publisher_name =~ s/\s*;$//g;
+		my $publisher_name = clean_publisher_name($publisher_names[$i]);
 
 		my @places = $field->subfield('a');
 		my $place;
