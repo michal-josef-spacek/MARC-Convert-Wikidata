@@ -13,8 +13,9 @@ use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
 use MARC::Convert::Wikidata::Object::Series;
 use MARC::Convert::Wikidata::Utils qw(clean_cover clean_date clean_edition_number
-	clean_number_of_pages clean_oclc clean_publisher_name clean_series_name
-	clean_series_ordinal clean_subtitle clean_title);
+	clean_number_of_pages clean_oclc clean_publisher_name
+	clean_publisher_place clean_series_name clean_series_ordinal clean_subtitle
+	clean_title);
 use Readonly;
 use URI;
 use Unicode::UTF8 qw(decode_utf8);
@@ -319,13 +320,7 @@ sub _process_publisher_field {
 		} else {
 			$place = $places[0];
 		}
-		$place =~ s/\s+$//g;
-		$place =~ s/\s*:$//g;
-		$place =~ s/^V Praze$/Praha/ms;
-		my $brno = decode_utf8('V Brně');
-		$place =~ s/^$brno$/Brno/ms;
-		# [Praha]
-		$place =~ s/^\[(.*?)\]$/$1/ms;
+		$place = clean_publisher_place($place);
 
 		push @publishers, MARC::Convert::Wikidata::Object::Publisher->new(
 			'name' => $publisher_name,

@@ -9,8 +9,9 @@ use Roman;
 use Unicode::UTF8 qw(decode_utf8);
 
 Readonly::Array our @EXPORT_OK => qw(clean_cover clean_date clean_edition_number
-	clean_number_of_pages clean_oclc clean_publisher_name clean_series_name
-	clean_series_ordinal clean_subtitle clean_title);
+	clean_number_of_pages clean_oclc clean_publisher_name
+	clean_publisher_place clean_series_name clean_series_ordinal clean_subtitle
+	clean_title);
 
 our $VERSION = 0.01;
 our $DEBUG = 0;
@@ -167,6 +168,25 @@ sub clean_publisher_name {
 	$ret_publisher_name =~ s/\s*;$//g;
 
 	return $ret_publisher_name;
+}
+
+sub clean_publisher_place {
+	my $publisher_place = shift;
+
+	if (! defined $publisher_place) {
+		return;
+	}
+
+	my $ret_publisher_place = $publisher_place;
+	$ret_publisher_place =~ s/\s+$//g;
+	$ret_publisher_place =~ s/\s*:$//g;
+	$ret_publisher_place =~ s/^V Praze$/Praha/ms;
+	my $brno = decode_utf8('V Brně');
+	$ret_publisher_place =~ s/^$brno$/Brno/ms;
+	# [Praha]
+	$ret_publisher_place =~ s/^\[(.*?)\]$/$1/ms;
+
+	return $ret_publisher_place;
 }
 
 sub clean_series_name {
