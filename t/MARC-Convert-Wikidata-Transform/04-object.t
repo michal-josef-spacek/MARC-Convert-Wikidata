@@ -5,9 +5,9 @@ use File::Object;
 use MARC::Convert::Wikidata::Transform;
 use MARC::Record;
 use Perl6::Slurp qw(slurp);
-use Test::More 'tests' => 47;
+use Test::More 'tests' => 67;
 use Test::NoWarnings;
-use Unicode::UTF8 qw(decode_utf8);
+use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
 # Data directory.
 my $data = File::Object->new->up->dir('data');
@@ -84,3 +84,32 @@ is_deeply($ret->translators, [], 'Krakatit: Get translators.');
 # TODO book series
 # TODO book series series ordinal
 # TODO Kramerius link
+
+# Test.
+$marc_data = slurp($data->file('cnb000576456.mrc')->s);
+$obj = MARC::Convert::Wikidata::Transform->new(
+	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
+);
+$ret = $obj->object;
+$author = $ret->authors->[0];
+is($author->name, 'Jan', 'Broučci: Get author name.');
+is($author->surname, decode_utf8('Karafiát'), 'Broučci: Get author surname.');
+is($author->date_of_birth, 1846, 'Broučci: Get author date of birth.');
+is($author->date_of_death, 1929, 'Broučci: Get author date of death.');
+is($author->nkcr_aut, 'jk01052941', 'Broučci: Get author NKČR AUT id.');
+is($ret->ccnb, 'cnb000576456', 'Broučci: Get ČČNB number.');
+is($ret->edition_number, 2, 'Broučci: Get edition number.');
+is_deeply($ret->editors, [], 'Broučci: Get editors.');
+is_deeply($ret->illustrators, [], 'Broučci: Get illustrators.');
+is_deeply($ret->isbns, [], 'Broučci: Get ISBN-10.');
+is_deeply($ret->krameriuses, [], 'Broučci: Get Kramerius objects.');
+is_deeply($ret->languages, ['cze'], 'Broučci: Get language.');
+is($ret->number_of_pages, 85, 'Broučci: Get number of pages.');
+is($ret->oclc, undef, 'Broučci: Get OCLC number.');
+# TODO + ?
+is($ret->publication_date, 1919, 'Broučci: Get publication date.');
+is($ret->publishers->[0]->name, 'Alois Hynek', 'Broučci: Get publisher.');
+is($ret->publishers->[0]->place, 'Praha', 'Broučci: Get publisher place.');
+is($ret->subtitle, decode_utf8('pro malé i veliké děti'), 'Broučci: Get subtitle.');
+is($ret->title, decode_utf8('Broučci'), 'Broučci: Get title.');
+is_deeply($ret->translators, [], 'Broučci: Get translators.');
