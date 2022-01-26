@@ -122,6 +122,7 @@ sub clean_number_of_pages {
 	}
 
 	my $ret_number_of_pages = $number_of_pages;
+	$ret_number_of_pages =~ s/^(\d+)\s*s\..*$/$1/ms;
 	$ret_number_of_pages =~ s/\s+$//g;
 	$ret_number_of_pages =~ s/\s*:$//g;
 	$ret_number_of_pages =~ s/\s*;$//g;
