@@ -10,7 +10,9 @@ Je tam vice ccnb, jedno pro dilo, dalsi pro jednotlive svazky
 use cover()
 14. Do publisher pridat policko 710
 15. Implement supposition in publication date.
-19.
+19. If author not present, add P2093 with role
+20. Named as to author: see cnb000754299
+21.
 
 Applied
 =======
