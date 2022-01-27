@@ -271,7 +271,6 @@ sub clean_title {
 sub _remove_trailing_whitespace {
 	my $string = shift;
 
-	# Trailing whitespace on begin and end
 	$string =~ s/^\s+//g;
 	$string =~ s/\s+$//g;
 
