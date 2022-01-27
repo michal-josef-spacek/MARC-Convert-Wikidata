@@ -166,8 +166,7 @@ sub clean_publisher_name {
 	$ret_publisher_name =~ s/\s*;$//g;
 
 	# Remove [] on begin and end.
-	$ret_publisher_name =~ s/^\[\s*(.*?)\s*\]$/$1/ms;
-	$ret_publisher_name =~ s/^\[\s*([^\]]+)$/$1/ms;
+	$ret_publisher_name = _remove_square_brackets($ret_publisher_name);
 
 	return $ret_publisher_name;
 }
@@ -275,6 +274,15 @@ sub _remove_trailing_whitespace {
 	# Trailing whitespace on begin and end
 	$string =~ s/^\s+//g;
 	$string =~ s/\s+$//g;
+
+	return $string;
+}
+
+sub _remove_square_brackets {
+	my $string = shift;
+
+	$string =~ s/^\[\s*(.*?)\s*\]$/$1/ms;
+	$string =~ s/^\[\s*([^\]]+)$/$1/ms;
 
 	return $string;
 }
