@@ -201,7 +201,8 @@ sub clean_series_name {
 
 	my $ret_series_name = $series_name;
 	$ret_series_name =~ s/\s+$//g;
-	$ret_series_name =~ s/;$//g;
+	$ret_series_name =~ s/\s*;$//g;
+	$ret_series_name =~ s/\s*:$//g;
 	$ret_series_name =~ s/\s+$//g;
 
 	return $ret_series_name;
