@@ -156,11 +156,13 @@ sub clean_publisher_name {
 	}
 
 	my $ret_publisher_name = $publisher_name;
+	$ret_publisher_name =~ s/^\s+//g;
 	$ret_publisher_name =~ s/\s+$//g;
 	$ret_publisher_name =~ s/\s*,$//g;
 	$ret_publisher_name =~ s/\s*:$//g;
 	$ret_publisher_name =~ s/\s*;$//g;
-	$ret_publisher_name =~ s/^\s*\[\s*(.*?)\s*\]?\s*$/$1/ms;
+	$ret_publisher_name =~ s/^\[\s*(.*?)\s*\]$/$1/ms;
+	$ret_publisher_name =~ s/^\[\s*([^\]]+)$/$1/ms;
 
 	return $ret_publisher_name;
 }
