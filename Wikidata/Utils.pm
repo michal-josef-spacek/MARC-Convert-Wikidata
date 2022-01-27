@@ -156,11 +156,17 @@ sub clean_publisher_name {
 	}
 
 	my $ret_publisher_name = $publisher_name;
+
+	# Trailing whitespace on begin and end
 	$ret_publisher_name =~ s/^\s+//g;
 	$ret_publisher_name =~ s/\s+$//g;
+
+	# Separators on the end.
 	$ret_publisher_name =~ s/\s*,$//g;
 	$ret_publisher_name =~ s/\s*:$//g;
 	$ret_publisher_name =~ s/\s*;$//g;
+
+	# Remove [] on begin and end.
 	$ret_publisher_name =~ s/^\[\s*(.*?)\s*\]$/$1/ms;
 	$ret_publisher_name =~ s/^\[\s*([^\]]+)$/$1/ms;
 
