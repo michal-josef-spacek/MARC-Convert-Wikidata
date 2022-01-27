@@ -205,6 +205,9 @@ sub clean_series_name {
 	$ret_series_name =~ s/\s*;$//g;
 	$ret_series_name =~ s/\s*:$//g;
 
+	# Remove [] on begin and end.
+	$ret_series_name = _remove_square_brackets($ret_series_name);
+
 	return $ret_series_name;
 }
 

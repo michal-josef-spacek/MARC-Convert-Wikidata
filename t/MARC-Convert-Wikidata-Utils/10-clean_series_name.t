@@ -15,5 +15,5 @@ is($ret, decode_utf8('Lidové umění slovesné. Řada A'),
 # Test.
 $input_series_name = decode_utf8('[Hospodářská knihovna] :');
 $ret = clean_series_name($input_series_name);
-is($ret, decode_utf8('[Hospodářská knihovna]'),
+is($ret, decode_utf8('Hospodářská knihovna'),
 	encode_utf8("Series name '$input_series_name' after cleanup."));
