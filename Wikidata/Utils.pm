@@ -158,8 +158,7 @@ sub clean_publisher_name {
 	my $ret_publisher_name = $publisher_name;
 
 	# Trailing whitespace on begin and end
-	$ret_publisher_name =~ s/^\s+//g;
-	$ret_publisher_name =~ s/\s+$//g;
+	$ret_publisher_name = _remove_trailing_whitespace($ret_publisher_name);
 
 	# Separators on the end.
 	$ret_publisher_name =~ s/\s*,$//g;
@@ -200,10 +199,12 @@ sub clean_series_name {
 	}
 
 	my $ret_series_name = $series_name;
-	$ret_series_name =~ s/\s+$//g;
+
+	# Trailing whitespace on begin and end
+	$ret_series_name = _remove_trailing_whitespace($ret_series_name);
+
 	$ret_series_name =~ s/\s*;$//g;
 	$ret_series_name =~ s/\s*:$//g;
-	$ret_series_name =~ s/\s+$//g;
 
 	return $ret_series_name;
 }
@@ -266,6 +267,16 @@ sub clean_title {
 	$ret_title =~ s/\s*\:$//g;
 
 	return $ret_title;
+}
+
+sub _remove_trailing_whitespace {
+	my $string = shift;
+
+	# Trailing whitespace on begin and end
+	$string =~ s/^\s+//g;
+	$string =~ s/\s+$//g;
+
+	return $string;
 }
 
 1;
