@@ -120,7 +120,7 @@ sub _cover {
 		$cover = clean_cover($cover);
 
 		if ($cover ne 'hardback' && $cover ne 'paperback') {
-			warn "Book cover '$cover' doesn't exist.";
+			warn "Book cover '$cover' doesn't exist.\n";
 		} else {
 			push @ret_cover, $cover;
 		}
