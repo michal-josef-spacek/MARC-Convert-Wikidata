@@ -13,7 +13,8 @@ use cover()
 19. If author not present, add P2093 with role
 20. Named as to author: see cnb000754299
 21. How detect periodical vs book edition?
-22.
+22. How to do changes between real Wikidata item and prepared object from MARC?
+23.
 
 Applied
 =======
