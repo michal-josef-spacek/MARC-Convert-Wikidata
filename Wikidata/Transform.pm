@@ -18,7 +18,7 @@ use MARC::Convert::Wikidata::Utils qw(clean_cover clean_date clean_edition_numbe
 	clean_title);
 use Readonly;
 use URI;
-use Unicode::UTF8 qw(decode_utf8);
+use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
 Readonly::Hash our %PEOPLE_TYPE => {
 	'aui' => 'authors_of_introduction',
@@ -120,7 +120,7 @@ sub _cover {
 		$cover = clean_cover($cover);
 
 		if ($cover ne 'hardback' && $cover ne 'paperback') {
-			warn "Book cover '$cover' doesn't exist.\n";
+			warn encode_utf8("Book cover '$cover' doesn't exist.\n");
 		} else {
 			push @ret_cover, $cover;
 		}
