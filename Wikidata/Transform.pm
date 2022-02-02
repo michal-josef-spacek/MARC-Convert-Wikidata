@@ -290,14 +290,11 @@ sub _process_people_type {
 		$type = 'aut';
 	}
 
-	if ($type eq 'art' || $type eq 'pht') {
-		return;
-	}
-
 	if (exists $PEOPLE_TYPE{$type}) {
 		return $PEOPLE_TYPE{$type};
 	} else {
-		err "People type '$type' doesn't exist.";
+		warn "People type '$type' doesn't exist.\n";
+		return;
 	}
 }
 
