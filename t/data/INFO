@@ -1,5 +1,6 @@
 INFO
 ====
+
 cnb000036403.mrc - Edition number (250 field).
 cnb000040543.mrc - Multiple people roles (700 field).
 cnb000087983.mrc - Translator (700 field).
@@ -16,6 +17,7 @@ cnb002181872.mrc - Editor (100 field).
 cnb002467522.mrc - Publisher (264 field). Illustrator (700 field).
 cnb002536669.mrc - Two publishers, two places (264 field). Two ISBNs (020 field). Book series.
 cnb002896853.mrc - Different ČČNB (015 field, z subfield)
+cnb002964680.mrc - Two ISBNs. Book series.
 cnb002981333.mrc - Has OCoLC (035 field).
 cnb003059138.mrc - Has 2x OCoLC (035 field).
 cnb003238343.mrc - Date of birth before Krist (100 field).
