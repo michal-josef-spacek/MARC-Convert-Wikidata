@@ -1,6 +1,5 @@
 INFO
 ====
-
 cnb000036403.mrc - Edition number (250 field).
 cnb000040543.mrc - Multiple people roles (700 field).
 cnb000087983.mrc - Translator (700 field).
@@ -12,6 +11,7 @@ cnb000576456.mrc
 cnb000641953.mrc - Special format of series ordinal (490 field).
 cnb000750997.mrc
 cnb000754547.mrc
+cnb001002340.mrc - Bad ISBN.
 cnb001657758.mrc - Two series (490 field).
 cnb002181872.mrc - Editor (100 field).
 cnb002467522.mrc - Publisher (264 field). Illustrator (700 field).
