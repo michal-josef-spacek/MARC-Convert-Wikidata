@@ -15,7 +15,8 @@ use cover()
 21. How detect periodical vs book edition?
 22. How to do changes between real Wikidata item and prepared object from MARC?
 23. Implement bad ISBN (cnb001002340)
-24.
+24. Look to cnb002964680, if everything is ok.
+25.
 
 Applied
 =======
