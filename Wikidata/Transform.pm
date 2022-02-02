@@ -286,7 +286,7 @@ sub _process_people_type {
 	my ($self, $type) = @_;
 
 	if (! defined $type || $type eq '') {
-		warn "People type set to 'aut'.";
+		warn "People type set to 'aut'.\n";
 		$type = 'aut';
 	}
 

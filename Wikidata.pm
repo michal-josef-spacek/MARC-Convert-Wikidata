@@ -260,7 +260,7 @@ sub wikidata_language {
 	}
 
 	if (! defined $self->{'callback_lang'}) {
-		warn "No callback method for translation of language.";
+		warn "No callback method for translation of language.\n";
 		return;
 	}
 
@@ -377,7 +377,7 @@ sub wikidata_people {
 	}
 
 	if (! defined $self->{'callback_people'}) {
-		warn "No callback method for translation of people in '$people_method' method.";
+		warn "No callback method for translation of people in '$people_method' method.\n";
 		return;
 	}
 
