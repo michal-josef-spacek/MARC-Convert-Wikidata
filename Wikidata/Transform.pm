@@ -114,10 +114,25 @@ sub _construct_kramerius {
 sub _cover {
 	my $self = shift;
 
-	my $cover = $self->_subfield('020', 'q');
-	$cover = clean_cover($cover);
+	my @cover = $self->_subfield('020', 'q');
+	my @ret_cover;
+	foreach my $cover (@cover) {
+		$cover = clean_cover($cover);
 
-	return $cover;
+		if ($cover ne 'hardback' && $cover ne 'paperback') {
+			warn "Book cover '$cover' doesn't exist.";
+		} else {
+			push @ret_cover, $cover;
+		}
+	}
+
+	if (@ret_cover > 1) {
+		err 'Multiple book covers.',
+			'List', (join ',', @ret_cover),
+		;
+	}
+
+	return $ret_cover[0];
 }
 
 sub _edition_number {
