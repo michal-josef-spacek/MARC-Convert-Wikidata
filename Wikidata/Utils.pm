@@ -222,6 +222,7 @@ sub clean_series_ordinal {
 	$ret_series_ordinal =~ s/\s+$//g;
 	$ret_series_ordinal =~ s/sv\.\s*(\d+)$/$1/g;
 	$ret_series_ordinal =~ s/svazek\s*(\d+)$/$1/g;
+	$ret_series_ordinal =~ s/^\s*(\d+)\.?\s*svazek/$1/g;
 	$ret_series_ordinal =~ s/Sv\.\s*(\d+)$/$1/g;
 	my $c = decode_utf8('č');
 	$ret_series_ordinal =~ s/^$c\.\s*//ms;
