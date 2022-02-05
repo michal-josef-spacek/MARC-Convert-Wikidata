@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_cover);
-use Test::More 'tests' => 8;
+use Test::More 'tests' => 9;
 use Test::NoWarnings;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
@@ -13,6 +13,11 @@ is($ret, 'paperback', encode_utf8("Date '$input_cover' after cleanup."));
 
 # Test.
 $input_cover = decode_utf8('(brož.) :');
+$ret = clean_cover($input_cover);
+is($ret, 'paperback', encode_utf8("Date '$input_cover' after cleanup."));
+
+# Test.
+$input_cover = decode_utf8('brož.)');
 $ret = clean_cover($input_cover);
 is($ret, 'paperback', encode_utf8("Date '$input_cover' after cleanup."));
 

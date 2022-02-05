@@ -34,9 +34,9 @@ sub clean_cover {
 	$c = decode_utf8('váz');
 	$ret_cover =~ s/^\(($c).\)$/hardback/ms;
 	$c = decode_utf8('Brož');
-	$ret_cover =~ s/^\(($c).\)$/paperback/ms;
+	$ret_cover =~ s/^\(?($c).\)$/paperback/ms;
 	$c = decode_utf8('brož');
-	$ret_cover =~ s/^\(($c).\)$/paperback/ms;
+	$ret_cover =~ s/^\(?($c).\)$/paperback/ms;
 	$c = decode_utf8('Brožováno');
 	$ret_cover =~ s/^\(($c)\)$/paperback/ms;
 	$c = decode_utf8('brožováno');
