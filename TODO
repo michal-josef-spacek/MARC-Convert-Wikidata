@@ -2,7 +2,6 @@ TODO
 ====
 2. Navrhnout nejaky system pro dotazovani na QID pro autory, mista, etc.
 Wikibase::Cache
-8. Add publisher to ISBN if more than 1.
 9. Mezinarodni desetinne trideni
 10. Jak poznam vicesvazkove dilo? (cnb003059138)
 Je tam vice ccnb, jedno pro dilo, dalsi pro jednotlive svazky
@@ -61,3 +60,6 @@ OK [20220122] skim
 11. Move cleanup things from Transform to Utils.
 - publication_date
 OK [20220126] skim
+
+8. Add publisher to ISBN if more than 1.
+OK [20220205] skim

@@ -147,11 +147,21 @@ sub _edition_number {
 sub _isbns {
 	my $self = shift;
 
-	my @isbns = $self->_subfield('020', 'a');
+	my @isbn_fields = $self->{'marc_record'}->field('020');
 	my @ret_isbns;
-	foreach my $isbn (@isbns) {
+	foreach my $isbn_field (@isbn_fields) {
+		my $isbn = $isbn_field->subfield('a');
+		if (! defined $isbn) {
+			next;
+		}
+		my $publisher = $isbn_field->subfield('q');
 		my $isbn_o = MARC::Convert::Wikidata::Object::ISBN->new(
 			'isbn' => $isbn,
+			defined $publisher ? (
+				'publisher' => MARC::Convert::Wikidata::Object::Publisher->new(
+					'name' => clean_publisher_name($publisher),
+				),
+			) : (),
 		);
 		if (defined $isbn_o) {
 			push @ret_isbns, $isbn_o;

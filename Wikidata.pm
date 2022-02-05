@@ -189,6 +189,7 @@ sub wikidata_isbn_10 {
 		if ($isbn->type != 10) {
 			next;
 		}
+		my $publisher = $self->_isbn_publisher($isbn);
 		push @ret, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
@@ -198,6 +199,17 @@ sub wikidata_isbn_10 {
 				),
 				'property' => 'P957',
 			),
+			defined $publisher ? (
+				'property_snaks' => [
+					Wikibase::Datatype::Snak->new(
+						'datatype' => 'wikibase-item',
+						'datavalue' => Wikibase::Datatype::Value::Item->new(
+							'value' => $publisher->[0],
+						),
+						'property' => 'P123',
+					),
+				],
+			) : (),
 		);
 	}
 
@@ -216,6 +228,7 @@ sub wikidata_isbn_13 {
 		if ($isbn->type != 13) {
 			next;
 		}
+		my $publisher = $self->_isbn_publisher($isbn);
 		push @ret, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
@@ -225,6 +238,17 @@ sub wikidata_isbn_13 {
 				),
 				'property' => 'P212',
 			),
+			defined $publisher ? (
+				'property_snaks' => [
+					Wikibase::Datatype::Snak->new(
+						'datatype' => 'wikibase-item',
+						'datavalue' => Wikibase::Datatype::Value::Item->new(
+							'value' => $publisher->[0],
+						),
+						'property' => 'P123',
+					),
+				],
+			) : (),
 		);
 	}
 
@@ -485,18 +509,7 @@ sub wikidata_publishers {
 		return;
 	}
 
-	my @publisher_qids;
-	if (! defined $self->{'callback_publisher_name'}) {
-		return;
-	} else {
-		foreach my $publisher (@{$self->{'_object'}->publishers}) {
-			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher);
-			if ($publisher_qid) {
-				push @publisher_qids, [$publisher_qid, $publisher->name];
-			}
-		}
-	}
-
+	my @publisher_qids = $self->_publisher_translate(@{$self->{'_object'}->publishers});
 	if (! @publisher_qids) {
 		return;
 	}
@@ -748,6 +761,23 @@ sub _description {
 	return $ret;
 }
 
+sub _isbn_publisher {
+	my ($self, $isbn_o) = @_;
+
+	if (! defined $isbn_o->publisher) {
+		return;
+	}
+
+	my ($publisher) = $self->_publisher_translate(
+		$isbn_o->publisher
+	);
+	if (! defined $publisher) {
+		return;
+	}
+
+	return $publisher;
+}
+
 sub _marc_lang_to_wd_lang {
 	my $self = shift;
 
@@ -761,6 +791,24 @@ sub _marc_lang_to_wd_lang {
 	}
 
 	return $wd_lang;
+}
+
+sub _publisher_translate {
+	my ($self, @publishers) = @_;
+
+	my @publisher_qids;
+	if (! defined $self->{'callback_publisher_name'}) {
+		return;
+	} else {
+		foreach my $publisher (@publishers) {
+			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher);
+			if ($publisher_qid) {
+				push @publisher_qids, [$publisher_qid, $publisher->name];
+			}
+		}
+	}
+
+	return @publisher_qids;
 }
 
 1;
