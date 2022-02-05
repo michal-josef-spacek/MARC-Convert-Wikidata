@@ -17,7 +17,9 @@ use cover()
 23. Implement bad ISBN (cnb001002340)
 24. Look to cnb002964680, if everything is ok.
 25. V cnb002180835 je isbn s dvojteckou za tim
-26.
+26. When are two publishers in the same place, place is inserted to Wikidata twice.
+    Do deduplication. cnb002276974
+27.
 
 Applied
 =======
