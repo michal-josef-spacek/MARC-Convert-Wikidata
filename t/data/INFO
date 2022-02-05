@@ -14,6 +14,7 @@ cnb000754547.mrc
 cnb001002340.mrc - Bad ISBN.
 cnb001657758.mrc - Two series (490 field).
 cnb002181872.mrc - Editor (100 field).
+cnb002276974.mrc - Two ISBNs in the same publishing place.
 cnb002467522.mrc - Publisher (264 field). Illustrator (700 field).
 cnb002536669.mrc - Two publishers, two places (264 field). Two ISBNs (020 field). Book series.
 cnb002896853.mrc - Different ČČNB (015 field, z subfield)
@@ -22,4 +23,3 @@ cnb002981333.mrc - Has OCoLC (035 field).
 cnb003059138.mrc - Has 2x OCoLC (035 field).
 cnb003238343.mrc - Date of birth before Krist (100 field).
 cnb003369415.mrc - Has weird format of number of pages (300 field).
-
