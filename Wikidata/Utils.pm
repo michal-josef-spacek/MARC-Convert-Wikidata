@@ -165,6 +165,9 @@ sub clean_publisher_name {
 	$ret_publisher_name =~ s/\s*:$//g;
 	$ret_publisher_name =~ s/\s*;$//g;
 
+	# Remove ( from begin and not ending.
+	$ret_publisher_name =~ s/^\(([^\)]+)$/$1/ms;
+
 	# Remove [] on begin and end.
 	$ret_publisher_name = _remove_square_brackets($ret_publisher_name);
 
