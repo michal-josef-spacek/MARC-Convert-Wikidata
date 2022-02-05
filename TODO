@@ -8,6 +8,7 @@ Wikibase::Cache
 Je tam vice ccnb, jedno pro dilo, dalsi pro jednotlive svazky
 13. Add hardback, paperback to isbn
 use cover()
+Doesn't work (Exists book with 4 ISBNs with paperback and hardback versions)
 14. Do publisher pridat policko 710
 15. Implement supposition in publication date.
 19. If author not present, add P2093 with role
