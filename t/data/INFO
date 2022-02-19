@@ -12,6 +12,7 @@ cnb000641953.mrc - Special format of series ordinal (490 field).
 cnb000750997.mrc
 cnb000754547.mrc
 cnb001002340.mrc - Bad ISBN.
+cnb001042253.mrc - Publication date in format [19--].
 cnb001657758.mrc - Two series (490 field).
 cnb002181872.mrc - Editor (100 field).
 cnb002276974.mrc - Two ISBNs in the same publishing place.
