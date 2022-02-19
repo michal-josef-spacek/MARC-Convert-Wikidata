@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_series_ordinal);
-use Test::More 'tests' => 11;
+use Test::More 'tests' => 12;
 use Test::NoWarnings;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
@@ -25,6 +25,11 @@ is($ret, '99', "Series ordinal '$input_series_ordinal' after cleanup.");
 $input_series_ordinal = decode_utf8('č.10');
 $ret = clean_series_ordinal($input_series_ordinal);
 is($ret, '10', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup."));
+
+# Test.
+$input_series_ordinal = decode_utf8('Č. 36');
+$ret = clean_series_ordinal($input_series_ordinal);
+is($ret, '36', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup."));
 
 # Test.
 $input_series_ordinal = decode_utf8('č.1057-58');
