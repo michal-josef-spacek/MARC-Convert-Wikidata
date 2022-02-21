@@ -95,6 +95,7 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/^$re.*$/1/ms;
 	$re = decode_utf8('Druhé');
 	$ret_edition_number =~ s/^$re.*$/2/ms;
+	$ret_edition_number =~ s/\s*,\s*upr\.\s*vyd\.$//ms;
 	$ret_edition_number =~ s/\s*vyd\.$//ms;
 	$re = decode_utf8('vydání');
 	$ret_edition_number =~ s/\s*$re$//ms;
