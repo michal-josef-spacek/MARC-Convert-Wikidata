@@ -21,7 +21,8 @@ Doesn't work (Exists book with 4 ISBNs with paperback and hardback versions)
     Do deduplication. cnb002276974
 27. Dve mista vydani: cnb001851291
 28. Jak se chovat k cnb001304654 ?
-29.
+29. Implement bad isbn (901b field)
+30.
 
 Applied
 =======
