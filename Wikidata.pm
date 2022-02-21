@@ -5,6 +5,7 @@ use warnings;
 
 use Class::Utils qw(set_params);
 use DateTime;
+use English;
 use Error::Pure qw(err);
 use MARC::Convert::Wikidata::Transform;
 use Unicode::UTF8 qw(decode_utf8);
@@ -482,10 +483,19 @@ sub wikidata_publication_date {
 
 	# TODO Second parameter of publication_date().
 
-	# XXX Publication date is year? Probably not.
-	my $value = '+'.DateTime->new(
-		'year' => $self->{'_object'}->publication_date,
-	)->iso8601().'Z';
+	# XXX Publication date is every year? Probably not.
+	my $publication_date = $self->{'_object'}->publication_date;
+	my $value_dt = eval {
+		DateTime->new(
+			'year' => $publication_date,
+		);
+	};
+	if ($EVAL_ERROR) {
+		return;
+		err "Cannot process publication date '$publication_date'.",
+			'Error', $EVAL_ERROR;
+	}
+	my $value = '+'.$value_dt->iso8601().'Z';
 	return (
 		Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
