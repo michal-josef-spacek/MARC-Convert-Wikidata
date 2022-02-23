@@ -59,7 +59,7 @@ is($ret, 2, encode_utf8("Edition number '$input_edition_number' after cleanup.")
 # Test.
 $input_edition_number = undef;
 $ret = clean_edition_number($input_edition_number);
-is($ret, undef, encode_utf8("Undefined edition number after cleanup."));
+is($ret, undef, 'Undefined edition number after cleanup.');
 
 # Test.
 $input_edition_number = decode_utf8('Vydání 1.');
