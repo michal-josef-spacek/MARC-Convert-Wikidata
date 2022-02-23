@@ -99,6 +99,8 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/\s*vyd\.$//ms;
 	$re = decode_utf8('vydání');
 	$ret_edition_number =~ s/\s*$re$//ms;
+	$re = decode_utf8('Vydání');
+	$ret_edition_number =~ s/^$re\s*//ms;
 	$ret_edition_number =~ s/\s*opr\. a rozmn\.$//ms;
 	$ret_edition_number =~ s/\s*\.$//ms;
 	if (isroman($ret_edition_number)) {
