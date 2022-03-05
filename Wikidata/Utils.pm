@@ -89,6 +89,10 @@ sub clean_edition_number {
 	}
 
 	my $ret_edition_number = $edition_number;
+
+	# Remove [] on begin and end.
+	$ret_edition_number = _remove_square_brackets($ret_edition_number);
+
 	$ret_edition_number =~ s/^Vyd. (\d+)./$1/ms;
 	$ret_edition_number =~ s/\s+$//ms;
 	my $re = decode_utf8('První');
@@ -105,6 +109,7 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/^$re\s*//ms;
 	$ret_edition_number =~ s/\s*opr\. a rozmn\.$//ms;
 	$ret_edition_number =~ s/\s*\.$//ms;
+
 	if (isroman($ret_edition_number)) {
 		$ret_edition_number = arabic($ret_edition_number);
 	}
