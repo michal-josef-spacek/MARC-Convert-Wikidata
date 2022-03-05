@@ -22,7 +22,8 @@ Doesn't work (Exists book with 4 ISBNs with paperback and hardback versions)
 27. Dve mista vydani: cnb001851291
 28. Jak se chovat k cnb001304654 ?
 29. Implement bad isbn (901b field)
-30.
+30. Handle audiobook: cnb003181564
+31.
 
 Applied
 =======
