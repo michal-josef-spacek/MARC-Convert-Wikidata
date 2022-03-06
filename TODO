@@ -23,7 +23,7 @@ Doesn't work (Exists book with 4 ISBNs with paperback and hardback versions)
 28. Jak se chovat k cnb001304654 ?
 29. Implement bad isbn (901b field)
 30. Handle audiobook: cnb003181564
-31. English/Czech edition or audiobook - different labels.
+31. English/Czech edition or audiobook or periodical - different labels.
 see Q111109207
 32.
 
