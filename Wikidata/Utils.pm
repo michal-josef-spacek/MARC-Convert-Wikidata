@@ -195,8 +195,9 @@ sub clean_publisher_place {
 	$ret_publisher_place =~ s/\s+$//g;
 	$ret_publisher_place =~ s/\s*:$//g;
 	$ret_publisher_place =~ s/\s*;$//g;
-	$ret_publisher_place =~ s/^V Praze$/Praha/ms;
-	my $brno = decode_utf8('V Brně');
+	$ret_publisher_place =~ s/^V\s*//ms;
+	$ret_publisher_place =~ s/^Praze$/Praha/ms;
+	my $brno = decode_utf8('Brně');
 	$ret_publisher_place =~ s/^$brno$/Brno/ms;
 	$ret_publisher_place =~ s/^V\s*([\s\w]+)$/$1/ms;
 	# [Praha]
