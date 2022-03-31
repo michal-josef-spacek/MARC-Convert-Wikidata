@@ -93,23 +93,36 @@ sub clean_edition_number {
 	# Remove [] on begin and end.
 	$ret_edition_number = _remove_square_brackets($ret_edition_number);
 
-	$ret_edition_number =~ s/^Vyd. (\d+)./$1/ms;
+	# Remove trailing whitespace
+	$ret_edition_number =~ s/^\s+//ms;
 	$ret_edition_number =~ s/\s+$//ms;
-	my $re = decode_utf8('První');
-	$ret_edition_number =~ s/^$re.*$/1/ms;
-	$re = decode_utf8('Druhé');
-	$ret_edition_number =~ s/^$re.*$/2/ms;
-	$ret_edition_number =~ s/\s*,\s*upr\.\s*vyd\.$//ms;
-	$re = decode_utf8('rozš');
-	$ret_edition_number =~ s/\s*\.?,\s*$re\.\s*a\s*aktualiz\.\s*vyd\.$//ms;
-	$ret_edition_number =~ s/\s*vyd\.$//ms;
-	$re = decode_utf8('vydání');
-	$ret_edition_number =~ s/\s*$re$//ms;
-	$re = decode_utf8('Vydání');
-	$ret_edition_number =~ s/^$re\s*//ms;
-	$ret_edition_number =~ s/\s*opr\. a rozmn\.$//ms;
-	$ret_edition_number =~ s/\s*\.$//ms;
 
+	# Remove special meanings.
+	$ret_edition_number =~ s/opr\. a rozmn\.//ms;
+	my $re = decode_utf8('rozš');
+	$ret_edition_number =~ s/,\s*$re\.\s*a\s*aktualiz\.//ms;
+	$ret_edition_number =~ s/,\s*upr\.//ms;
+	$re = decode_utf8('přepracované a doplněné');
+	$ret_edition_number =~ s/, $re//ms;
+
+	# Rewrite number in Czech to number.
+	# TODO Better
+	my $w1 = decode_utf8('První');
+	$ret_edition_number =~ s/$w1/1/ms;
+	my $w2 = decode_utf8('Druhé');
+	$ret_edition_number =~ s/$w2/2/ms;
+	my $w3 = decode_utf8('druhé');
+	$ret_edition_number =~ s/$w3/2/ms;
+
+	# Remove edition word.
+	my $v1 = decode_utf8('Vydání');
+	my $v2 = decode_utf8('vydání');
+	$ret_edition_number =~ s/\s*(Vyd\.|vyd\.|$v1|$v2)\s*//gx;
+
+	# Remove dots.
+	$ret_edition_number =~ s/\.//ms;
+
+	# Rename roman to arabic
 	if (isroman($ret_edition_number)) {
 		$ret_edition_number = arabic($ret_edition_number);
 	}
