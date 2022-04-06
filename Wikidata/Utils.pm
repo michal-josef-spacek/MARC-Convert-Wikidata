@@ -106,13 +106,14 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/, $re//ms;
 
 	# Rewrite number in Czech to number.
-	# TODO Better
-	my $w1 = decode_utf8('První');
-	$ret_edition_number =~ s/$w1/1/ms;
-	my $w2 = decode_utf8('Druhé');
-	$ret_edition_number =~ s/$w2/2/ms;
-	my $w3 = decode_utf8('druhé');
-	$ret_edition_number =~ s/$w3/2/ms;
+	my $dict_hr = {
+		decode_utf8('První') => 1,
+		decode_utf8('Druhé') => 2,
+		decode_utf8('druhé') => 2,
+	};
+	foreach my $origin (keys %{$dict_hr}) {
+		$ret_edition_number =~ s/$origin/$dict_hr->{$origin}/ms;
+	}
 
 	# Remove edition word.
 	my $v1 = decode_utf8('Vydání');
