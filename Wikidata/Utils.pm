@@ -204,16 +204,24 @@ sub clean_publisher_place {
 		return;
 	}
 
+	my $dict_hr = {
+		'Praze' => 'Praha',
+		decode_utf8('Pardubicích') => 'Pardubice',
+		decode_utf8('Brně') => 'Brno',
+	};
+
 	my $ret_publisher_place = $publisher_place;
+
 	$ret_publisher_place =~ s/\s+$//g;
 	$ret_publisher_place =~ s/\s*:$//g;
 	$ret_publisher_place =~ s/\s*;$//g;
+
 	$ret_publisher_place =~ s/^V\s*//ms;
-	$ret_publisher_place =~ s/^Praze$/Praha/ms;
-	my $brno = decode_utf8('Brně');
-	$ret_publisher_place =~ s/^$brno$/Brno/ms;
-	my $pardubice = decode_utf8('Pardubicích');
-	$ret_publisher_place =~ s/^$pardubice$/Pardubice/ms;
+
+	foreach my $origin (keys %{$dict_hr}) {
+		$ret_publisher_place =~ s/^$origin$/$dict_hr->{$origin}/ms;
+	}
+
 	$ret_publisher_place =~ s/^V\s*([\s\w]+)$/$1/ms;
 	# [Praha]
 	$ret_publisher_place =~ s/^\[(.*?)\]$/$1/ms;
