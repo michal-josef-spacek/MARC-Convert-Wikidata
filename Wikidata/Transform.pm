@@ -139,7 +139,17 @@ sub _edition_number {
 	my $self = shift;
 
 	my $edition_number = $self->_subfield('250', 'a');
+	if (! defined $edition_number) {
+		return;
+	}
+	my $orig_edition_number = $edition_number;
 	$edition_number = clean_edition_number($edition_number);
+
+	if (! defined $edition_number) {
+		warn encode_utf8("Edition number '$orig_edition_number' cannot clean.\n");
+	} elsif ($edition_number !~ m/^\d+$/ms) {
+		warn encode_utf8("Edition number '$edition_number' isn't number.\n");
+	}
 
 	return $edition_number;
 }

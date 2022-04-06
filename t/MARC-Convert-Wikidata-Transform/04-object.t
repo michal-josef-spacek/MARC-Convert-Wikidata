@@ -5,8 +5,9 @@ use File::Object;
 use MARC::Convert::Wikidata::Transform;
 use MARC::Record;
 use Perl6::Slurp qw(slurp);
-use Test::More 'tests' => 67;
+use Test::More 'tests' => 68;
 use Test::NoWarnings;
+use Test::Warn;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
 # Data directory.
@@ -56,9 +57,15 @@ is($translator->nkcr_aut, 'jk01121492', 'Masa a moc: Get translator NKČR AUT id
 
 # Test.
 $marc_data = slurp($data->file('cnb000750997.mrc')->s);
-$obj = MARC::Convert::Wikidata::Transform->new(
-	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
-);
+warning_like
+	{
+		$obj = MARC::Convert::Wikidata::Transform->new(
+			'marc_record' => MARC::Record->new_from_usmarc($marc_data),
+		);
+	}
+	qr{^Edition number 'Lidové vydání' cannot clean\.},
+	"Test of warning about 'Lidové vydání' edition number.",
+;
 $ret = $obj->object;
 $author = $ret->authors->[0];
 is($author->name, 'Karel', 'Krakatit: Get author name.');

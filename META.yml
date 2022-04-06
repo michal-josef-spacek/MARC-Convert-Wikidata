@@ -9,6 +9,7 @@ build_requires:
   Perl6::Slurp: 0
   Test::More: 0
   Test::NoWarnings: 0
+  Test::Warn: 0
   Unicode::UTF8: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.59
