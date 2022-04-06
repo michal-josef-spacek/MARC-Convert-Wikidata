@@ -208,6 +208,7 @@ sub clean_publisher_place {
 		'Praze' => 'Praha',
 		decode_utf8('Pardubicích') => 'Pardubice',
 		decode_utf8('Brně') => 'Brno',
+		'Olomouci' => 'Olomouc',
 	};
 
 	my $ret_publisher_place = $publisher_place;
