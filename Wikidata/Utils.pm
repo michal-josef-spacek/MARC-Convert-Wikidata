@@ -108,6 +108,7 @@ sub clean_edition_number {
 	# Rewrite number in Czech to number.
 	my $dict_hr = {
 		decode_utf8('První') => 1,
+		decode_utf8('první') => 1,
 		decode_utf8('Druhé') => 2,
 		decode_utf8('druhé') => 2,
 	};
