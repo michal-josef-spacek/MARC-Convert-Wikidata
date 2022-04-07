@@ -25,7 +25,8 @@ Doesn't work (Exists book with 4 ISBNs with paperback and hardback versions)
 30. Handle audiobook: cnb003181564
 31. English/Czech edition or audiobook or periodical - different labels.
 see Q111109207
-32.
+32. Test undefined edition number. See cnb003232974
+33.
 
 Applied
 =======
