@@ -233,7 +233,7 @@ sub _process_object {
 		'ccnb' => $self->_ccnb,
 		'compilers' => $self->{'_people'}->{'compilers'},
 		'cover' => $self->_cover,
-		'edition_number' => $self->_edition_number,
+		$self->_edition_number ? ('edition_number' => $self->_edition_number) : (),
 		'editors' => $self->{'_people'}->{'editors'},
 		'isbns' => [$self->_isbns],
 		'illustrators' => $self->{'_people'}->{'illustrators'},
