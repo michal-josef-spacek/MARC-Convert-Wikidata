@@ -7,8 +7,9 @@ use File::Object;
 use MARC::Record;
 use MARC::Convert::Wikidata;
 use Perl6::Slurp qw(slurp);
-use Test::More 'tests' => 3;
+use Test::More 'tests' => 4;
 use Test::NoWarnings;
+use Test::Warn;
 
 # Data directory.
 my $data = File::Object->new->up->dir('data');
@@ -23,7 +24,14 @@ clean();
 
 # Test.
 my $marc_data = slurp($data->file('cnb000750997.mrc')->s);
-my $obj = MARC::Convert::Wikidata->new(
-	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
-);
+my $obj;
+warning_like
+	{
+		$obj = MARC::Convert::Wikidata->new(
+			'marc_record' => MARC::Record->new_from_usmarc($marc_data),
+		);
+	}
+	qr{^Edition number 'Lidové vydání' cannot clean\.},
+	"Test of warning about 'Lidové vydání' edition number.",
+;
 isa_ok($obj, 'MARC::Convert::Wikidata');
