@@ -107,6 +107,8 @@ sub clean_edition_number {
 	$re = decode_utf8('rozšířené');
 	$ret_edition_number =~ s/,\s*$re//ms;
 	$re = decode_utf8('české');
+	$ret_edition_number =~ s/\b$re\b//ms;
+	$re = decode_utf8('v českém jazyce');
 	$ret_edition_number =~ s/$re//ms;
 
 	# Rewrite number in Czech to number.
