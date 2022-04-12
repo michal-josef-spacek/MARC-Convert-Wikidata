@@ -19,7 +19,7 @@ Doesn't work (Exists book with 4 ISBNs with paperback and hardback versions)
 25. V cnb002180835 je isbn s dvojteckou za tim
 26. When are two publishers in the same place, place is inserted to Wikidata twice.
     Do deduplication. cnb002276974
-27. Dve mista vydani: cnb001851291
+27. Dve mista vydani: cnb001851291, cnb002343708
 28. Jak se chovat k cnb001304654 ?
 29. Implement bad isbn (901b field)
 30. Handle audiobook: cnb003181564
