@@ -226,6 +226,9 @@ sub clean_publisher_place {
 	$ret_publisher_place =~ s/\s*:$//g;
 	$ret_publisher_place =~ s/\s*;$//g;
 
+	# [V Praze]
+	$ret_publisher_place =~ s/^\[(.*?)\]$/$1/ms;
+
 	$ret_publisher_place =~ s/^V\s*//ms;
 
 	foreach my $origin (keys %{$dict_hr}) {
