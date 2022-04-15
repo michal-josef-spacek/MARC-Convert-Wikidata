@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_edition_number);
-use Test::More 'tests' => 21;
+use Test::More 'tests' => 22;
 use Test::NoWarnings;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
@@ -99,6 +99,11 @@ is($ret, 1, encode_utf8("Edition number '$input_edition_number' after cleanup.")
 $input_edition_number = decode_utf8('Druhé vydání v českém jazyce');
 $ret = clean_edition_number($input_edition_number);
 is($ret, 2, encode_utf8("Edition number '$input_edition_number' after cleanup."));
+
+# Test.
+$input_edition_number = decode_utf8('V českém jazyce vydání první');
+$ret = clean_edition_number($input_edition_number);
+is($ret, 1, encode_utf8("Edition number '$input_edition_number' after cleanup."));
 
 # Test.
 $input_edition_number = decode_utf8('Lidové vydání');
