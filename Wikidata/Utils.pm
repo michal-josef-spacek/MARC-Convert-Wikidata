@@ -101,7 +101,8 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/opr\. a rozmn\.//ms;
 	my $re = decode_utf8('rozš');
 	$ret_edition_number =~ s/,\s*$re\.\s*a\s*aktualiz\.//ms;
-	$ret_edition_number =~ s/,\s*upr\.//ms;
+	$ret_edition_number =~ s/,\s*upr\.\s*//ms;
+	$ret_edition_number =~ s/a\s*dopl\.\s*vyd.//ms;
 	$re = decode_utf8('přepracované a doplněné');
 	$ret_edition_number =~ s/,\s*$re//ms;
 	$re = decode_utf8('rozšířené');
