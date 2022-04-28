@@ -104,6 +104,7 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/,\s*upr\.\s*//ms;
 	$re = decode_utf8('přeprac');
 	$ret_edition_number =~ s/,\s*$re\.\s*a\s*dopl\.\s*vyd\.//ms;
+	$ret_edition_number =~ s/,\s*$re\.\s*vyd\.//ms;
 	$ret_edition_number =~ s/a\s*dopl\.\s*vyd\.//ms;
 	$re = decode_utf8('přepracované a doplněné');
 	$ret_edition_number =~ s/,\s*$re//ms;
