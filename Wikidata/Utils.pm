@@ -78,6 +78,13 @@ sub clean_date {
 	$ret_date =~ s/^(\d+)\s*$bk/-$1/ms;
 	$ret_date =~ s/\s*\.$//ms;
 
+	if ($ret_date !~ m/^\-?\d+(\-\d+)?(\-\d+)?$/ms) {
+		if ($DEBUG) {
+			warn "Date '$date' couldn't clean.";
+		}
+		$ret_date = undef;
+	}
+
 	return $ret_date;
 }
 
