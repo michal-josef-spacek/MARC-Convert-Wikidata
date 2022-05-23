@@ -9,7 +9,7 @@ use Roman;
 use Unicode::UTF8 qw(decode_utf8);
 
 Readonly::Array our @EXPORT_OK => qw(clean_cover clean_date clean_edition_number
-	clean_number_of_pages clean_oclc clean_publisher_name
+	clean_number_of_pages clean_oclc clean_publication_date clean_publisher_name
 	clean_publisher_place clean_series_name clean_series_ordinal clean_subtitle
 	clean_title);
 
@@ -190,6 +190,31 @@ sub clean_oclc {
 	$ret_oclc =~ s/^\(OCoLC\)//ms;
 
 	return $ret_oclc;
+}
+
+sub clean_publication_date {
+	my $publication_date = shift;
+
+	my $ret_publication_date = $publication_date;
+
+	# Remove [] on begin and end.
+	$ret_publication_date = _remove_square_brackets($ret_publication_date);
+
+	my $option;
+	if ($ret_publication_date =~ s/^c(.*)$/$1/ms
+		|| $ret_publication_date =~ s/^(.*)\?$/$1/ms) {
+
+		$option = 'circa';
+	}
+
+	if ($ret_publication_date !~ m/^\d+$/ms) {
+		if ($DEBUG) {
+			warn "Publication date '$publication_date' couldn't clean.";
+		}
+		$ret_publication_date = undef;
+	}
+
+	return ($ret_publication_date, $option);
 }
 
 sub clean_publisher_name {
