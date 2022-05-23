@@ -13,7 +13,7 @@ use MARC::Convert::Wikidata::Object::People;
 use MARC::Convert::Wikidata::Object::Publisher;
 use MARC::Convert::Wikidata::Object::Series;
 use MARC::Convert::Wikidata::Utils qw(clean_cover clean_date clean_edition_number
-	clean_number_of_pages clean_oclc clean_publisher_name
+	clean_number_of_pages clean_oclc clean_publication_date clean_publisher_name
 	clean_publisher_place clean_series_name clean_series_ordinal clean_subtitle
 	clean_title);
 use Readonly;
@@ -227,6 +227,9 @@ sub _oclc {
 sub _process_object {
 	my $self = shift;
 
+	my ($publication_date, $publication_date_option) = $self->_publication_date;
+
+	# TODO $publication_date_option;
 	$self->{'_object'} = MARC::Convert::Wikidata::Object->new(
 		'authors' => $self->{'_people'}->{'authors'},
 		'authors_of_introduction' => $self->{'_people'}->{'authors_of_introduction'},
@@ -241,7 +244,7 @@ sub _process_object {
 		'languages' => [$self->_languages],
 		'number_of_pages' => $self->_number_of_pages,
 		'oclc' => $self->_oclc,
-		'publication_date' => scalar $self->_publication_date,
+		'publication_date' => $publication_date,
 		'publishers' => [$self->_publishers],
 		'series' => [$self->_series],
 		'subtitle' => $self->_subtitle,
@@ -371,14 +374,10 @@ sub _publication_date {
 		$publication_date = $self->_subfield('260', 'c');
 	}
 
-	# Supposition.
-	my $supposition = 0;
-	if ($publication_date =~ m/^\[(\d+)\??\]$/ms) {
-		$publication_date = $1;
-		$supposition = 1;
-	}
+	my $option;
+	($publication_date, $option) = clean_publication_date($publication_date);
 
-	return wantarray ? ($publication_date, $supposition) : $publication_date;
+	return wantarray ? ($publication_date, $option) : $publication_date;
 }
 
 sub _publishers {
