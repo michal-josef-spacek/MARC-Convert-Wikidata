@@ -256,6 +256,7 @@ sub clean_publisher_place {
 		decode_utf8('Brně') => 'Brno',
 		'Olomouci' => 'Olomouc',
 		decode_utf8('Ostravě') => 'Ostrava',
+		decode_utf8('Řevnicích') => decode_utf8('Řevnice'),
 	};
 
 	my $ret_publisher_place = $publisher_place;
