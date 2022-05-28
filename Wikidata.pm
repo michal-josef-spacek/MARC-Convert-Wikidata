@@ -384,7 +384,7 @@ sub wikidata_oclc {
 		Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
-				'datatype' => 'string',
+				'datatype' => 'external-id',
 				'datavalue' => Wikibase::Datatype::Value::String->new(
 					'value' => $self->{'_object'}->oclc,
 				),
