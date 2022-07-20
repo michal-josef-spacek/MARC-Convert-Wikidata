@@ -117,6 +117,8 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/,\s*$re//ms;
 	$re = decode_utf8('rozšířené');
 	$ret_edition_number =~ s/,\s*$re//ms;
+	$re = decode_utf8('rozš. vyd.');
+	$ret_edition_number =~ s/,\s*$re//ms;
 	$re = decode_utf8('(Č|č)eské');
 	$ret_edition_number =~ s/\b$re\b//ms;
 	$re = decode_utf8('(v|V) českém jazyce');
