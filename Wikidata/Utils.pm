@@ -254,6 +254,7 @@ sub clean_publisher_place {
 		'Praze' => 'Praha',
 		decode_utf8('Pardubicích') => 'Pardubice',
 		decode_utf8('Brně') => 'Brno',
+		'Liberci' => 'Liberec',
 		'Olomouci' => 'Olomouc',
 		decode_utf8('Ostravě') => 'Ostrava',
 		decode_utf8('Řevnicích') => decode_utf8('Řevnice'),
