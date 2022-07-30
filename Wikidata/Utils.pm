@@ -127,6 +127,8 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/$re//ms;
 	$re = decode_utf8('s vyobrazeními');
 	$ret_edition_number =~ s/$re//ms;
+	$re = decode_utf8(', aktualizované');
+	$ret_edition_number =~ s/$re//ms;
 
 	# Rewrite number in Czech to number.
 	my $dict_hr = {
