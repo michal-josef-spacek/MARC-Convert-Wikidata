@@ -4,6 +4,7 @@ use base qw(Exporter);
 use strict;
 use warnings;
 
+use List::Util qw(none);
 use Readonly;
 use Roman;
 use Unicode::UTF8 qw(decode_utf8);
@@ -12,6 +13,7 @@ Readonly::Array our @EXPORT_OK => qw(clean_cover clean_date clean_edition_number
 	clean_number_of_pages clean_oclc clean_publication_date clean_publisher_name
 	clean_publisher_place clean_series_name clean_series_ordinal clean_subtitle
 	clean_title);
+Readonly::Array our @COVERS => qw(hardback paperback);
 
 our $VERSION = 0.01;
 our $DEBUG = 0;
@@ -36,6 +38,13 @@ sub clean_cover {
 	$ret_cover =~ s/^$c\.?$/paperback/ms;
 	$c = decode_utf8('(b|B)rožováno');
 	$ret_cover =~ s/^$c$/paperback/ms;
+
+	if (none { $ret_cover eq $_ } @COVERS) {
+		if ($DEBUG) {
+			warn "Book cover '$ret_cover' couldn't clean.";
+		}
+		$ret_cover = undef;
+	}
 
 	return $ret_cover;
 }
