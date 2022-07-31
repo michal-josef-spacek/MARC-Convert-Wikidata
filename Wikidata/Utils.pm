@@ -25,22 +25,17 @@ sub clean_cover {
 
 	my $ret_cover = $cover;
 	$ret_cover =~ s/\s*:\s*$//ms;
-	my $c = decode_utf8('Váz');
-	$ret_cover =~ s/^\(($c).\)$/hardback/ms;
-	$c = decode_utf8('Vázáno');
-	$ret_cover =~ s/^\(($c)\)$/hardback/ms;
-	$c = decode_utf8('vázáno');
-	$ret_cover =~ s/^($c)\)$/hardback/ms;
-	$c = decode_utf8('váz');
-	$ret_cover =~ s/^\(?($c).\)$/hardback/ms;
-	$c = decode_utf8('Brož');
-	$ret_cover =~ s/^\(?($c).\)$/paperback/ms;
-	$c = decode_utf8('brož');
-	$ret_cover =~ s/^\(?($c).\)$/paperback/ms;
-	$c = decode_utf8('Brožováno');
-	$ret_cover =~ s/^\(($c)\)$/paperback/ms;
-	$c = decode_utf8('brožováno');
-	$ret_cover =~ s/^($c)\)$/paperback/ms;
+	$ret_cover =~ s/^\s*//ms;
+	$ret_cover =~ s/^\(\s*//ms;
+	$ret_cover =~ s/\s*\)$//ms;
+	my $c = decode_utf8('(v|V)áz');
+	$ret_cover =~ s/^$c\.?$/hardback/ms;
+	$c = decode_utf8('(v|V)ázáno');
+	$ret_cover =~ s/^$c$/hardback/ms;
+	$c = decode_utf8('(b|B)rož');
+	$ret_cover =~ s/^$c\.?$/paperback/ms;
+	$c = decode_utf8('(b|B)rožováno');
+	$ret_cover =~ s/^$c$/paperback/ms;
 
 	return $ret_cover;
 }
