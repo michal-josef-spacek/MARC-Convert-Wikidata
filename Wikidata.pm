@@ -28,6 +28,9 @@ sub new {
 	# Create object.
 	my $self = bless {}, $class;
 
+	# Cover callback.
+	$self->{'callback_cover'} = undef;
+
 	# Lang callback.
 	$self->{'callback_lang'} = undef;
 
@@ -191,6 +194,7 @@ sub wikidata_isbn_10 {
 			next;
 		}
 		my $publisher = $self->_isbn_publisher($isbn);
+		my $cover_qid = $self->_isbn_cover($isbn);
 		push @ret, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
@@ -208,6 +212,17 @@ sub wikidata_isbn_10 {
 							'value' => $publisher->[0],
 						),
 						'property' => 'P123',
+					),
+				],
+			) : (),
+			defined $cover_qid ? (
+				'property_snaks' => [
+					Wikibase::Datatype::Snak->new(
+						'datatype' => 'wikibase-item',
+						'datavalue' => Wikibase::Datatype::Value::Item->new(
+							'value' => $cover_qid,
+						),
+						'property' => 'P437',
 					),
 				],
 			) : (),
@@ -230,6 +245,7 @@ sub wikidata_isbn_13 {
 			next;
 		}
 		my $publisher = $self->_isbn_publisher($isbn);
+		my $cover_qid = $self->_isbn_cover($isbn);
 		push @ret, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
@@ -247,6 +263,17 @@ sub wikidata_isbn_13 {
 							'value' => $publisher->[0],
 						),
 						'property' => 'P123',
+					),
+				],
+			) : (),
+			defined $cover_qid ? (
+				'property_snaks' => [
+					Wikibase::Datatype::Snak->new(
+						'datatype' => 'wikibase-item',
+						'datavalue' => Wikibase::Datatype::Value::Item->new(
+							'value' => $cover_qid,
+						),
+						'property' => 'P437',
 					),
 				],
 			) : (),
@@ -777,6 +804,16 @@ sub _isbn_publisher {
 	return $publisher;
 }
 
+sub _isbn_cover {
+	my ($self, $isbn_o) = @_;
+
+	if (! defined $isbn_o->cover) {
+		return;
+	}
+
+	return $self->_cover_translate($isbn_o->cover);
+}
+
 sub _marc_lang_to_wd_lang {
 	my $self = shift;
 
@@ -808,6 +845,19 @@ sub _publisher_translate {
 	}
 
 	return @publisher_qids;
+}
+
+sub _cover_translate {
+	my ($self, $cover) = @_;
+
+	my $cover_qid;
+	if (! defined $self->{'callback_cover'}) {
+		return;
+	} else {
+		$cover_qid = $self->{'callback_cover'}->($cover);
+	}
+
+	return $cover_qid;
 }
 
 1;

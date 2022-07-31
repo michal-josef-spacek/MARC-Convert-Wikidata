@@ -6,6 +6,7 @@ use warnings;
 use Class::Utils qw(set_params);
 use Data::Kramerius;
 use Error::Pure qw(err);
+use List::Util qw(any);
 use MARC::Convert::Wikidata::Object;
 use MARC::Convert::Wikidata::Object::ISBN;
 use MARC::Convert::Wikidata::Object::Kramerius;
@@ -20,6 +21,7 @@ use Readonly;
 use URI;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
+Readonly::Array our @COVERS => qw(hardback paperback);
 Readonly::Hash our %PEOPLE_TYPE => {
 	'aui' => 'authors_of_introduction',
 	'aut' => 'authors',
@@ -164,8 +166,20 @@ sub _isbns {
 		if (! defined $isbn) {
 			next;
 		}
-		my $publisher = $isbn_field->subfield('q');
+		my @publishers = $isbn_field->subfield('q');
+		my ($publisher, $cover);
+		foreach my $pub (@publishers) {
+			$pub = clean_cover($pub);
+			if (any { $pub eq $_ } @COVERS) {
+				$cover = $pub;
+			} else {
+				$publisher = $pub;
+			}
+		}
 		my $isbn_o = MARC::Convert::Wikidata::Object::ISBN->new(
+			defined $cover ? (
+				'cover' => $cover,
+			) : (),
 			'isbn' => $isbn,
 			defined $publisher ? (
 				'publisher' => MARC::Convert::Wikidata::Object::Publisher->new(
