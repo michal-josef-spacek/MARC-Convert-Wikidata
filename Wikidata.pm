@@ -627,17 +627,6 @@ sub wikidata_series {
 			),
 			'property_snaks' => [
 
-				# Publisher
-				$series_ar->[1] ? (
-					Wikibase::Datatype::Snak->new(
-						'datatype' => 'string',
-						'datavalue' => Wikibase::Datatype::Value::String->new(
-							'value' => $series_ar->[1],
-						),
-						'property' => 'P123',
-					),
-				) : (),
-
 				# Series ordinal.
 				$series_ar->[2] ? (
 					Wikibase::Datatype::Snak->new(
