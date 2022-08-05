@@ -160,7 +160,7 @@ sub clean_edition_number {
 		decode_utf8('dvacáté') => 20,
 	};
 	foreach my $origin (keys %{$dict_hr}) {
-		$ret_edition_number =~ s/$origin/$dict_hr->{$origin}/ms;
+		$ret_edition_number =~ s/\s*$origin\s*/$dict_hr->{$origin}/ms;
 	}
 
 	# Remove edition word.
@@ -170,6 +170,9 @@ sub clean_edition_number {
 
 	# Remove dots.
 	$ret_edition_number =~ s/\.//ms;
+
+	# Remove :
+	$ret_edition_number =~ s/://ms;
 
 	# Rename roman to arabic
 	if (isroman($ret_edition_number)) {
