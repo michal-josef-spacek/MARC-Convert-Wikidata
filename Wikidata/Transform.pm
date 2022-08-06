@@ -120,7 +120,9 @@ sub _cover {
 	my @ret_cover;
 	foreach my $cover (@cover) {
 		$cover = clean_cover($cover);
-
+		if (! defined $cover) {
+			next;
+		}
 		if ($cover ne 'hardback' && $cover ne 'paperback') {
 			warn encode_utf8("Book cover '$cover' doesn't exist.\n");
 		} else {
@@ -170,6 +172,9 @@ sub _isbns {
 		my ($publisher, $cover);
 		foreach my $pub (@publishers) {
 			$pub = clean_cover($pub);
+			if (! defined $pub) {
+				next;
+			}
 			if (any { $pub eq $_ } @COVERS) {
 				$cover = $pub;
 			} else {
