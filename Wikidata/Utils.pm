@@ -105,8 +105,7 @@ sub clean_edition_number {
 	$ret_edition_number = _remove_square_brackets($ret_edition_number);
 
 	# Remove trailing whitespace
-	$ret_edition_number =~ s/^\s+//ms;
-	$ret_edition_number =~ s/\s+$//ms;
+	$ret_edition_number = _remove_trailing_whitespace($ret_edition_number);
 
 	# Remove special meanings.
 	$ret_edition_number =~ s/opr\. a rozmn\.//ms;
