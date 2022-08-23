@@ -342,7 +342,10 @@ sub clean_series_ordinal {
 	}
 
 	my $ret_series_ordinal = $series_ordinal;
-	$ret_series_ordinal =~ s/\s+$//g;
+
+	# Trailing whitespace on begin and end
+	$ret_series_ordinal = _remove_trailing_whitespace($ret_series_ordinal);
+
 	$ret_series_ordinal =~ s/sv\.\s*(\d+)$/$1/g;
 	$ret_series_ordinal =~ s/svazek\s*(\d+)$/$1/g;
 	$ret_series_ordinal =~ s/^\s*(\d+)\.?\s*svazek/$1/g;
