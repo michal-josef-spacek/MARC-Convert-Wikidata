@@ -124,6 +124,8 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/,\s*$re//ms;
 	$re = decode_utf8('(Č|č)eské');
 	$ret_edition_number =~ s/\b$re\b//ms;
+	$re = decode_utf8('(Č|č)es\.');
+	$ret_edition_number =~ s/$re//ms;
 	$re = decode_utf8('(v|V) českém jazyce');
 	$ret_edition_number =~ s/$re//ms;
 	$re = decode_utf8('(v|V) češtině\s*');
