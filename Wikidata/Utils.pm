@@ -345,15 +345,16 @@ sub clean_series_ordinal {
 	# Trailing whitespace on begin and end
 	$ret_series_ordinal = _remove_trailing_whitespace($ret_series_ordinal);
 
-	$ret_series_ordinal =~ s/sv\.\s*(\d+)$/$1/g;
-	$ret_series_ordinal =~ s/svazek\s*(\d+)$/$1/g;
-	$ret_series_ordinal =~ s/^\s*(\d+)\.?\s*svazek/$1/g;
-	$ret_series_ordinal =~ s/Sv\.\s*(\d+)\.?$/$1/g;
+	$ret_series_ordinal =~ s/^(S|s)v\.\s*//g;
+	$ret_series_ordinal =~ s/^svazek\s*//g;
+	$ret_series_ordinal =~ s/\s*svazek$//g;
 
 	my $c = decode_utf8('(č|Č)');
 	$ret_series_ordinal =~ s/^$c\.\s*//ms;
 	$c = decode_utf8('(č|Č)íslo');
 	$ret_series_ordinal =~ s/^$c\s*//ms;
+
+	$ret_series_ordinal =~ s/^(\d+)\.$/$1/ms;
 
 	if ($ret_series_ordinal =~ m/^(\d+)-(\d+)$/ms) {
 		my $first = $1;
