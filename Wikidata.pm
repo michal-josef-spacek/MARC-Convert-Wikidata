@@ -580,6 +580,9 @@ sub wikidata_publishers {
 sub wikidata_reference {
 	my $self = shift;
 
+	if (! defined $self->{'_object'}->ccnb) {
+		err decode_utf8('Missing ČČNB id.');
+	}
 	return (
 		Wikibase::Datatype::Reference->new(
 			'snaks' => [
