@@ -288,6 +288,7 @@ sub clean_publisher_place {
 		decode_utf8('Brně') => 'Brno',
 		decode_utf8('Karlových Varech') => 'Karlovy Vary',
 		'Liberci' => 'Liberec',
+		'Nymburce' => 'Nymburk',
 		'Olomouci' => 'Olomouc',
 		decode_utf8('Ostravě') => 'Ostrava',
 		decode_utf8('Řevnicích') => decode_utf8('Řevnice'),
