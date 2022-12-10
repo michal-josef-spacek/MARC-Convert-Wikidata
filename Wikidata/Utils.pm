@@ -167,7 +167,7 @@ sub clean_edition_number {
 	# Remove edition word.
 	my $v1 = decode_utf8('Vydání');
 	my $v2 = decode_utf8('vydání');
-	$ret_edition_number =~ s/\s*(Vyd\.|vyd\.|$v1|$v2)\s*//gx;
+	$ret_edition_number =~ s/\s*(Vyd\.|vyd\.|$v1|$v2|vyd)\s*//gx;
 
 	# Remove dots.
 	$ret_edition_number =~ s/\.//ms;
