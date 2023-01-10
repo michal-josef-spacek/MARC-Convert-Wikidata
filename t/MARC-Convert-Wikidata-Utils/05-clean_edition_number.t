@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_edition_number);
-use Test::More 'tests' => 34;
+use Test::More 'tests' => 38;
 use Test::NoWarnings;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
@@ -169,3 +169,23 @@ is($ret, undef, encode_utf8("Edition number '$input_edition_number' after cleanu
 $input_edition_number = decode_utf8('4. vyd');
 $ret = clean_edition_number($input_edition_number);
 is($ret, 4, "Edition number '$input_edition_number' after cleanup.");
+
+# Test.
+$input_edition_number = decode_utf8('3., dopln. a přeprac. vyd.');
+$ret = clean_edition_number($input_edition_number);
+is($ret, 3, encode_utf8("Edition number '$input_edition_number' after cleanup."));
+
+# Test.
+$input_edition_number = decode_utf8('[1. souborné vyd.]');
+$ret = clean_edition_number($input_edition_number);
+is($ret, 1, encode_utf8("Edition number '$input_edition_number' after cleanup."));
+
+# Test.
+$input_edition_number = decode_utf8('1. autoris. vyd.');
+$ret = clean_edition_number($input_edition_number);
+is($ret, 1, encode_utf8("Edition number '$input_edition_number' after cleanup."));
+
+# Test.
+$input_edition_number = decode_utf8('I. aut. vyd.');
+$ret = clean_edition_number($input_edition_number);
+is($ret, 1, encode_utf8("Edition number '$input_edition_number' after cleanup."));
