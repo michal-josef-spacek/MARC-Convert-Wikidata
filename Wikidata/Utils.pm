@@ -123,6 +123,7 @@ sub clean_edition_number {
 	# Authorized.
 	$ret_edition_number =~ s/\s*aut\.//ms;
 	$ret_edition_number =~ s/\s*autoris\.//ms;
+	$ret_edition_number =~ s/\s*autoriz\.//ms;
 
 	# Extended.
 	$re = decode_utf8('přeprac');
