@@ -410,6 +410,7 @@ sub clean_subtitle {
 	$ret_subtitle =~ s/\s+$//g;
 	$ret_subtitle =~ s/\/$//g;
 	$ret_subtitle =~ s/\s+$//g;
+	$ret_subtitle =~ s/,$//g;
 
 	return $ret_subtitle;
 }
@@ -425,6 +426,7 @@ sub clean_title {
 	$ret_title =~ s/\s+$//g;
 	$ret_title =~ s/\s*\/$//g;
 	$ret_title =~ s/\s*\:$//g;
+	$ret_title =~ s/\.$//g;
 
 	return $ret_title;
 }

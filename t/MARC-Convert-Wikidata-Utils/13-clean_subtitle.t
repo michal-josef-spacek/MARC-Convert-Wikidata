@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_subtitle);
-use Test::More 'tests' => 4;
+use Test::More 'tests' => 5;
 use Test::NoWarnings;
 
 # Test.
@@ -17,5 +17,10 @@ is($ret, 'Subtitle', "Subtitle '$input_subtitle' after cleanup.");
 
 # Test.
 $input_subtitle = 'Subtitle / ';
+$ret = clean_subtitle($input_subtitle);
+is($ret, 'Subtitle', "Subtitle '$input_subtitle' after cleanup.");
+
+# Test.
+$input_subtitle = 'Subtitle,';
 $ret = clean_subtitle($input_subtitle);
 is($ret, 'Subtitle', "Subtitle '$input_subtitle' after cleanup.");
