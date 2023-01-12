@@ -266,7 +266,7 @@ sub _process_object {
 		'publication_date' => $publication_date,
 		'publishers' => [$self->_publishers],
 		'series' => [$self->_series],
-		'subtitle' => $self->_subtitle,
+		'subtitles' => [$self->_subtitles],
 		'title' => $self->_title,
 		'translators' => $self->{'_people'}->{'translators'},
 	);
@@ -439,13 +439,27 @@ sub _subfield {
 	return $field_value->subfield($subfield);
 }
 
-sub _subtitle {
+sub _subtitles {
 	my $self = shift;
 
+	my @ret;
 	my $subtitle = $self->_subfield('245', 'b');
 	$subtitle = clean_subtitle($subtitle);
+	if (defined $subtitle) {
+		push @ret, $subtitle;
+	}
+	my $number_of_part = $self->_subfield('245', 'n');
+	$number_of_part = clean_subtitle($number_of_part);
+	if (defined $number_of_part) {
+		push @ret, $number_of_part;
+	}
+	my $name_of_part = $self->_subfield('245', 'p');
+	$name_of_part = clean_subtitle($name_of_part);
+	if (defined $name_of_part) {
+		push @ret, $name_of_part;
+	}
 
-	return $subtitle;
+	return @ret;
 }
 
 sub _title {

@@ -674,26 +674,29 @@ sub wikidata_series {
 	return @series;
 }
 
-sub wikidata_subtitle {
+sub wikidata_subtitles {
 	my $self = shift;
 
-	if (! defined $self->{'_object'}->subtitle) {
+	if (! @{$self->{'_object'}->subtitles}) {
 		return;
 	}
 
-	return (
-		Wikibase::Datatype::Statement->new(
+	my @ret;
+	foreach my $subtitle (@{$self->{'_object'}->subtitles}) {
+		push @ret, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'monolingualtext',
 				'datavalue' => Wikibase::Datatype::Value::Monolingual->new(
 					'language' => $self->_marc_lang_to_wd_lang,
-					'value' => $self->{'_object'}->subtitle,
+					'value' => $subtitle,
 				),
 				'property' => 'P1680',
 			),
 		),
-	);
+	}
+
+	return @ret;
 }
 
 sub wikidata_title {
@@ -759,7 +762,7 @@ sub wikidata {
 			$self->wikidata_publication_date,
 			$self->wikidata_publishers,
 			$self->wikidata_series,
-			$self->wikidata_subtitle,
+			$self->wikidata_subtitles,
 			$self->wikidata_title,
 			$self->wikidata_translators,
 		],
