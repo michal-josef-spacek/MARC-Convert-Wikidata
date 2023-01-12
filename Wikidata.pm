@@ -469,12 +469,13 @@ sub wikidata_place_of_publication {
 	}
 
 	my @places;
+	my $publication_date = $self->{'_object'}->publication_date;
 	if (! defined $self->{'callback_publisher_place'}) {
 		return;
 	} else {
 		foreach my $publisher (@{$self->{'_object'}->publishers}) {
 			my $place_qid = $self->{'callback_publisher_place'}->($publisher);
-			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher);
+			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher, $publication_date);
 			if ($place_qid) {
 				push @places, [$publisher_qid, $place_qid];
 			}
@@ -839,11 +840,12 @@ sub _publisher_translate {
 	my ($self, @publishers) = @_;
 
 	my @publisher_qids;
+	my $publication_date = $self->{'_object'}->publication_date;
 	if (! defined $self->{'callback_publisher_name'}) {
 		return;
 	} else {
 		foreach my $publisher (@publishers) {
-			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher);
+			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher, $publication_date);
 			if ($publisher_qid) {
 				push @publisher_qids, [$publisher_qid, $publisher->name];
 			}
