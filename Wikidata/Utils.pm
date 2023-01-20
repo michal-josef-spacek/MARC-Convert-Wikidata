@@ -315,6 +315,8 @@ sub clean_publisher_place {
 		'Liberci' => 'Liberec',
 		'Nymburce' => 'Nymburk',
 		'Olomouci' => 'Olomouc',
+		decode_utf8('Třebíči') => decode_utf8('Třebíč'),
+		decode_utf8('Třebíči na Moravě') => decode_utf8('Třebíč'),
 		decode_utf8('Ostravě') => 'Ostrava',
 		decode_utf8('Řevnicích') => decode_utf8('Řevnice'),
 	};
