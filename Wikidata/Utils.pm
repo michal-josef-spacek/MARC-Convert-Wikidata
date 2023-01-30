@@ -135,6 +135,7 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/\s*aktualiz\.//ms;
 	$re = decode_utf8('aktualizované');
 	$ret_edition_number =~ s/\s*$re//ms;
+	$ret_edition_number =~ s/\s*nezm\.//ms;
 	$re = decode_utf8('rozš');
 	$ret_edition_number =~ s/\s*$re\.//ms;
 	$re = decode_utf8('rozšířené');
