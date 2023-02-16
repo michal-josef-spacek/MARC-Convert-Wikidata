@@ -28,7 +28,8 @@ see Q111109207
 35. https://aleph.nkp.cz/F/?func=direct&doc_number=000085928&local_base=CNB
 Jsou tam dve ccnb, co s tim?
 37. Cache queries.
-38.
+38. Parsing of kramerius uri isn't ok - look to dml, we could have more entities
+39.
 
 Applied
 =======
