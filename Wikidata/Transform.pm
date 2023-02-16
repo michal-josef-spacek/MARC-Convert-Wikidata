@@ -139,6 +139,20 @@ sub _cover {
 	return $ret_cover[0];
 }
 
+sub _dml {
+	my $self = shift;
+
+	my @fields_856 = $self->{'marc_record'}->field('856');
+	foreach my $field_856 (@fields_856) {
+		my $uri = $field_856->subfield('u');
+		if ($uri =~ m/https:\/\/dml\.cz\/handle\/10338\.dmlcz\/(\d+)$/ms) {
+			return $1;
+		}
+	}
+
+	return;
+}
+
 sub _edition_number {
 	my $self = shift;
 
@@ -255,6 +269,7 @@ sub _process_object {
 		'ccnb' => $self->_ccnb,
 		'compilers' => $self->{'_people'}->{'compilers'},
 		'cover' => $self->_cover,
+		$self->_dml ? ('dml' => $self->_dml) : (),
 		$self->_edition_number ? ('edition_number' => $self->_edition_number) : (),
 		'editors' => $self->{'_people'}->{'editors'},
 		'isbns' => [$self->_isbns],

@@ -175,6 +175,25 @@ sub wikidata_compilers {
 	return $self->wikidata_people('compilers', 'P98', $property_snaks_ar);
 }
 
+sub wikidata_dml {
+	my $self = shift;
+
+	if (! defined $self->{'_object'}->dml) {
+		return;
+	}
+
+	return Wikibase::Datatype::Statement->new(
+		'references' => [$self->wikidata_reference],
+		'snak' => Wikibase::Datatype::Snak->new(
+			'datatype' => 'external-id',
+			'datavalue' => Wikibase::Datatype::Value::String->new(
+				'value' => $self->{'_object'}->dml,
+			),
+			'property' => 'P11378',
+		),
+	);
+}
+
 sub wikidata_illustrators {
 	my $self = shift;
 
@@ -750,6 +769,7 @@ sub wikidata {
 			$self->wikidata_authors_of_introduction,
 			$self->wikidata_ccnb,
 			$self->wikidata_compilers,
+			$self->wikidata_dml,
 			$self->wikidata_edition_number,
 			$self->wikidata_editors,
 			$self->wikidata_illustrators,
