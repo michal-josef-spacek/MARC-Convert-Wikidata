@@ -196,10 +196,10 @@ sub clean_edition_number {
 	}
 
 	# Remove dots.
-	$ret_edition_number =~ s/\.//ms;
+	$ret_edition_number =~ s/\s*\.\s*//ms;
 
 	# Remove :
-	$ret_edition_number =~ s/://ms;
+	$ret_edition_number =~ s/\s*:\s*//ms;
 
 	# Rename roman to arabic
 	if (isroman($ret_edition_number)) {
