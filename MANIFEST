@@ -41,6 +41,10 @@ t/data/cnb003059138.mrc
 t/data/cnb003238343.mrc
 t/data/cnb003369415.mrc
 t/data/INFO
+t/MARC-Convert-Wikidata-Item-BookEdition/01-use.t
+t/MARC-Convert-Wikidata-Item-BookEdition/02-version.t
+t/MARC-Convert-Wikidata-Item/01-use.t
+t/MARC-Convert-Wikidata-Item/02-version.t
 t/MARC-Convert-Wikidata-Transform/01-use.t
 t/MARC-Convert-Wikidata-Transform/02-version.t
 t/MARC-Convert-Wikidata-Transform/03-new.t
@@ -63,8 +67,14 @@ t/MARC-Convert-Wikidata/01-use.t
 t/MARC-Convert-Wikidata/02-version.t
 t/MARC-Convert-Wikidata/03-new.t
 Wikidata.pm
+Wikidata/Item.pm
+Wikidata/Item/BookEdition.pm
 Wikidata/Transform.pm
 Wikidata/Utils.pm
+xt/MARC-Convert-Wikidata-Item-BookEdition/01-pod_coverage.t
+xt/MARC-Convert-Wikidata-Item-BookEdition/02-pod.t
+xt/MARC-Convert-Wikidata-Item/01-pod_coverage.t
+xt/MARC-Convert-Wikidata-Item/02-pod.t
 xt/MARC-Convert-Wikidata-Transform/01-pod_coverage.t
 xt/MARC-Convert-Wikidata-Transform/02-pod.t
 xt/MARC-Convert-Wikidata-Utils/01-pod_coverage.t
