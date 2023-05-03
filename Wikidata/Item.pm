@@ -775,7 +775,7 @@ sub _marc_lang_to_wd_lang {
 	my $self = shift;
 
 	my $wd_lang;
-	my $marc_lang = $self->object->languages->[0];
+	my $marc_lang = $self->{'transform_object'}->languages->[0];
 	# TODO Common way. ISO 639-2 code for bibliography
 	if ($marc_lang eq 'cze') {
 		$wd_lang = 'cs';
