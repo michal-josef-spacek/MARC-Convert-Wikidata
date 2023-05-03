@@ -389,6 +389,12 @@ sub wikidata_krameriuses {
 	return @krameriuses;
 }
 
+sub wikidata_narrators {
+	my $self = shift;
+
+	return $self->wikidata_people('narrators', 'P2438');
+}
+
 sub wikidata_number_of_pages {
 	my $self = shift;
 

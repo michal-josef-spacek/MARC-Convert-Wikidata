@@ -28,6 +28,7 @@ Readonly::Hash our %PEOPLE_TYPE => {
 	'com' => 'compilers',
 	'edt' => 'editors',
 	'ill' => 'illustrators',
+	'nrt' => 'narrators',
 	'trl' => 'translators',
 };
 
@@ -61,6 +62,7 @@ sub new {
 		'compilers' => [],
 		'editors' => [],
 		'illustrators' => [],
+		'narrators' => [],
 		'translators' => [],
 	};
 	$self->_process_people_100;
@@ -276,6 +278,7 @@ sub _process_object {
 		'illustrators' => $self->{'_people'}->{'illustrators'},
 		'krameriuses' => [$self->_krameriuses],
 		'languages' => [$self->_languages],
+		'narrators' => $self->{'_people'}->{'narrators'},
 		'number_of_pages' => $self->_number_of_pages,
 		'oclc' => $self->_oclc,
 		'publication_date' => $publication_date,
