@@ -5,6 +5,7 @@ use warnings;
 
 use Class::Utils qw(set_params);
 use Error::Pure qw(err);
+use MARC::Convert::Wikidata::Item::AudioBook;
 use MARC::Convert::Wikidata::Item::BookEdition;
 use MARC::Convert::Wikidata::Transform;
 
@@ -72,6 +73,8 @@ sub type {
 
 	if ($leader_hr->{'type_of_record'} eq 'a' && $leader_hr->{'bibliographic_level'} eq 'm') {
 		return 'monograph';
+	} elsif ($leader_hr->{'type_of_record'} eq 'i' && $leader_hr->{'bibliographic_level'} eq 'm') {
+		return 'audiobook';
 	} else {
 		err "Unsupported item with leader '$leader'.";
 	}
@@ -80,23 +83,32 @@ sub type {
 sub wikidata {
 	my $self = shift;
 
+	# Parameters.
+	my %params = (
+		'callback_cover' => $self->{'callback_cover'},
+		'callback_lang' => $self->{'callback_lang'},,
+		'callback_publisher_place' => $self->{'callback_publisher_place'},,
+		'callback_people' => $self->{'callback_people'},
+		'callback_publisher_name' => $self->{'callback_publisher_name'},
+		'callback_series' => $self->{'callback_series'},
+		'marc_record' => $self->{'marc_record'},
+		'transform_object' => $self->{'_transform_object'},
+	);
+
 	my $wikidata;
-	if ($self->type eq 'monograph') {
+	my $marc_type = $self->type;
+	if ($marc_type eq 'monograph') {
 		$wikidata = MARC::Convert::Wikidata::Item::BookEdition->new(
-			'callback_cover' => $self->{'callback_cover'},
-			'callback_lang' => $self->{'callback_lang'},,
-			'callback_publisher_place' => $self->{'callback_publisher_place'},,
-			'callback_people' => $self->{'callback_people'},
-			'callback_publisher_name' => $self->{'callback_publisher_name'},
-			'callback_series' => $self->{'callback_series'},
-			'marc_record' => $self->{'marc_record'},
-			'transform_object' => $self->{'_transform_object'},
+			%params,
+		)->wikidata;
+	} elsif ($marc_type eq 'audiobook') {
+		$wikidata = MARC::Convert::Wikidata::Item::AudioBook->new(
+			%params,
 		)->wikidata;
 
 	# TODO Implement series.
-	# TODO Implement audiobook.
 	} else {
-		err "Unsupported MARC type.";
+		err "Item '$marc_type' doesn't supported.";
 	}
 
 	return $wikidata;
