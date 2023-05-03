@@ -34,6 +34,7 @@ sub wikidata {
 			$self->wikidata_authors_of_introduction,
 			$self->wikidata_ccnb,
 			$self->wikidata_compilers,
+			$self->wikidata_directors,
 			$self->wikidata_dml,
 			$self->wikidata_edition_number,
 			$self->wikidata_editors,

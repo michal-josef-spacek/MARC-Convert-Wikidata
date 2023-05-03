@@ -124,6 +124,12 @@ sub wikidata_descriptions {
 	);
 }
 
+sub wikidata_directors {
+	my $self = shift;
+
+	return $self->wikidata_people('directors', 'P57');
+}
+
 sub wikidata_edition_number {
 	my $self = shift;
 
