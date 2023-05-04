@@ -218,6 +218,14 @@ sub _isbns {
 	return (@ret_isbns);
 }
 
+sub _issn {
+	my $self = shift;
+
+	my $issn = $self->_subfield('022', 'a');
+
+	return $issn;
+}
+
 sub _krameriuses {
 	my $self = shift;
 
@@ -278,6 +286,7 @@ sub _process_object {
 		$self->_edition_number ? ('edition_number' => $self->_edition_number) : (),
 		'editors' => $self->{'_people'}->{'editors'},
 		'isbns' => [$self->_isbns],
+		'issn' => $self->_issn,
 		'illustrators' => $self->{'_people'}->{'illustrators'},
 		'krameriuses' => [$self->_krameriuses],
 		'languages' => [$self->_languages],
