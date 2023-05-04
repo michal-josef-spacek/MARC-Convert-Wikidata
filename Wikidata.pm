@@ -7,6 +7,7 @@ use Class::Utils qw(set_params);
 use Error::Pure qw(err);
 use MARC::Convert::Wikidata::Item::AudioBook;
 use MARC::Convert::Wikidata::Item::BookEdition;
+use MARC::Convert::Wikidata::Item::Periodical;
 use MARC::Convert::Wikidata::Transform;
 
 our $VERSION = 0.01;
@@ -75,6 +76,8 @@ sub type {
 		return 'monograph';
 	} elsif ($leader_hr->{'type_of_record'} eq 'i' && $leader_hr->{'bibliographic_level'} eq 'm') {
 		return 'audiobook';
+	} elsif ($leader_hr->{'bibliographic_level'} eq 's') {
+		return 'periodical';
 	} else {
 		err "Unsupported item with leader '$leader'.";
 	}
@@ -105,8 +108,10 @@ sub wikidata {
 		$wikidata = MARC::Convert::Wikidata::Item::AudioBook->new(
 			%params,
 		)->wikidata;
-
-	# TODO Implement series.
+	} elsif ($marc_type eq 'periodical') {
+		$wikidata = MARC::Convert::Wikidata::Item::Periodical->new(
+			%params,
+		)->wikidata;
 	} else {
 		err "Item '$marc_type' doesn't supported.";
 	}
