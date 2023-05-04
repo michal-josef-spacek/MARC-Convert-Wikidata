@@ -30,7 +30,11 @@ Jsou tam dve ccnb, co s tim?
 37. Cache queries.
 38. Parsing of kramerius uri isn't ok - look to dml, we could have more entities
 39. Add P7937 (form of creative work) = Q106833 (audiobook) for audiobook
-40.
+40. Multiple publishers to periodical (cnb000300974)
+41. country of origin to periodical (cnb000300974)
+42. field 71 in periodical (another publishers) (cnb000300974)
+43. field 78 in periodical (follows) (cnb000300974)
+44.
 
 Applied
 =======
