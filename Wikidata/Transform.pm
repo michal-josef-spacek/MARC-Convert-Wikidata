@@ -23,6 +23,7 @@ use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
 Readonly::Array our @COVERS => qw(hardback paperback);
 Readonly::Hash our %PEOPLE_TYPE => {
+	'aft' => 'authors_of_afterword',
 	'aui' => 'authors_of_introduction',
 	'aut' => 'authors',
 	'com' => 'compilers',
@@ -59,6 +60,7 @@ sub new {
 	# Process people in 100, 700.
 	$self->{'_people'} = {
 		'authors' => [],
+		'authors_of_afterword' => [],
 		'authors_of_introduction' => [],
 		'compilers' => [],
 		'directors' => [],
@@ -277,6 +279,7 @@ sub _process_object {
 	# TODO $publication_date_option;
 	$self->{'_object'} = MARC::Convert::Wikidata::Object->new(
 		'authors' => $self->{'_people'}->{'authors'},
+		'authors_of_afterword' => $self->{'_people'}->{'authors_of_afterword'},
 		'authors_of_introduction' => $self->{'_people'}->{'authors_of_introduction'},
 		'ccnb' => $self->_ccnb,
 		'compilers' => $self->{'_people'}->{'compilers'},

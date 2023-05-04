@@ -76,6 +76,12 @@ sub wikidata_authors {
 	return $self->wikidata_people('authors', 'P50');
 }
 
+sub wikidata_authors_of_afterword {
+	my $self = shift;
+
+	return $self->wikidata_people('authors_of_afterword', 'P2680');
+}
+
 sub wikidata_authors_of_introduction {
 	my $self = shift;
 
