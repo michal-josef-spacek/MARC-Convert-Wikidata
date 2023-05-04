@@ -299,6 +299,27 @@ sub wikidata_isbn_13 {
 	return @ret;
 }
 
+sub wikidata_issn {
+	my $self = shift;
+
+	if (! $self->{'transform_object'}->issn) {
+		return;
+	}
+
+	return (
+		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'external-id',
+				'datavalue' => Wikibase::Datatype::Value::String->new(
+					'value' => $self->{'transform_object'}->issn,
+				),
+				'property' => 'P236',
+			),
+		),
+	);
+}
+
 sub wikidata_labels {
 	my $self = shift;
 
