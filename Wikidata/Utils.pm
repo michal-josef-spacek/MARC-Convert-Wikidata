@@ -310,6 +310,7 @@ sub clean_publisher_place {
 
 	my $dict_hr = {
 		'Blansku' => 'Blansko',
+		'Plzni' => decode_utf8('Plzeň'),
 		'Praze' => 'Praha',
 		decode_utf8('Pardubicích') => 'Pardubice',
 		decode_utf8('Brně') => 'Brno',
