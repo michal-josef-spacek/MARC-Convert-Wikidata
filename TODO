@@ -19,7 +19,6 @@ Je tam vice ccnb, jedno pro dilo, dalsi pro jednotlive svazky
 27. Dve mista vydani: cnb001851291, cnb002343708
 28. Jak se chovat k cnb001304654 ?
 29. Implement bad isbn (901b field)
-30. Handle audiobook: cnb003181564
 31. English/Czech edition or audiobook or periodical - different labels.
 see Q111109207
 32. Test undefined edition number. See cnb003232974
@@ -84,3 +83,6 @@ OK [20220731] skim
 
 36. More subtitles (support 245n and 245p) - first version in same as 245b
 OK [20230112] skim
+
+30. Handle audiobook: cnb003181564
+OK [20230505] skim
