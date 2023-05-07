@@ -144,6 +144,8 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/\s*dopln\.//ms;
 	$re = decode_utf8('doplněné');
 	$ret_edition_number =~ s/\s*$re//ms;
+	$re = decode_utf8('upravené');
+	$ret_edition_number =~ s/\s*$re//ms;
 	$ret_edition_number =~ s/\s*upr\.//ms;
 	$ret_edition_number =~ s/\s*opr\.//ms;
 	$re = decode_utf8('revidované');
