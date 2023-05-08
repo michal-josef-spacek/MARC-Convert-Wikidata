@@ -63,7 +63,6 @@ sub _description {
 
 	my $ret;
 	if ($lang eq 'cs') {
-		# XXX Czech
 		$ret = decode_utf8('české vydání audioknihy');
 		if (defined $self->{'transform_object'}->publication_date) {
 			$ret .= ' z roku '.$self->{'transform_object'}->publication_date;
@@ -73,7 +72,6 @@ sub _description {
 		if (defined $self->{'transform_object'}->publication_date) {
 			$ret = $self->{'transform_object'}->publication_date.' ';
 		}
-		# XXX Czech
 		$ret .= 'Czech audiobook edition';
 	}
 
