@@ -136,10 +136,10 @@ sub clean_edition_number {
 	$re = decode_utf8('aktualizované');
 	$ret_edition_number =~ s/\s*$re//ms;
 	$ret_edition_number =~ s/\s*nezm\.//ms;
-	$re = decode_utf8('rozš');
-	$ret_edition_number =~ s/\s*$re\.//ms;
 	$re = decode_utf8('rozšířené');
 	$ret_edition_number =~ s/\s*$re//ms;
+	$re = decode_utf8('rozš');
+	$ret_edition_number =~ s/\s*$re\.?//ms;
 	$ret_edition_number =~ s/\s*dopl\.//ms;
 	$ret_edition_number =~ s/\s*dopln\.//ms;
 	$re = decode_utf8('doplněné');
