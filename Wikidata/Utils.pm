@@ -268,7 +268,9 @@ sub clean_publication_date {
 		$option = 'circa';
 	}
 
-	if ($ret_publication_date !~ m/^\d+$/ms) {
+	if ($ret_publication_date !~ m/^\d+$/ms
+		&& $ret_publication_date !~ m/^\d+\-\d+$/ms) {
+
 		if ($DEBUG) {
 			warn "Publication date '$publication_date' couldn't clean.";
 		}
