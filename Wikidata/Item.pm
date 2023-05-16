@@ -163,6 +163,19 @@ sub wikidata_editors {
 	return $self->wikidata_people('editors', 'P98');
 }
 
+sub wikidata_end_time {
+	my $self = shift;
+
+	if (! defined $self->{'transform_object'}->end_time) {
+		return;
+	}
+
+	# XXX end_time is every year? Probably not.
+	my $end_time = $self->{'transform_object'}->end_time;
+
+	return $self->_year($end_time, 'end time', 'P582');
+}
+
 sub wikidata_compilers {
 	my $self = shift;
 
@@ -714,6 +727,19 @@ sub wikidata_series {
 	}
 
 	return @series;
+}
+
+sub wikidata_start_time {
+	my $self = shift;
+
+	if (! defined $self->{'transform_object'}->start_time) {
+		return;
+	}
+
+	# XXX start_time is every year? Probably not.
+	my $start_time = $self->{'transform_object'}->start_time;
+
+	return $self->_year($start_time, 'start time', 'P580');
 }
 
 sub wikidata_subtitles {
