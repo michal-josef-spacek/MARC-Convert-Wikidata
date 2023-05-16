@@ -577,31 +577,8 @@ sub wikidata_publication_date {
 
 	# XXX Publication date is every year? Probably not.
 	my $publication_date = $self->{'transform_object'}->publication_date;
-	my $value_dt = eval {
-		DateTime->new(
-			'year' => $publication_date,
-		);
-	};
-	if ($EVAL_ERROR) {
-		return;
-		err "Cannot process publication date '$publication_date'.",
-			'Error', $EVAL_ERROR;
-	}
-	my $value = '+'.$value_dt->iso8601().'Z';
-	return (
-		Wikibase::Datatype::Statement->new(
-			'references' => [$self->wikidata_reference],
-			'snak' => Wikibase::Datatype::Snak->new(
-				'datatype' => 'time',
-				'datavalue' => Wikibase::Datatype::Value::Time->new(
-					# Precision for year.
-					'precision' => 9,
-					'value' => $value,
-				),
-				'property' => 'P577',
-			),
-		),
-	);
+
+	return $self->_year($publication_date, 'publication date', 'P577');
 }
 
 sub wikidata_publishers {
@@ -870,6 +847,36 @@ sub _cover_translate {
 	}
 
 	return $cover_qid;
+}
+
+sub _year {
+	my ($self, $year, $title, $property) = @_;
+
+	my $value_dt = eval {
+		DateTime->new(
+			'year' => $year,
+		);
+	};
+	if ($EVAL_ERROR) {
+		return;
+		err "Cannot process $title '$year'.",
+			'Error', $EVAL_ERROR;
+	}
+	my $value = '+'.$value_dt->iso8601().'Z';
+	return (
+		Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'time',
+				'datavalue' => Wikibase::Datatype::Value::Time->new(
+					# Precision for year.
+					'precision' => 9,
+					'value' => $value,
+				),
+				'property' => $property,
+			),
+		),
+	);
 }
 
 1;
