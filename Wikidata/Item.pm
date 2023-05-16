@@ -510,6 +510,21 @@ sub wikidata_people {
 	return @people;
 }
 
+sub wikidata_photographers {
+	my $self = shift;
+
+	my $property_snaks_ar = [
+		Wikibase::Datatype::Snak->new(
+			'datatype' => 'wikibase-item',
+			'datavalue' => Wikibase::Datatype::Value::Item->new(
+				'value' => 'Q33231',
+			),
+			'property' => 'P2868',
+		),
+	];
+	return $self->wikidata_people('photographers', 'P50', $property_snaks_ar);
+}
+
 sub wikidata_place_of_publication {
 	my $self = shift;
 

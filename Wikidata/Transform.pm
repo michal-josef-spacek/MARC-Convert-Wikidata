@@ -31,6 +31,7 @@ Readonly::Hash our %PEOPLE_TYPE => {
 	'edt' => 'editors',
 	'ill' => 'illustrators',
 	'nrt' => 'narrators',
+	'pht' => 'photographers',
 	'trl' => 'translators',
 };
 
@@ -67,6 +68,7 @@ sub new {
 		'editors' => [],
 		'illustrators' => [],
 		'narrators' => [],
+		'photographers' => [],
 		'translators' => [],
 	};
 	$self->_process_people_100;
@@ -296,6 +298,7 @@ sub _process_object {
 		'narrators' => $self->{'_people'}->{'narrators'},
 		'number_of_pages' => $self->_number_of_pages,
 		'oclc' => $self->_oclc,
+		'photographers' => $self->{'_people'}->{'photographers'},
 		'publication_date' => $publication_date,
 		'publishers' => [$self->_publishers],
 		'series' => [$self->_series],

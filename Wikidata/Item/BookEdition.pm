@@ -46,6 +46,7 @@ sub wikidata {
 			$self->wikidata_number_of_pages,
 			$self->wikidata_oclc,
 			$self->wikidata_place_of_publication,
+			$self->wikidata_photographers,
 			$self->wikidata_publication_date,
 			$self->wikidata_publishers,
 			$self->wikidata_series,
