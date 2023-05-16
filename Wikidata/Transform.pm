@@ -277,8 +277,14 @@ sub _process_object {
 	my $self = shift;
 
 	my ($publication_date, $publication_date_option) = $self->_publication_date;
+	my ($start_time, $end_time);
+	if ($publication_date =~ m/^(\d+)\-(\d+)$/ms) {
+		$start_time = $1;
+		$end_time = $2;
+		undef $publication_date;
+	}
 
-	# TODO $publication_date_option;
+	# TODO $publication_date_option; end_time; start_time
 	$self->{'_object'} = MARC::Convert::Wikidata::Object->new(
 		'authors' => $self->{'_people'}->{'authors'},
 		'authors_of_afterword' => $self->{'_people'}->{'authors_of_afterword'},
@@ -290,6 +296,7 @@ sub _process_object {
 		$self->_dml ? ('dml' => $self->_dml) : (),
 		$self->_edition_number ? ('edition_number' => $self->_edition_number) : (),
 		'editors' => $self->{'_people'}->{'editors'},
+		'end_time' => $end_time,
 		'isbns' => [$self->_isbns],
 		'issn' => $self->_issn,
 		'illustrators' => $self->{'_people'}->{'illustrators'},
@@ -302,6 +309,7 @@ sub _process_object {
 		'publication_date' => $publication_date,
 		'publishers' => [$self->_publishers],
 		'series' => [$self->_series],
+		'start_time' => $start_time,
 		'subtitles' => [$self->_subtitles],
 		'title' => $self->_title,
 		'translators' => $self->{'_people'}->{'translators'},
