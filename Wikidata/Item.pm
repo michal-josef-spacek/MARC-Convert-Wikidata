@@ -172,7 +172,7 @@ sub wikidata_compilers {
 			'datavalue' => Wikibase::Datatype::Value::Item->new(
 				'value' => 'Q29514511',
 			),
-			'property' => 'P106',
+			'property' => 'P2868',
 		),
 	];
 	return $self->wikidata_people('compilers', 'P98', $property_snaks_ar);
