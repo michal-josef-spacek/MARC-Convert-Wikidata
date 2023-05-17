@@ -66,26 +66,32 @@ $input_publisher_place = 'Nymburce';
 $ret = clean_publisher_place($input_publisher_place);
 is($ret, 'Nymburk', "Publisher name '$input_publisher_place' after cleanup.");
 
+# Test.
 $input_publisher_place = decode_utf8('V Jimramově');
 $ret = clean_publisher_place($input_publisher_place);
 is($ret, 'Jimramov', encode_utf8("Publisher name '$input_publisher_place' after cleanup."));
 
+# Test.
 $input_publisher_place = decode_utf8('Veletiny :');
 $ret = clean_publisher_place($input_publisher_place);
 is($ret, 'Veletiny', encode_utf8("Publisher name '$input_publisher_place' after cleanup."));
 
+# Test.
 $input_publisher_place = decode_utf8('V Jihlavě');
 $ret = clean_publisher_place($input_publisher_place);
 is($ret, 'Jihlava', encode_utf8("Publisher name '$input_publisher_place' after cleanup."));
 
+# Test.
 $input_publisher_place = decode_utf8('V Blansku');
 $ret = clean_publisher_place($input_publisher_place);
 is($ret, 'Blansko', encode_utf8("Publisher name '$input_publisher_place' after cleanup."));
 
+# Test.
 $input_publisher_place = decode_utf8('V Přerově');
 $ret = clean_publisher_place($input_publisher_place);
 is($ret, decode_utf8('Přerov'), encode_utf8("Publisher name '$input_publisher_place' after cleanup."));
 
+# Test.
 $input_publisher_place = decode_utf8('Č. Budějovice');
 $ret = clean_publisher_place($input_publisher_place);
 is($ret, decode_utf8('České Budějovice'), encode_utf8("Publisher name '$input_publisher_place' after cleanup."));
