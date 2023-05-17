@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_publication_date);
-use Test::More 'tests' => 12;
+use Test::More 'tests' => 13;
 use Test::NoWarnings;
 
 # Test.
