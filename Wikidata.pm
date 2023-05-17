@@ -72,10 +72,19 @@ sub type {
 	# XXX Use MARC::Leader if exist.
 	my $leader_hr = $self->_leader($leader);
 
+	# Language material
 	if ($leader_hr->{'type_of_record'} eq 'a' && $leader_hr->{'bibliographic_level'} eq 'm') {
 		return 'monograph';
+
+	# XXX Notated music
+	} elsif ($leader_hr->{'type_of_record'} eq 'c' && $leader_hr->{'bibliographic_level'} eq 'm') {
+		return 'monograph';
+
+	# Nonmusical sound recording
 	} elsif ($leader_hr->{'type_of_record'} eq 'i' && $leader_hr->{'bibliographic_level'} eq 'm') {
 		return 'audiobook';
+
+	# Serial
 	} elsif ($leader_hr->{'bibliographic_level'} eq 's') {
 		return 'periodical';
 	} else {
