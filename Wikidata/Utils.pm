@@ -269,7 +269,7 @@ sub clean_publication_date {
 	}
 
 	if ($ret_publication_date !~ m/^\d+$/ms
-		&& $ret_publication_date !~ m/^\d+\-\d+$/ms) {
+		&& $ret_publication_date !~ m/^\d+\-\d*$/ms) {
 
 		if ($DEBUG) {
 			warn "Publication date '$publication_date' couldn't clean.";
