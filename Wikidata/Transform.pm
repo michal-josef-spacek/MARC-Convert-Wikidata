@@ -278,9 +278,11 @@ sub _process_object {
 
 	my ($publication_date, $publication_date_option) = $self->_publication_date;
 	my ($start_time, $end_time);
-	if ($publication_date =~ m/^(\d+)\-(\d+)$/ms) {
+	if ($publication_date =~ m/^(\d+)\-(\d*)$/ms) {
 		$start_time = $1;
-		$end_time = $2;
+		if ($2) {
+			$end_time = $2;
+		}
 		undef $publication_date;
 	}
 
