@@ -464,11 +464,15 @@ sub _series {
 		$series_name = clean_series_name($series_name);
 		my $series_ordinal = $series_490->subfield('v');
 		$series_ordinal = clean_series_ordinal($series_ordinal);
-		push @series, MARC::Convert::Wikidata::Object::Series->new(
-			'name' => $series_name,
-			# TODO publisher
-			'series_ordinal' => $series_ordinal,
-		);
+
+		# XXX Over all publishers.
+		foreach my $publisher ($self->_publishers) {
+			push @series, MARC::Convert::Wikidata::Object::Series->new(
+				'name' => $series_name,
+				'publisher' => $publisher,
+				'series_ordinal' => $series_ordinal,
+			);
+		}
 	}
 
 	return @series;
