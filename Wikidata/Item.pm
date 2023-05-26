@@ -7,6 +7,7 @@ use Class::Utils qw(set_params);
 use DateTime;
 use English;
 use Error::Pure qw(err);
+use Scalar::Util qw(blessed);
 use Unicode::UTF8 qw(decode_utf8);
 use Wikibase::Datatype::Reference;
 use Wikibase::Datatype::Snak;
@@ -56,7 +57,10 @@ sub new {
 	# Process parameters.
 	set_params($self, @params);
 
-	if (! defined $self->{'marc_record'}
+	if (! defined $self->{'marc_record'}) {
+		err "Parameter 'marc_record' is required.";
+	}
+	if (! blessed($self->{'marc_record'})
 		|| ! $self->{'marc_record'}->isa('MARC::Record')) {
 
 		err "Parameter 'marc_record' must be a MARC::Record object.";

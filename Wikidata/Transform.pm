@@ -18,6 +18,7 @@ use MARC::Convert::Wikidata::Utils qw(clean_cover clean_date clean_edition_numbe
 	clean_publisher_place clean_series_name clean_series_ordinal clean_subtitle
 	clean_title);
 use Readonly;
+use Scalar::Util qw(blessed);
 use URI;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
@@ -50,7 +51,10 @@ sub new {
 	# Process parameters.
 	set_params($self, @params);
 
-	if (! defined $self->{'marc_record'}
+	if (! defined $self->{'marc_record'}) {
+		err "Parameter 'marc_record' is required.";
+	}
+	if (! blessed($self->{'marc_record'})
 		|| ! $self->{'marc_record'}->isa('MARC::Record')) {
 
 		err "Parameter 'marc_record' must be a MARC::Record object.";

@@ -9,6 +9,7 @@ use MARC::Convert::Wikidata::Item::AudioBook;
 use MARC::Convert::Wikidata::Item::BookEdition;
 use MARC::Convert::Wikidata::Item::Periodical;
 use MARC::Convert::Wikidata::Transform;
+use Scalar::Util qw(blessed);
 
 our $VERSION = 0.01;
 
@@ -46,7 +47,10 @@ sub new {
 	# Process parameters.
 	set_params($self, @params);
 
-	if (! defined $self->{'marc_record'}
+	if (! defined $self->{'marc_record'}) {
+		err "Parameter 'marc_record' is required.";
+	}
+	if (! blessed($self->{'marc_record'})
 		|| ! $self->{'marc_record'}->isa('MARC::Record')) {
 
 		err "Parameter 'marc_record' must be a MARC::Record object.";
