@@ -15,7 +15,7 @@ Readonly::Array our @EXPORT_OK => qw(clean_cover clean_date clean_edition_number
 	clean_title);
 Readonly::Array our @COVERS => qw(hardback paperback);
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 our $DEBUG = 0;
 
 sub clean_cover {
