@@ -7,7 +7,7 @@ use File::Object;
 use MARC::Record;
 use MARC::Convert::Wikidata;
 use Perl6::Slurp qw(slurp);
-use Test::More 'tests' => 4;
+use Test::More 'tests' => 5;
 use Test::NoWarnings;
 use Test::Warn;
 
@@ -17,6 +17,16 @@ my $data = File::Object->new->up->dir('data');
 # Test.
 eval {
 	MARC::Convert::Wikidata->new;
+};
+is($EVAL_ERROR, "Parameter 'marc_record' is required.\n",
+	"Parameter 'marc_record' is required.");
+clean();
+
+# Test.
+eval {
+	MARC::Convert::Wikidata->new(
+		'marc_record' => 'bad',
+	);
 };
 is($EVAL_ERROR, "Parameter 'marc_record' must be a MARC::Record object.\n",
 	"Parameter 'marc_record' must be a MARC::Record object.");
