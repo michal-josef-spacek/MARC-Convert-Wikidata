@@ -27,6 +27,7 @@ requires 'MARC::Convert::Wikidata::Object' => 0;
 requires 'Readonly' => 0;
 requires 'Roman' => 0;
 requires 'Unicode::UTF8' => 0;
+requires 'URI' => 0;
 requires 'Wikibase::Datatype' => 0;
 resources 'bugtracker' => 'https://github.com/michal-josef-spacek/MARC-Convert-Wikidata/issues',
 resources 'homepage' => 'https://github.com/michal-josef-spacek/MARC-Convert-Wikidata';
