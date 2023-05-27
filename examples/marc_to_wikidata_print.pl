@@ -138,4 +138,52 @@ my $item = $obj->wikidata;
 print encode_utf8(scalar Wikibase::Datatype::Print::Item::print($item));
 
 # Output like:
-# TODO
+# TODO Add callbacks.
+# No callback method for translation of people in 'authors' method.
+# No callback method for translation of language.
+# Label: Broučci: pro malé i veliké děti (en)
+# Description: 1917 Czech book edition (en)
+# Statements:
+#   P31: Q3331189 (normal)
+#   P3184: cnb003102359 (normal)
+#   References:
+#     {
+#       P248: Q86914821
+#       P3184: cnb003102359
+#       P813: 26 May 2023 (Q1985727)
+#     }
+#   P393: 4 (normal)
+#   References:
+#     {
+#       P248: Q86914821
+#       P3184: cnb003102359
+#       P813: 26 May 2023 (Q1985727)
+#     }
+#   P1104: 85 (normal)
+#   References:
+#     {
+#       P248: Q86914821
+#       P3184: cnb003102359
+#       P813: 26 May 2023 (Q1985727)
+#     }
+#   P577: 1917 (Q1985727) (normal)
+#   References:
+#     {
+#       P248: Q86914821
+#       P3184: cnb003102359
+#       P813: 26 May 2023 (Q1985727)
+#     }
+#   P1680: pro malé i veliké děti (cs) (normal)
+#   References:
+#     {
+#       P248: Q86914821
+#       P3184: cnb003102359
+#       P813: 26 May 2023 (Q1985727)
+#     }
+#   P1476: Broučci (cs) (normal)
+#   References:
+#     {
+#       P248: Q86914821
+#       P3184: cnb003102359
+#       P813: 26 May 2023 (Q1985727)
+#     }
