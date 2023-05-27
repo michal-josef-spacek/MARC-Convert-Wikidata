@@ -36,7 +36,9 @@ Jsou tam dve ccnb, co s tim?
 44. Check ERRORS section in doc (Wikidata.pm)
 45. Improve example in doc to add callbacks and use backend to print english
 descriptions.
-46.
+46. Rename clean_date() to something clean_czech_date().
+47. More examples in Utils.pm
+48.
 
 Applied
 =======
