@@ -1,4 +1,5 @@
 0.02
+ - Add doc for Utils.
  - Add example to doc.
  - Add README file.
  - Fix dependencies (missing URI).
