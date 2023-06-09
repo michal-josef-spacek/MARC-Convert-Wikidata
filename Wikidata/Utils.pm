@@ -7,7 +7,7 @@ use warnings;
 use List::Util qw(none);
 use Readonly;
 use Roman;
-use Unicode::UTF8 qw(decode_utf8);
+use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
 Readonly::Array our @EXPORT_OK => qw(clean_cover clean_date clean_edition_number
 	clean_number_of_pages clean_oclc clean_publication_date clean_publisher_name
@@ -211,7 +211,7 @@ sub clean_edition_number {
 
 	if ($ret_edition_number !~ m/^\d+$/ms) {
 		if ($DEBUG) {
-			warn "Edition number '$edition_number' couldn't clean ($ret_edition_number).";
+			warn encode_utf8("Edition number '$edition_number' couldn't clean ($ret_edition_number).");
 		}
 		$ret_edition_number = undef;
 	}
