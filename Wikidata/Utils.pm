@@ -262,18 +262,41 @@ sub clean_publication_date {
 
 	my $ret_publication_date = $publication_date;
 
-	# Remove [] on begin and end.
-	$ret_publication_date = _remove_square_brackets($ret_publication_date);
-
-	my $option;
-	if ($ret_publication_date =~ s/^c(.*)$/$1/ms
-		|| $ret_publication_date =~ s/^(.*)\?$/$1/ms) {
-
-		$option = 'circa';
+	my ($start_date, $end_date, $dash);
+	if ($ret_publication_date =~ m/^([^-]+)(\-?)(.*)$/ms) {
+		$start_date = $1;
+		$dash = $2;
+		$end_date = $3;
 	}
 
-	if ($ret_publication_date !~ m/^\d+$/ms
-		&& $ret_publication_date !~ m/^\d+\-\d*$/ms) {
+	# Remove [] on begin and end.
+	# XXX [] is circa
+	$start_date = _remove_square_brackets($start_date);
+	if (defined $end_date) {
+		$end_date = _remove_square_brackets($end_date);
+	}
+
+	# Detect circa.
+	my $option;
+	foreach my $date ($start_date, $end_date) {
+		if (defined $date && ($date =~ s/^c(.*)$/$1/ms
+			|| $date =~ s/^(.*)\?$/$1/ms)) {
+
+			# XXX Circa of start and end
+			$option = 'circa';
+		}
+	}
+
+	# Combine back.
+	$ret_publication_date = $start_date;
+	if ($dash) {
+		$ret_publication_date .= $dash;
+	}
+	if ($end_date) {
+		$ret_publication_date .= $end_date;
+	}
+
+	if ($ret_publication_date !~ m/^(\d+)\-?(.*)$/ms) {
 
 		if ($DEBUG) {
 			warn "Publication date '$publication_date' couldn't clean.";
