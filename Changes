@@ -1,3 +1,5 @@
+0.05
+
 0.04 2023-06-11T18:24:52+02:00
  - Add publication date use case.
  - Improve clean_publication_date() code.
