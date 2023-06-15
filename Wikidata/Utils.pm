@@ -154,6 +154,7 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/\s*opr\.//ms;
 	$re = decode_utf8('revidované');
 	$ret_edition_number =~ s/\s*$re//ms;
+	$ret_edition_number =~ s/\s*zcela//ms;
 
 	# Czech.
 	$re = decode_utf8('(v|V) českém jazyce');
