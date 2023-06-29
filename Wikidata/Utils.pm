@@ -348,6 +348,7 @@ sub clean_publisher_place {
 		'Praze' => 'Praha',
 		decode_utf8('Pardubicích') => 'Pardubice',
 		decode_utf8('Brně') => 'Brno',
+		decode_utf8('Hradci Králové') => decode_utf8('Hradec Králové'),
 		decode_utf8('Jičíně') => decode_utf8('Jičín'),
 		decode_utf8('Jihlavě') => 'Jihlava',
 		decode_utf8('Jimramově') => 'Jimramov',
