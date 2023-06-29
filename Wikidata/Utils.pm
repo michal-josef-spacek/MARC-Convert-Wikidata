@@ -357,6 +357,7 @@ sub clean_publisher_place {
 		'Olomouci' => 'Olomouc',
 		decode_utf8('Poděbradech') => decode_utf8('Poděbrady'),
 		decode_utf8('Přerově') => decode_utf8('Přerov'),
+		decode_utf8('Telči') => decode_utf8('Telč'),
 		decode_utf8('Třebíč na Moravě') => decode_utf8('Třebíč'),
 		decode_utf8('Třebíči') => decode_utf8('Třebíč'),
 		decode_utf8('Třebíči na Moravě') => decode_utf8('Třebíč'),
