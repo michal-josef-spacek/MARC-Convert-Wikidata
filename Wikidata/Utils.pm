@@ -152,6 +152,7 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/\s*$re//ms;
 	$ret_edition_number =~ s/\s*upr\.//ms;
 	$ret_edition_number =~ s/\s*opr\.//ms;
+	$ret_edition_number =~ s/\s*oprav\.//ms;
 	$re = decode_utf8('revidované');
 	$ret_edition_number =~ s/\s*$re//ms;
 	$ret_edition_number =~ s/\s*zcela//ms;
