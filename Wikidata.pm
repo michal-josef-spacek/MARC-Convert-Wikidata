@@ -44,6 +44,9 @@ sub new {
 	# MARC::Record object.
 	$self->{'marc_record'} = undef;
 
+	# Verbose mode.
+	$self->{'verbose'} = 0;
+
 	# Process parameters.
 	set_params($self, @params);
 
@@ -233,6 +236,14 @@ Default value is undef.
 MARC::Record object.
 
 It's required.
+
+=item * C<verbose>
+
+Verbose mode.
+
+Could be 1 or 0.
+
+Default value is 0.
 
 =back
 
