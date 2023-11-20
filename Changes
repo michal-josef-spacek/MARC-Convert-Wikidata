@@ -1,5 +1,6 @@
 0.07
  - Add $options_hr return value to clean_date(). Implment circa date.
+ - Add example for clean_number_of_pages() to doc.
 
 0.06 2023-11-20T14:16:34+01:00
  - Rewrite to use of MARC::Leader.
