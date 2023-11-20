@@ -59,6 +59,8 @@ sub clean_date {
 		return;
 	}
 
+	my $options_hr = {};
+
 	my $months_hr = {
 		'leden' => '01',
 		decode_utf8('únor') => '02',
@@ -75,6 +77,12 @@ sub clean_date {
 	};
 
 	my $ret_date = $date;
+
+	# Date is circa.
+	if ($ret_date =~ s/^c(.*)$/$1/ms) {
+		$options_hr->{'circa'} = 1;
+	}
+
 	foreach my $month (keys %{$months_hr}) {
 		$ret_date =~ s/^(\d{4})\s*$month\s*(\d+)\.$/$1-$months_hr->{$month}-$2/ms;
 	}
@@ -89,7 +97,7 @@ sub clean_date {
 		$ret_date = undef;
 	}
 
-	return $ret_date;
+	return wantarray ? ($ret_date, $options_hr) : $ret_date;
 }
 
 sub clean_edition_number {
@@ -516,6 +524,7 @@ MARC::Convert::Wikidata::Utils - Utilities for MARC::Convert::Wikidata.
 
  my $cleaned_cover = clean_cover($cover);
  my $cleaned_date = clean_date($date);
+ my ($cleaned_date, $options_hr) = clean_date($date);
  my $cleaned_edition_number = clean_edition_number($edition_number);
  my $cleaned_number_of_pages = clean_number_of_pages($number_of_pages);
  my $cleaned_oclc = clean_oclc($oclc);
@@ -540,10 +549,12 @@ Returns string or undef.
 =head2 C<clean_date>
 
  my $cleaned_date = clean_date($date);
+ my ($cleaned_date, $options_hr) = clean_date($date);
 
 Clean date in Czech language.
 
-Returns string or undef.
+Returns string or undef in scalar context.
+Returns string or undef of date and hash reference with options in array context.
 
 =head2 C<clean_edition_number>
 
