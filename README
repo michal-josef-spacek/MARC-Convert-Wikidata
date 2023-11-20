@@ -310,7 +310,7 @@ DEPENDENCIES
     Class::Utils, Error::Pure, MARC::Convert::Wikidata::Item::AudioBook,
     MARC::Convert::Wikidata::Item::BookEdition,
     MARC::Convert::Wikidata::Item::Periodical,
-    MARC::Convert::Wikidata::Transform, Scalar::Util.
+    MARC::Convert::Wikidata::Transform, MARC::Leader, Scalar::Util.
 
 SEE ALSO
     MARC::Record

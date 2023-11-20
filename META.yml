@@ -34,6 +34,7 @@ requires:
   English: 0
   Error::Pure: 0
   MARC::Convert::Wikidata::Object: 0
+  MARC::Leader: 0
   Readonly: 0
   Roman: 0
   URI: 0
