@@ -363,6 +363,7 @@ sub clean_publisher_place {
 		decode_utf8('Jimramově') => 'Jimramov',
 		decode_utf8('Karlových Varech') => 'Karlovy Vary',
 		'Liberci' => 'Liberec',
+		decode_utf8('Litoměřicích') => decode_utf8('Litoměřice'),
 		'Nymburce' => 'Nymburk',
 		'Olomouci' => 'Olomouc',
 		decode_utf8('Ostravě') => 'Ostrava',
