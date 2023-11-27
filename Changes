@@ -1,6 +1,7 @@
 0.07
  - Add $options_hr return value to clean_date(). Implment circa date.
  - Add Výst. to series ordinal cleanup.
+ - Add Výstava to series ordinal cleanup.
  - Add Litoměřice to publishing places cleanup.
  - Add example for clean_number_of_pages() to doc.
 
