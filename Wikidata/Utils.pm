@@ -440,6 +440,8 @@ sub clean_series_ordinal {
 	$ret_series_ordinal =~ s/^$c\.\s*//ms;
 	$c = decode_utf8('(č|Č)íslo');
 	$ret_series_ordinal =~ s/^$c\s*//ms;
+	$c = decode_utf8('Výst');
+	$ret_series_ordinal =~ s/$c\.\s*//ms;
 
 	$ret_series_ordinal =~ s/^(\d+)\.$/$1/ms;
 
