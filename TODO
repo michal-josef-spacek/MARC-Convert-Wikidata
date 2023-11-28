@@ -39,7 +39,9 @@ descriptions.
 46. Rename clean_date() to something clean_czech_date().
 47. More examples in Utils.pm
 48. Object named as to series too.
-49.
+49. cnb000993953 for https://en.isabart.org/document/448 is obsoleted by NKC.
+skip? or deprecate?
+50.
 
 Applied
 =======
