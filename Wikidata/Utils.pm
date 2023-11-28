@@ -505,6 +505,7 @@ sub _remove_square_brackets {
 
 	$string =~ s/^\[\s*(.*?)\s*\]$/$1/ms;
 	$string =~ s/^\[\s*([^\]]+)$/$1/ms;
+	$string =~ s/^([^\]]+)\s*\]$/$1/ms;
 
 	return $string;
 }
