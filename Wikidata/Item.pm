@@ -555,7 +555,13 @@ sub wikidata_place_of_publication {
 		return;
 	} else {
 		foreach my $publisher (@{$self->{'transform_object'}->publishers}) {
-			my $place_qid = $self->{'callback_publisher_place'}->($publisher);
+			my $place_qid;
+			# No concrete place.
+			if ($publisher->place eq 'sine loco') {
+				$place_qid = 'Q11254169';
+			} else {
+				$place_qid = $self->{'callback_publisher_place'}->($publisher);
+			}
 			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher, $publication_date);
 			if ($place_qid) {
 				push @places, [$publisher_qid, $place_qid];

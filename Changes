@@ -5,6 +5,7 @@
  - Add Litoměřice to publishing places cleanup.
  - Add example for clean_number_of_pages() to doc.
  - Fix cleanup of publisher name with ending ']'.
+ - Implement sine loco.
 
 0.06 2023-11-20T14:16:34+01:00
  - Rewrite to use of MARC::Leader.
