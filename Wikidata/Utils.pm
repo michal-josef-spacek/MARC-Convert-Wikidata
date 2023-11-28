@@ -398,6 +398,8 @@ sub clean_publisher_place {
 	# [Praha]
 	$ret_publisher_place =~ s/^\[(.*?)\]$/$1/ms;
 
+	$ret_publisher_place =~ s/^(.*)\?$/$1/ms;
+
 	return $ret_publisher_place;
 }
 

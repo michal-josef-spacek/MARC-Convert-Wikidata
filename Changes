@@ -3,6 +3,7 @@
  - Add Výst. to series ordinal cleanup.
  - Add Výstava to series ordinal cleanup.
  - Add Litoměřice to publishing places cleanup.
+ - Add Praha? to publishing places cleanup.
  - Add example for clean_number_of_pages() to doc.
  - Fix cleanup of publisher name with ending ']'.
  - Implement sine loco.
