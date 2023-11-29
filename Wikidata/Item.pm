@@ -584,7 +584,17 @@ sub wikidata_place_of_publication {
 				),
 				'property' => 'P291',
 			),
-			# TODO property snak with publisher if multiples = 1;
+			$multiple ? (
+				'property_snaks' => [
+					Wikibase::Datatype::Snak->new(
+						'datatype' => 'wikibase-item',
+						'datavalue' => Wikibase::Datatype::Value::Item->new(
+							'value' => $_->[0],
+						),
+						'property' => 'P123',
+					),
+				],
+			) : (),
 		);
 	} @places;
 }

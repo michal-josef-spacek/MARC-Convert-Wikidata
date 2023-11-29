@@ -5,6 +5,7 @@
  - Add Výst. to series ordinal cleanup.
  - Add Výstava to series ordinal cleanup.
  - Add example for clean_number_of_pages() to doc.
+ - Add property snak to publishing place to resolve multiple publishers.
  - Fix cleanup of publisher name with ending ']'.
  - Implement sine loco.
 
