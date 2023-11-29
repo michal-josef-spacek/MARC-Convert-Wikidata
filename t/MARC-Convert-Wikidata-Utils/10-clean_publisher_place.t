@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_publisher_place);
-use Test::More 'tests' => 26;
+use Test::More 'tests' => 27;
 use Test::NoWarnings;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
@@ -130,3 +130,8 @@ is($ret, decode_utf8('sine loco'), encode_utf8("Publisher name '$input_publisher
 $input_publisher_place = decode_utf8('Praha?');
 $ret = clean_publisher_place($input_publisher_place);
 is($ret, decode_utf8('Praha'), encode_utf8("Publisher name '$input_publisher_place' after cleanup."));
+
+# Test.
+$input_publisher_place = decode_utf8('Náchodě');
+$ret = clean_publisher_place($input_publisher_place);
+is($ret, decode_utf8('Náchod'), encode_utf8("Publisher name '$input_publisher_place' after cleanup."));
