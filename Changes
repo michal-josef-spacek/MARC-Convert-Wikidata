@@ -1,5 +1,6 @@
 0.08
  - Add Cieszyn to publishing places cleanup.
+ - Add Kroměříž to publishing places cleanup.
 
 0.07 2023-11-29T01:53:01+01:00
  - Add $options_hr return value to clean_date(). Implment circa date.
