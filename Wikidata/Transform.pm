@@ -461,6 +461,8 @@ sub _publishers {
 sub _series {
 	my $self = shift;
 
+	my @series_830 = $self->{'marc_record'}->field('830');
+
 	my @series_490 = $self->{'marc_record'}->field('490');
 	my @series;
 	foreach my $series_490 (@series_490) {
