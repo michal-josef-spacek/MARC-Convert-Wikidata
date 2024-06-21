@@ -458,6 +458,7 @@ sub wikidata_number_of_pages {
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'quantity',
 				'datavalue' => Wikibase::Datatype::Value::Quantity->new(
+					'unit' => 'Q1069725',
 					'value' => $self->{'transform_object'}->number_of_pages,
 				),
 				'property' => 'P1104',
