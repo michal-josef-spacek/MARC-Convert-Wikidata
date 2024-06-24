@@ -53,7 +53,7 @@ sub new {
 	set_params($self, @params);
 
 	check_required($self, 'marc_record');
-	check_isa($self, 'MARC::Record');
+	check_isa($self, 'marc_record', 'MARC::Record');
 
 	$self->{'_transform_object'} = MARC::Convert::Wikidata::Transform->new(
 		'marc_record' => $self->{'marc_record'},
@@ -259,7 +259,7 @@ Returns Wikibase::Datatype instance.
          From Class::Utils::set_params():
                  Unknown parameter '%s'.
          From Mo::utils::check_isa():
-                 Parameter 'marc_record' must be a MARC::Record object.
+                 Parameter 'marc_record' must be a 'MARC::Record' object.
          From Mo::utils::check_required():
                  Parameter 'marc_record' is required.
 
