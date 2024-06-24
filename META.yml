@@ -35,6 +35,7 @@ requires:
   Error::Pure: 0
   MARC::Convert::Wikidata::Object: 0
   MARC::Leader: 0
+  Mo::utils: 0.08
   Readonly: 0
   Roman: 0
   URI: 0
