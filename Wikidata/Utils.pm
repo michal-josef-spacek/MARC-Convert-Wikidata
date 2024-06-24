@@ -394,13 +394,13 @@ sub clean_publisher_place {
 	# [V Praze]
 	$ret_publisher_place =~ s/^\[(.*?)\]?$/$1/ms;
 
-	$ret_publisher_place =~ s/^V\s+//ms;
+	$ret_publisher_place =~ s/^[VW][e]{0,1}\s+//ms;
 
 	foreach my $origin (keys %{$dict_hr}) {
 		$ret_publisher_place =~ s/^$origin$/$dict_hr->{$origin}/ms;
 	}
 
-	$ret_publisher_place =~ s/^V\s+([\s\w]+)$/$1/ms;
+	$ret_publisher_place =~ s/^[VW][e]{0,1}\s+([\s\w]+)$/$1/ms;
 	# [Praha]
 	$ret_publisher_place =~ s/^\[(.*?)\]$/$1/ms;
 
