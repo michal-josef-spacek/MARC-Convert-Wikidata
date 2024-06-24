@@ -34,6 +34,6 @@ eval {
 		'marc_record' => 'bad',
 	);
 };
-is($EVAL_ERROR, "Parameter 'marc_record' must be a MARC::Record object.\n",
-	"Parameter 'marc_record' must be a MARC::Record object.");
+is($EVAL_ERROR, "Parameter 'marc_record' must be a 'MARC::Record' object.\n",
+	"Parameter 'marc_record' must be a 'MARC::Record' object.");
 clean();
