@@ -36,6 +36,7 @@ resources 'homepage' => 'https://github.com/michal-josef-spacek/MARC-Convert-Wik
 resources 'repository' => 'git://github.com/michal-josef-spacek/MARC-Convert-Wikidata';
 test_requires 'File::Object' => 0;
 test_requires 'MARC::Record' => 0;
+test_requires 'NARC::File::XML' => 0;
 test_requires 'Perl6::Slurp' => 0;
 test_requires 'Test::More' => 0;
 test_requires 'Test::NoWarnings' => 0;
