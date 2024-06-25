@@ -1,4 +1,5 @@
 0.11
+ - Add another date cleanup (asi 2010 and po Kr.). Thanks Josef Moravec.
 
 0.10 2024-06-25T19:59:41+02:00
  - Add missing requires.
