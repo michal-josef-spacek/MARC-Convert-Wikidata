@@ -346,11 +346,17 @@ sub _process_people {
 	my $nkcr_aut = $field->subfield('7');
 
 	my $dates = $field->subfield('d');
-	my ($date_of_birth, $date_of_death);
-	if (defined $dates) {
-		($date_of_birth, $date_of_death) = split m/-/ms, $dates;
-		$date_of_birth = clean_date($date_of_birth);
-		$date_of_death = clean_date($date_of_death);
+	my ($date_of_birth, $date_of_death, $work_period_start, $work_period_end);
+	my $active_re = decode_utf8('činný');
+	my $active = $dates =~ m/^$active_re/;
+	$dates =~ s/$active_re\s*(.*)/$1/ms;
+	my ($start_date, $end_date) = split m/-/ms, $dates;
+	if (defined $dates && $active) {
+		$work_period_start = clean_date($start_date);
+		$work_period_end = clean_date($end_date);
+	} elsif (defined $dates) {
+		$date_of_birth = clean_date($start_date);
+		$date_of_death = clean_date($end_date);
 	}
 
 	foreach my $type_key (@type_keys) {
@@ -358,6 +364,8 @@ sub _process_people {
 			MARC::Convert::Wikidata::Object::People->new(
 				'date_of_birth' => $date_of_birth,
 				'date_of_death' => $date_of_death,
+				'work_period_start' => $work_period_start,
+				'work_period_end' => $work_period_end,
 				'name' => $name,
 				'nkcr_aut' => $nkcr_aut,
 				'surname' => $surname,

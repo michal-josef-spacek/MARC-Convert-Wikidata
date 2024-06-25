@@ -79,7 +79,7 @@ sub clean_date {
 	my $ret_date = $date;
 
 	# Date is circa.
-	if ($ret_date =~ s/^c(.*)$/$1/ms) {
+	if ($ret_date =~ s/^asi (.*)$/$1/ms) {
 		$options_hr->{'circa'} = 1;
 	}
 
@@ -88,6 +88,8 @@ sub clean_date {
 	}
 	my $bk = decode_utf8('př. Kr.');
 	$ret_date =~ s/^(\d+)\s*$bk/-$1/ms;
+	my $ak = decode_utf8('po. Kr.');
+	$ret_date =~ s/^(\d+)\s*$ak/$1/ms;
 	$ret_date =~ s/\s*\.$//ms;
 
 	if ($ret_date !~ m/^\-?\d+(\-\d+)?(\-\d+)?$/ms) {
