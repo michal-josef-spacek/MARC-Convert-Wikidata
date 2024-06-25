@@ -38,7 +38,7 @@ requires:
   MARC::Convert::Wikidata::Object::Kramerius: 0
   MARC::Convert::Wikidata::Object::People: 0
   MARC::Convert::Wikidata::Object::Publisher: 0
-  MARC::Convert::Wikidata::Object::Series: 0
+  MARC::Convert::Wikidata::Object::Series: 0.04
   MARC::Leader: 0
   Mo::utils: 0.08
   Readonly: 0
