@@ -5,6 +5,7 @@ author:
 build_requires:
   ExtUtils::MakeMaker: 6.59
   File::Object: 0
+  MARC::File::XML: 0
   MARC::Record: 0
   Perl6::Slurp: 0
   Test::More: 0
