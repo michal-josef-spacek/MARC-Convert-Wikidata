@@ -34,6 +34,11 @@ requires:
   English: 0
   Error::Pure: 0
   MARC::Convert::Wikidata::Object: 0
+  MARC::Convert::Wikidata::Object::ISBN: 0
+  MARC::Convert::Wikidata::Object::Kramerius: 0
+  MARC::Convert::Wikidata::Object::People: 0
+  MARC::Convert::Wikidata::Object::Publisher: 0
+  MARC::Convert::Wikidata::Object::Series: 0
   MARC::Leader: 0
   Mo::utils: 0.08
   Readonly: 0
