@@ -19,7 +19,7 @@ use Wikibase::Datatype::Value::Quantity;
 use Wikibase::Datatype::Value::String;
 use Wikibase::Datatype::Value::Time;
 
-our $VERSION = 0.11;
+our $VERSION = 0.12;
 
 # Constructor.
 sub new {
