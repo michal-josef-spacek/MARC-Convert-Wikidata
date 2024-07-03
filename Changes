@@ -1,5 +1,6 @@
 0.11
  - Add another date cleanup (asi 2010 and po Kr.). Thanks Josef Moravec.
+ - Add tests for Transform.
  - Add work period dates processing. Thanks Josef Moravec.
  - Fix series publisher.
 
