@@ -485,9 +485,7 @@ sub _series {
 			push @series, MARC::Convert::Wikidata::Object::Series->new(
 				'name' => $series_name,
 				defined $publisher ? (
-					'publisher' => MARC::Convert::Wikidata::Object::Publisher->new(
-						'name' => clean_publisher_name($publisher),
-					),
+					'publisher' => $publisher,
 				) : (),
 				'series_ordinal' => $series_ordinal,
 			);
