@@ -105,6 +105,21 @@ sub wikidata_authors_of_introduction {
 	return $self->wikidata_people('authors_of_introduction', 'P2679');
 }
 
+sub wikidata_compilers {
+	my $self = shift;
+
+	my $property_snaks_ar = [
+		Wikibase::Datatype::Snak->new(
+			'datatype' => 'wikibase-item',
+			'datavalue' => Wikibase::Datatype::Value::Item->new(
+				'value' => 'Q29514511',
+			),
+			'property' => 'P3831',
+		),
+	];
+	return $self->wikidata_people('compilers', 'P98', $property_snaks_ar);
+}
+
 sub wikidata_descriptions {
 	my $self = shift;
 
@@ -130,6 +145,25 @@ sub wikidata_directors {
 	my $self = shift;
 
 	return $self->wikidata_people('directors', 'P57');
+}
+
+sub wikidata_dml {
+	my $self = shift;
+
+	if (! defined $self->{'transform_object'}->dml) {
+		return;
+	}
+
+	return Wikibase::Datatype::Statement->new(
+		'references' => [$self->wikidata_reference],
+		'snak' => Wikibase::Datatype::Snak->new(
+			'datatype' => 'external-id',
+			'datavalue' => Wikibase::Datatype::Value::String->new(
+				'value' => $self->{'transform_object'}->dml,
+			),
+			'property' => 'P11378',
+		),
+	);
 }
 
 sub wikidata_edition_number {
@@ -201,40 +235,6 @@ sub wikidata_external_ids {
 	}
 
 	return @ret;
-}
-
-sub wikidata_compilers {
-	my $self = shift;
-
-	my $property_snaks_ar = [
-		Wikibase::Datatype::Snak->new(
-			'datatype' => 'wikibase-item',
-			'datavalue' => Wikibase::Datatype::Value::Item->new(
-				'value' => 'Q29514511',
-			),
-			'property' => 'P3831',
-		),
-	];
-	return $self->wikidata_people('compilers', 'P98', $property_snaks_ar);
-}
-
-sub wikidata_dml {
-	my $self = shift;
-
-	if (! defined $self->{'transform_object'}->dml) {
-		return;
-	}
-
-	return Wikibase::Datatype::Statement->new(
-		'references' => [$self->wikidata_reference],
-		'snak' => Wikibase::Datatype::Snak->new(
-			'datatype' => 'external-id',
-			'datavalue' => Wikibase::Datatype::Value::String->new(
-				'value' => $self->{'transform_object'}->dml,
-			),
-			'property' => 'P11378',
-		),
-	);
 }
 
 sub wikidata_illustrators {
