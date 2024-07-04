@@ -8,6 +8,7 @@ use DateTime;
 use English;
 use Error::Pure qw(err);
 use Mo::utils 0.08 qw(check_isa check_required);
+use Readonly;
 use Scalar::Util qw(blessed);
 use Unicode::UTF8 qw(decode_utf8);
 use Wikibase::Datatype::Reference;
@@ -18,6 +19,11 @@ use Wikibase::Datatype::Value::Monolingual;
 use Wikibase::Datatype::Value::Quantity;
 use Wikibase::Datatype::Value::String;
 use Wikibase::Datatype::Value::Time;
+
+Readonly::Hash our %EXT_ID_MAPPING => (
+	'cnb' => 'P3184',
+	'lccn' => 'P243',
+);
 
 our $VERSION = 0.12;
 
@@ -69,6 +75,18 @@ sub new {
 	return $self;
 }
 
+sub look_for_external_id {
+	my ($self, $external_id_name) = @_;
+
+	foreach my $external_id (@{$self->{'transform_object'}->external_ids}) {
+		if ($external_id->name eq $external_id_name) {
+			return $external_id->value;
+		}
+	}
+
+	return;
+}
+
 sub wikidata_authors {
 	my $self = shift;
 
@@ -85,27 +103,6 @@ sub wikidata_authors_of_introduction {
 	my $self = shift;
 
 	return $self->wikidata_people('authors_of_introduction', 'P2679');
-}
-
-sub wikidata_ccnb {
-	my $self = shift;
-
-	if (! defined $self->{'transform_object'}->ccnb) {
-		return;
-	}
-
-	return (
-		Wikibase::Datatype::Statement->new(
-			'references' => [$self->wikidata_reference],
-			'snak' => Wikibase::Datatype::Snak->new(
-				'datatype' => 'external-id',
-				'datavalue' => Wikibase::Datatype::Value::String->new(
-					'value' => $self->{'transform_object'}->ccnb,
-				),
-				'property' => 'P3184',
-			),
-		),
-	);
 }
 
 sub wikidata_descriptions {
@@ -173,6 +170,37 @@ sub wikidata_end_time {
 	my $end_time = $self->{'transform_object'}->end_time;
 
 	return $self->_year($end_time, 'end time', 'P582');
+}
+
+sub wikidata_external_ids {
+	my $self = shift;
+
+	my @ret;
+	foreach my $external_id (@{$self->{'transform_object'}->external_ids}) {
+		push @ret, Wikibase::Datatype::Statement->new(
+			'references' => [$self->wikidata_reference],
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'external-id',
+				'datavalue' => Wikibase::Datatype::Value::String->new(
+					'value' => $external_id->value,
+				),
+				'property' => $EXT_ID_MAPPING{$external_id->name},
+			),
+			defined $external_id->deprecated ? (
+				'property_snaks' => [
+					Wikibase::Datatype::Snak->new(
+						'datatype' => 'wikibase-item',
+						'datavalue' => Wikibase::Datatype::Value::Item->new(
+							'value' => 'Q21441764',
+						),
+						'property' => 'P2241',
+					),
+				],
+			) : (),
+		),
+	}
+
+	return @ret;
 }
 
 sub wikidata_compilers {
@@ -462,27 +490,6 @@ sub wikidata_number_of_pages {
 	);
 }
 
-sub wikidata_oclc {
-	my $self = shift;
-
-	if (! defined $self->{'transform_object'}->oclc) {
-		return;
-	}
-
-	return (
-		Wikibase::Datatype::Statement->new(
-			'references' => [$self->wikidata_reference],
-			'snak' => Wikibase::Datatype::Snak->new(
-				'datatype' => 'external-id',
-				'datavalue' => Wikibase::Datatype::Value::String->new(
-					'value' => $self->{'transform_object'}->oclc,
-				),
-				'property' => 'P243',
-			),
-		),
-	);
-}
-
 sub wikidata_people {
 	my ($self, $people_method, $people_property, $property_snaks_ar) = @_;
 
@@ -651,7 +658,8 @@ sub wikidata_publishers {
 sub wikidata_reference {
 	my $self = shift;
 
-	if (! defined $self->{'transform_object'}->ccnb) {
+	my $ccnb = $self->look_for_external_id('cnb');
+	if (! defined $ccnb) {
 		err decode_utf8('Missing ČČNB id.');
 	}
 	return (
@@ -670,7 +678,7 @@ sub wikidata_reference {
 				Wikibase::Datatype::Snak->new(
 					'datatype' => 'external-id',
 					'datavalue' => Wikibase::Datatype::Value::String->new(
-						'value' => $self->{'transform_object'}->ccnb,
+						'value' => $ccnb,
 					),
 					'property' => 'P3184',
 				),
