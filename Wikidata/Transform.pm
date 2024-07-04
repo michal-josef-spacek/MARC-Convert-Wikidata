@@ -268,6 +268,22 @@ sub _languages {
 	return @lang;
 }
 
+sub _lccn {
+	my $self = shift;
+
+	my @ret;
+
+	my @lccn = $self->_subfield('035', 'a');
+	foreach my $lccn (@lccn) {
+		$lccn = clean_oclc($lccn);
+		push @ret, MARC::Convert::Wikidata::Object::ExternalId->new(
+			'name' => 'lccn',
+			'value' => $lccn,
+		);
+	}
+
+	return @ret;
+}
 
 sub _number_of_pages {
 	my $self = shift;
@@ -276,23 +292,6 @@ sub _number_of_pages {
 	$number_of_pages = clean_number_of_pages($number_of_pages);
 
 	return $number_of_pages;
-}
-
-sub _oclc {
-	my $self = shift;
-
-	my @ret;
-
-	my @oclc = $self->_subfield('035', 'a');
-	foreach my $oclc (@oclc) {
-		$oclc = clean_oclc($oclc);
-		push @ret, MARC::Convert::Wikidata::Object::ExternalId->new(
-			'name' => 'lccn',
-			'value' => $oclc,
-		);
-	}
-
-	return @ret;
 }
 
 sub _process_object {
@@ -322,7 +321,7 @@ sub _process_object {
 		'end_time' => $end_time,
 		'external_ids' => [
 			$self->_ccnb,
-			$self->_oclc,
+			$self->_lccn,
 		],
 		'isbns' => [$self->_isbns],
 		'issn' => $self->_issn,
