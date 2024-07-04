@@ -384,10 +384,15 @@ sub _process_people {
 			MARC::Convert::Wikidata::Object::People->new(
 				'date_of_birth' => $date_of_birth,
 				'date_of_death' => $date_of_death,
+				'external_ids' => [
+					MARC::Convert::Wikidata::Object::ExternalId->new(
+						'name' => 'nkcr_aut',
+						'value' => $nkcr_aut,
+					),
+				],
 				'work_period_start' => $work_period_start,
 				'work_period_end' => $work_period_end,
 				'name' => $name,
-				'nkcr_aut' => $nkcr_aut,
 				'surname' => $surname,
 			);
 	}

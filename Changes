@@ -1,6 +1,8 @@
 0.13
  - Add look_for_external_id() method to Wikidata.
  - Rename internal subroutine _oclc() to _lccn().
+ - Rewrite Transform to store people external ids in 'external_ids'
+   parameter.
  - Sort subroutines in Item.
 
 0.12 2024-07-04T23:15:01+02:00
