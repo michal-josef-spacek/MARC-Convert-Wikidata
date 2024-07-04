@@ -13,7 +13,7 @@ use MARC::Leader;
 use Mo::utils 0.08 qw(check_isa check_required);
 use Scalar::Util qw(blessed);
 
-our $VERSION = 0.12;
+our $VERSION = 0.13;
 
 # Constructor.
 sub new {
@@ -505,6 +505,6 @@ BSD 2-Clause License
 
 =head1 VERSION
 
-0.12
+0.13
 
 =cut
