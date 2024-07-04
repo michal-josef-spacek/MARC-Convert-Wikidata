@@ -52,7 +52,8 @@ skip? or deprecate?
     - činný 15. století-16. století
 55. Example with DML to t/data/.
 56. Move DML to external identifiers.
-57.
+57. Tests for Utils::look_for_external_id().
+58.
 
 Applied
 =======

@@ -1,4 +1,5 @@
 0.13
+ - Add look_for_external_id() method to Wikidata.
  - Rename internal subroutine _oclc() to _lccn().
  - Sort subroutines in Item.
 

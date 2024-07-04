@@ -7,6 +7,7 @@ use Class::Utils qw(set_params);
 use DateTime;
 use English;
 use Error::Pure qw(err);
+use MARC::Convert::Wikidata::Utils qw(look_for_external_id);
 use Mo::utils 0.08 qw(check_isa check_required);
 use Readonly;
 use Scalar::Util qw(blessed);
@@ -73,18 +74,6 @@ sub new {
 	}
 
 	return $self;
-}
-
-sub look_for_external_id {
-	my ($self, $external_id_name) = @_;
-
-	foreach my $external_id (@{$self->{'transform_object'}->external_ids}) {
-		if ($external_id->name eq $external_id_name) {
-			return $external_id->value;
-		}
-	}
-
-	return;
 }
 
 sub wikidata_authors {
@@ -658,7 +647,7 @@ sub wikidata_publishers {
 sub wikidata_reference {
 	my $self = shift;
 
-	my $ccnb = $self->look_for_external_id('cnb');
+	my $ccnb = look_for_external_id($self->{'transform_object'}, 'cnb');
 	if (! defined $ccnb) {
 		err decode_utf8('Missing ČČNB id.');
 	}
