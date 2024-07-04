@@ -518,12 +518,17 @@ sub _series {
 sub _subfield {
 	my ($self, $field, $subfield) = @_;
 
-	my $field_value = $self->{'marc_record'}->field($field);
-	if (! defined $field_value) {
-		return;
+	my @ret;
+
+	my @field_values = $self->{'marc_record'}->field($field);
+	foreach my $field_value (@field_values) {
+		my $subfield_value = $field_value->subfield($subfield);
+		if (defined $subfield_value) {
+			push @ret, $subfield_value;
+		}
 	}
 
-	return $field_value->subfield($subfield);
+	return wantarray ? @ret : $ret[0];
 }
 
 sub _subtitles {
