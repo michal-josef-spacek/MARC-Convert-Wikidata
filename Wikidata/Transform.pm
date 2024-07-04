@@ -7,7 +7,8 @@ use Class::Utils qw(set_params);
 use Data::Kramerius;
 use Error::Pure qw(err);
 use List::Util qw(any);
-use MARC::Convert::Wikidata::Object;
+use MARC::Convert::Wikidata::Object 0.05;
+use MARC::Convert::Wikidata::Object::ExternalId 0.05;
 use MARC::Convert::Wikidata::Object::ISBN;
 use MARC::Convert::Wikidata::Object::Kramerius;
 use MARC::Convert::Wikidata::Object::People;
@@ -93,12 +94,26 @@ sub object {
 sub _ccnb {
 	my $self = shift;
 
+	my @ret;
+
 	my $ccnb = $self->_subfield('015', 'a');
-	if (! defined $ccnb) {
-		$ccnb = $self->_subfield('015', 'z');
+	if (defined $ccnb) {
+		push @ret, MARC::Convert::Wikidata::Object::ExternalId->new(
+			'name' => 'cnb',
+			'value' => $ccnb,
+		);
 	}
 
-	return $ccnb;
+	my $depr_ccnb = $self->_subfield('015', 'z');
+	if (defined $depr_ccnb) {
+		push @ret, MARC::Convert::Wikidata::Object::ExternalId->new(
+			'deprecated' => 1,
+			'name' => 'cnb',
+			'value' => $depr_ccnb,
+		);
+	}
+
+	return @ret;
 }
 
 sub _construct_kramerius {
@@ -266,15 +281,18 @@ sub _number_of_pages {
 sub _oclc {
 	my $self = shift;
 
+	my @ret;
+
 	my @oclc = $self->_subfield('035', 'a');
 	foreach my $oclc (@oclc) {
 		$oclc = clean_oclc($oclc);
-	}
-	if (@oclc > 1) {
-		err 'Multiple OCLC control number.';
+		push @ret, MARC::Convert::Wikidata::Object::ExternalId->new(
+			'name' => 'lccn',
+			'value' => $oclc,
+		);
 	}
 
-	return $oclc[0];
+	return @ret;
 }
 
 sub _process_object {
@@ -295,7 +313,6 @@ sub _process_object {
 		'authors' => $self->{'_people'}->{'authors'},
 		'authors_of_afterword' => $self->{'_people'}->{'authors_of_afterword'},
 		'authors_of_introduction' => $self->{'_people'}->{'authors_of_introduction'},
-		'ccnb' => $self->_ccnb,
 		'compilers' => $self->{'_people'}->{'compilers'},
 		'cover' => $self->_cover,
 		'directors' => $self->{'_people'}->{'directors'},
@@ -303,6 +320,10 @@ sub _process_object {
 		$self->_edition_number ? ('edition_number' => $self->_edition_number) : (),
 		'editors' => $self->{'_people'}->{'editors'},
 		'end_time' => $end_time,
+		'external_ids' => [
+			$self->_ccnb,
+			$self->_oclc,
+		],
 		'isbns' => [$self->_isbns],
 		'issn' => $self->_issn,
 		'illustrators' => $self->{'_people'}->{'illustrators'},
@@ -310,7 +331,6 @@ sub _process_object {
 		'languages' => [$self->_languages],
 		'narrators' => $self->{'_people'}->{'narrators'},
 		'number_of_pages' => $self->_number_of_pages,
-		'oclc' => $self->_oclc,
 		'photographers' => $self->{'_people'}->{'photographers'},
 		'publication_date' => $publication_date,
 		'publishers' => [$self->_publishers],
