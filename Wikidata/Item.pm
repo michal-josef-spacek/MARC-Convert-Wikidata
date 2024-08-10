@@ -209,7 +209,7 @@ sub wikidata_external_ids {
 				),
 				'property' => $EXT_ID_MAPPING{$external_id->name},
 			),
-			defined $external_id->deprecated ? (
+			$external_id->deprecated ? (
 				'property_snaks' => [
 					Wikibase::Datatype::Snak->new(
 						'datatype' => 'wikibase-item',
