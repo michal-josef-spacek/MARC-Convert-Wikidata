@@ -201,6 +201,9 @@ sub wikidata_external_ids {
 	my @ret;
 	foreach my $external_id (@{$self->{'transform_object'}->external_ids}) {
 		push @ret, Wikibase::Datatype::Statement->new(
+			$external_id->deprecated ? (
+				'rank' => 'deprecated',
+			) : (),
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'external-id',
