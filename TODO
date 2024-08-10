@@ -53,7 +53,8 @@ skip? or deprecate?
 55. Example with DML to t/data/.
 56. Move DML to external identifiers.
 57. Tests for Utils::look_for_external_id().
-58.
+58. Test cnb002180648
+59.
 
 Applied
 =======
