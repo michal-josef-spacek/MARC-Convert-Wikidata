@@ -54,7 +54,9 @@ skip? or deprecate?
 56. Move DML to external identifiers.
 57. Tests for Utils::look_for_external_id().
 58. Test cnb002180648
-59.
+59. Test cnb000137865
+60. Implement "soubor", LDR 19 = a
+61.
 
 Applied
 =======
