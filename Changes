@@ -1,4 +1,5 @@
 0.16
+ - Add support for new use case of number of pages.
 
 0.15 2024-09-18T21:40:20+02:00
  - Fix of not-defined NKCR AUT ID in people.

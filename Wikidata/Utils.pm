@@ -245,6 +245,8 @@ sub clean_number_of_pages {
 	my $ret_number_of_pages = $number_of_pages;
 	$ret_number_of_pages =~ s/^\[(\d+)\]/$1/ms;
 	$ret_number_of_pages =~ s/^(\d+)\s*(s\.|stran).*$/$1/ms;
+	# XXX First number.
+	$ret_number_of_pages =~ s/^(\d+)\s*,\s*.*/$1/ms;
 
 	if ($ret_number_of_pages !~ m/^\d+$/ms) {
 		if ($DEBUG) {
