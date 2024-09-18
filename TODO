@@ -56,7 +56,8 @@ skip? or deprecate?
 58. Test cnb002180648
 59. Test cnb000137865
 60. Implement "soubor", LDR 19 = a
-61.
+61. Test cnb001252919 - multiple isbn for multiple publishers
+62.
 
 Applied
 =======
