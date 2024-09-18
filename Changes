@@ -1,4 +1,5 @@
 0.15
+ - Fix of not-defined NKCR AUT ID in people.
 
 0.14 2024-08-10T23:13:54+02:00
  - Add deprecated rank to deprecated values.
