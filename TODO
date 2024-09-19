@@ -58,7 +58,8 @@ skip? or deprecate?
 60. Implement "soubor", LDR 19 = a
 61. Test cnb001252919 - multiple isbn for multiple publishers
 62. Test cnb000497695, ted to propojuje na spatne BLOK nakladatelstvi
-63.
+63. Test cnb000542208 - Series has p subfield.
+64.
 
 Applied
 =======
