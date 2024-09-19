@@ -569,13 +569,14 @@ sub wikidata_place_of_publication {
 	}
 
 	my $multiple = @places > 1 ? 1 : 0;
-	return map {
-		Wikibase::Datatype::Statement->new(
+	my @ret;
+	foreach my $place (@places) {
+		push @ret, Wikibase::Datatype::Statement->new(
 			'references' => [$self->wikidata_reference],
 			'snak' => Wikibase::Datatype::Snak->new(
 				'datatype' => 'wikibase-item',
 				'datavalue' => Wikibase::Datatype::Value::Item->new(
-					'value' => $_->[1],
+					'value' => $place->[1],
 				),
 				'property' => 'P291',
 			),
@@ -584,14 +585,16 @@ sub wikidata_place_of_publication {
 					Wikibase::Datatype::Snak->new(
 						'datatype' => 'wikibase-item',
 						'datavalue' => Wikibase::Datatype::Value::Item->new(
-							'value' => $_->[0],
+							'value' => $place->[0],
 						),
 						'property' => 'P123',
 					),
 				],
 			) : (),
 		);
-	} @places;
+	}
+
+	return @ret;
 }
 
 sub wikidata_publication_date {
