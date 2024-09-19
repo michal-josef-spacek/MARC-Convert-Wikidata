@@ -57,7 +57,8 @@ skip? or deprecate?
 59. Test cnb000137865
 60. Implement "soubor", LDR 19 = a
 61. Test cnb001252919 - multiple isbn for multiple publishers
-62.
+62. Test cnb000497695, ted to propojuje na spatne BLOK nakladatelstvi
+63.
 
 Applied
 =======
