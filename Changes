@@ -1,4 +1,4 @@
-0.16
+0.16 2024-09-19T10:23:56+02:00
  - Add support for new use case of number of pages.
  - Fix error in case of not detected publishing house.
  - Improve callback to series to add argument with no_warn flag.
