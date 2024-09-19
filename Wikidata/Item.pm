@@ -702,14 +702,17 @@ sub wikidata_series {
 	if (! defined $self->{'callback_series'}) {
 		return;
 	} else {
+		# No warn flag for use case when we found series.
+		my $found = 0;
 		foreach my $series (@{$self->{'transform_object'}->series}) {
-			my $series_qid = $self->{'callback_series'}->($series);
+			my $series_qid = $self->{'callback_series'}->($series, $found);
 			if ($series_qid) {
 				push @series_qids, [
 					$series_qid,
 					$series->name,
 					$series->series_ordinal,
 				];
+				$found = 1;
 			}
 		}
 	}
