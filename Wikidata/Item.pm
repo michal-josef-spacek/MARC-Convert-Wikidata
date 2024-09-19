@@ -558,7 +558,7 @@ sub wikidata_place_of_publication {
 				$place_qid = $self->{'callback_publisher_place'}->($publisher);
 			}
 			my $publisher_qid = $self->{'callback_publisher_name'}->($publisher, $publication_date);
-			if ($place_qid) {
+			if (defined $publisher_qid && $place_qid) {
 				push @places, [$publisher_qid, $place_qid];
 			}
 		}
