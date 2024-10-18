@@ -124,7 +124,7 @@ sub clean_edition_number {
 	# Edition.
 	my $v1 = decode_utf8('Vydání');
 	my $v2 = decode_utf8('vydání');
-	$ret_edition_number =~ s/\s*(Vyd\.|vyd\.|$v1|$v2|Vydanie|vyd)//gx;
+	$ret_edition_number =~ s/\s*(Vyd\.|vyd\.|$v1|$v2|Vydanie|vyd|published)//gx;
 
 	$ret_edition_number =~ s/\s*rozmn\.//ms;
 	my $re = decode_utf8('souborné');
@@ -190,6 +190,7 @@ sub clean_edition_number {
 	my $dict_hr = {
 		decode_utf8('První') => 1,
 		decode_utf8('první') => 1,
+		'First' => 1,
 		decode_utf8('prvé') => 1,
 		decode_utf8('Druhé') => 2,
 		decode_utf8('druhé') => 2,
