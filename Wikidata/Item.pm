@@ -425,6 +425,8 @@ sub wikidata_krameriuses {
 
 	my @krameriuses;
 	foreach my $k (@{$self->{'transform_object'}->krameriuses}) {
+
+		# Rewriting to Czech Digital Library
 		if ($k->kramerius_id eq 'mzk') {
 			push @krameriuses, Wikibase::Datatype::Statement->new(
 				'references' => [$self->wikidata_reference],
@@ -433,7 +435,7 @@ sub wikidata_krameriuses {
 					'datavalue' => Wikibase::Datatype::Value::String->new(
 						'value' => $k->object_id,
 					),
-					'property' => 'P8752',
+					'property' => 'P13032',
 				),
 			),
 		} else {
