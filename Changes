@@ -1,6 +1,7 @@
 0.17
  - Add another publication place cleanup use case.
  - Add another edition number cleanup use case.
+ - Implement collective to clean_cover().
  - Rewrite Kramerius of MZK to Kramerius of CDL.
 
 0.16 2024-09-19T10:23:56+02:00

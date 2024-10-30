@@ -43,7 +43,10 @@ sub clean_cover {
 	$c = decode_utf8('(b|B)rožováno');
 	$ret_cover =~ s/^$c$/paperback/ms;
 
-	if (none { $ret_cover eq $_ } @COVERS) {
+	# Collective.
+	$ret_cover =~ s/soubor/collective/ms;
+
+	if (none { $ret_cover eq $_ } (@COVERS, 'collective')) {
 		if ($DEBUG) {
 			warn "Book cover '$ret_cover' couldn't clean.";
 		}
