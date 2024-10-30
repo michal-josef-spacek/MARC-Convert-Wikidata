@@ -30,10 +30,14 @@ sub clean_cover {
 	$ret_cover =~ s/^\s*//ms;
 	$ret_cover =~ s/^\(\s*//ms;
 	$ret_cover =~ s/\s*\)$//ms;
+
+	# Hardback
 	my $c = decode_utf8('(v|V)áz');
 	$ret_cover =~ s/^$c\.?$/hardback/ms;
 	$c = decode_utf8('(v|V)ázáno');
 	$ret_cover =~ s/^$c$/hardback/ms;
+
+	# Paperback
 	$c = decode_utf8('(b|B)rož');
 	$ret_cover =~ s/^$c\.?$/paperback/ms;
 	$c = decode_utf8('(b|B)rožováno');
