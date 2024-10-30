@@ -247,6 +247,12 @@ sub wikidata_isbn_10 {
 		if ($isbn->type != 10) {
 			next;
 		}
+
+		# Skip collective ISBNs.
+		if ($isbn->collective) {
+			next;
+		}
+
 		my $publisher = $self->_isbn_publisher($isbn);
 		my $cover_qid = $self->_isbn_cover($isbn);
 		push @ret, Wikibase::Datatype::Statement->new(
@@ -298,6 +304,12 @@ sub wikidata_isbn_13 {
 		if ($isbn->type != 13) {
 			next;
 		}
+
+		# Skip collective ISBNs.
+		if ($isbn->collective) {
+			next;
+		}
+
 		my $publisher = $self->_isbn_publisher($isbn);
 		my $cover_qid = $self->_isbn_cover($isbn);
 		push @ret, Wikibase::Datatype::Statement->new(
