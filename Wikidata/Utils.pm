@@ -372,6 +372,7 @@ sub clean_publisher_place {
 		decode_utf8('Jihlavě') => 'Jihlava',
 		decode_utf8('Jimramově') => 'Jimramov',
 		decode_utf8('Karlových Varech') => 'Karlovy Vary',
+		decode_utf8('Kolíně') => decode_utf8('Kolín'),
 		decode_utf8('Kroměříži') => decode_utf8('Kroměříž'),
 		decode_utf8('Hoře Kutné') => decode_utf8('Kutná Hora'),
 		decode_utf8('Kutné Hoře') => decode_utf8('Kutná Hora'),
