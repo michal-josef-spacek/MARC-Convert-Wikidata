@@ -61,7 +61,8 @@ skip? or deprecate?
 63. Test cnb000542208 - Series has p subfield.
 64. Test cnb001702561 - Series in Czech and English
 65. Test cnb002162963 - Spatny pocet stranek, spatne titulek.
-66.
+66. Test cnb002633747 - Jenom jedno isbn
+67.
 
 Applied
 =======
