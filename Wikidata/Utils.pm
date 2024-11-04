@@ -147,6 +147,8 @@ sub clean_edition_number {
 	# Extended.
 	$re = decode_utf8('přeprac');
 	$ret_edition_number =~ s/\s*$re\.//ms;
+	$re = decode_utf8('nezměněné');
+	$ret_edition_number =~ s/\s*$re//ms;
 	$re = decode_utf8('nezměn');
 	$ret_edition_number =~ s/\s*$re\.//ms;
 	$re = decode_utf8('přepracované');
