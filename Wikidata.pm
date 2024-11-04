@@ -26,6 +26,9 @@ sub new {
 	# Cover callback.
 	$self->{'callback_cover'} = undef;
 
+	# Cycles callback.
+	$self->{'callback_cycles'} = undef;
+
 	# Lang callback.
 	$self->{'callback_lang'} = undef;
 
@@ -109,6 +112,7 @@ sub wikidata {
 	# Parameters.
 	my %params = (
 		'callback_cover' => $self->{'callback_cover'},
+		'callback_cycles' => $self->{'callback_cycles'},
 		'callback_lang' => $self->{'callback_lang'},,
 		'callback_publisher_place' => $self->{'callback_publisher_place'},,
 		'callback_people' => $self->{'callback_people'},
