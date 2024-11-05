@@ -44,7 +44,7 @@ sub clean_cover {
 	$ret_cover =~ s/^$c$/paperback/ms;
 
 	# Collective.
-	$ret_cover =~ s/soubor/collective/ms;
+	$ret_cover =~ s/soubor\s*\d*/collective/ms;
 
 	if (none { $ret_cover eq $_ } (@COVERS, 'collective')) {
 		if ($DEBUG) {
