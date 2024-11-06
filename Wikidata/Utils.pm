@@ -44,6 +44,8 @@ sub clean_cover {
 	$ret_cover =~ s/^$c$/paperback/ms;
 
 	# Collective.
+	$c = decode_utf8('svazků');
+	$ret_cover =~ s/soubor\s+\d+\s+$c/collective/ms;
 	$ret_cover =~ s/soubor\s*\d*/collective/ms;
 
 	if (none { $ret_cover eq $_ } (@COVERS, 'collective')) {
