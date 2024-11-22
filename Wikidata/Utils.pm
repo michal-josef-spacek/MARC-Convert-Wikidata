@@ -182,6 +182,8 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/\s*zcela//ms;
 	$re = decode_utf8('v této');
 	$ret_edition_number =~ s/\s*$re//ms;
+	$re = decode_utf8('V této');
+	$ret_edition_number =~ s/\s*$re//ms;
 	$re = decode_utf8('podobě');
 	$ret_edition_number =~ s/\s*$re//ms;
 
