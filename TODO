@@ -65,7 +65,9 @@ skip? or deprecate?
 67. Test cnb003565872 - Cyklus.
 68. Test cnb001242078 - specialni formy, krouzkova vazba
 69. When publisher is not identified, add unknown + subject named as.
-70.
+70. Test cnb000080974 - ISSN u edice
+Pak by bylo fajn hledat edici podle ISSN
+71.
 
 Applied
 =======
