@@ -49,6 +49,7 @@ t/data/cnb002981333.mrc
 t/data/cnb003059138.mrc
 t/data/cnb003238343.mrc
 t/data/cnb003369415.mrc
+t/data/cnb003565872.xml
 t/data/INFO
 t/MARC-Convert-Wikidata-Item-AudioBook/01-use.t
 t/MARC-Convert-Wikidata-Item-AudioBook/02-version.t
@@ -66,6 +67,7 @@ t/MARC-Convert-Wikidata-Transform/01-use.t
 t/MARC-Convert-Wikidata-Transform/02-version.t
 t/MARC-Convert-Wikidata-Transform/03-new.t
 t/MARC-Convert-Wikidata-Transform/04-object.t
+t/MARC-Convert-Wikidata-Transform/05-object-cnb003565872.t
 t/MARC-Convert-Wikidata-Utils/01-use.t
 t/MARC-Convert-Wikidata-Utils/02-version.t
 t/MARC-Convert-Wikidata-Utils/03-clean_cover.t

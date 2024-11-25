@@ -62,7 +62,6 @@ skip? or deprecate?
 64. Test cnb001702561 - Series in Czech and English
 65. Test cnb002162963 - Spatny pocet stranek, spatne titulek.
 66. Test cnb002633747 - Jenom jedno isbn
-67. Test cnb003565872 - Cyklus.
 68. Test cnb001242078 - specialni formy, krouzkova vazba
 69. When publisher is not identified, add unknown + subject named as.
 70. Test cnb000080974 - ISSN u edice
@@ -120,3 +119,6 @@ OK [20230112] skim
 
 30. Handle audiobook: cnb003181564
 OK [20230505] skim
+
+67. Test cnb003565872 - Cyklus.
+OK [20241125] skim
