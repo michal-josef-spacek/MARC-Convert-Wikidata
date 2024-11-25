@@ -1,6 +1,7 @@
 0.21
  - Add clean_issn() helper subroutine.
  - Add edition number cleanup use case.
+ - Add series name cleanup use case.
  - Add test for cycle.
 
 0.20 2024-11-22T19:41:33+01:00
