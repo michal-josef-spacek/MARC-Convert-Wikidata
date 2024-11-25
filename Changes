@@ -1,3 +1,5 @@
+0.22
+
 0.21 2024-11-25T23:55:13+01:00
  - Add clean_issn() helper subroutine.
  - Add detection of ISSN in series.
