@@ -25,6 +25,7 @@ SIGNATURE
 t/data/cnb000024035.xml
 t/data/cnb000036403.mrc
 t/data/cnb000040543.mrc
+t/data/cnb000080974.xml
 t/data/cnb000087983.mrc
 t/data/cnb000103538.mrc
 t/data/cnb000121825.mrc
@@ -68,7 +69,8 @@ t/MARC-Convert-Wikidata-Transform/01-use.t
 t/MARC-Convert-Wikidata-Transform/02-version.t
 t/MARC-Convert-Wikidata-Transform/03-new.t
 t/MARC-Convert-Wikidata-Transform/04-object.t
-t/MARC-Convert-Wikidata-Transform/05-object-cnb003565872.t
+t/MARC-Convert-Wikidata-Transform/05-object-cnb000080974.t
+t/MARC-Convert-Wikidata-Transform/06-object-cnb003565872.t
 t/MARC-Convert-Wikidata-Utils/01-use.t
 t/MARC-Convert-Wikidata-Utils/02-version.t
 t/MARC-Convert-Wikidata-Utils/03-clean_cover.t

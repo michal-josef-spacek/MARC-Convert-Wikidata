@@ -1,5 +1,6 @@
 0.21
  - Add clean_issn() helper subroutine.
+ - Add detection of ISSN in series.
  - Add edition number cleanup use case.
  - Add series name cleanup use case.
  - Add test for cycle.
