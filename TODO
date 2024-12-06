@@ -64,7 +64,8 @@ skip? or deprecate?
 66. Test cnb002633747 - Jenom jedno isbn
 68. Test cnb001242078 - specialni formy, krouzkova vazba
 69. When publisher is not identified, add unknown + subject named as.
-71.
+71. cnb002662450 - 020: q: krabice ?
+72.
 
 Applied
 =======
