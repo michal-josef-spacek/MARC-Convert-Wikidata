@@ -1,4 +1,5 @@
 0.22
+ - Add cover cleanup use case.
 
 0.21 2024-11-25T23:55:13+01:00
  - Add clean_issn() helper subroutine.

@@ -27,6 +27,7 @@ sub clean_cover {
 
 	my $ret_cover = $cover;
 	$ret_cover =~ s/\s*:\s*$//ms;
+	$ret_cover =~ s/\s*;\s*$//ms;
 	$ret_cover =~ s/^\s*//ms;
 	$ret_cover =~ s/^\(\s*//ms;
 	$ret_cover =~ s/\s*\)$//ms;
