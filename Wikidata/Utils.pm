@@ -188,6 +188,8 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/\s*V\stomto\ssouboru//ms;
 	$re = decode_utf8('podobě');
 	$ret_edition_number =~ s/\s*$re//ms;
+	$re = decode_utf8('část');
+	$ret_edition_number =~ s/\s*$re\.?//ms;
 
 	# Czech.
 	$re = decode_utf8('(v|V) českém jazyce');
