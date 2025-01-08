@@ -72,7 +72,6 @@ skip? or deprecate?
 76. Test cnb002602952 - pole 020 ma v knize neuvedeno
 77. Test cnb001261581 - anglické knižní vydání, not české
 78. Test cnb003633764 - chybné ISBN
-79. Test cnb002539102 - field 928 contains nak id.
 80.
 
 Applied
@@ -133,3 +132,7 @@ OK [20241125] skim
 70. Test cnb000080974 - ISSN u edice
 Pak by bylo fajn hledat edici podle ISSN
 OK [20241125] skim
+
+79. Test cnb002539102 - field 928 contains nak id.
+Neni exportovano, nejde.
+NONE [20250108] skim
