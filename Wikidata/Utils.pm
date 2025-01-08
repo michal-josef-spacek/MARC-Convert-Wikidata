@@ -428,6 +428,7 @@ sub clean_publisher_place {
 		decode_utf8('Přelouči') => decode_utf8('Přelouč'),
 		decode_utf8('Přerově') => decode_utf8('Přerov'),
 		decode_utf8('Řevnicích') => decode_utf8('Řevnice'),
+		decode_utf8('Stříbře') => decode_utf8('Stříbro'),
 		decode_utf8('Telči') => decode_utf8('Telč'),
 		decode_utf8('Třebíč na Moravě') => decode_utf8('Třebíč'),
 		decode_utf8('Třebíči') => decode_utf8('Třebíč'),
