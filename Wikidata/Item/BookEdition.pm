@@ -15,6 +15,11 @@ our $VERSION = 0.22;
 sub wikidata {
 	my $self = shift;
 
+	my $instance_value = 'Q3331189';
+	if ($self->wikidata_translators) {
+		$instance_value = 'Q21112633';
+	}
+
 	my $wikidata = Wikibase::Datatype::Item->new(
 		$self->wikidata_labels,
 		$self->wikidata_descriptions,
@@ -24,7 +29,7 @@ sub wikidata {
 				'snak' => Wikibase::Datatype::Snak->new(
 					'datatype' => 'wikibase-item',
 					'datavalue' => Wikibase::Datatype::Value::Item->new(
-						'value' => 'Q3331189',
+						'value' => $instance_value,
 					),
 					'property' => 'P31',
 				),
