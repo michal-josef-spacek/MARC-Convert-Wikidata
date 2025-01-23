@@ -4,6 +4,7 @@
  - Add publication place cleanup use case.
  - Add support for 'translated edition' in P31.
  - Add tests for three ISBNs in book edition.
+ - Update copyright years.
 
 0.21 2024-11-25T23:55:13+01:00
  - Add clean_issn() helper subroutine.
