@@ -1,5 +1,6 @@
 0.23
  - Fix MANIFEST file.
+ - Fix test with Krakatit book edition and Krameriuses.
  - Improve tests.
 
 0.22 2025-01-23T08:37:25+01:00

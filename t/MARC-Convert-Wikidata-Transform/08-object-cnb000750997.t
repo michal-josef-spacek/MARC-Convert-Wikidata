@@ -5,7 +5,7 @@ use File::Object;
 use MARC::Convert::Wikidata::Transform;
 use MARC::Record;
 use Perl6::Slurp qw(slurp);
-use Test::More 'tests' => 27;
+use Test::More 'tests' => 30;
 use Test::NoWarnings;
 use Test::Warn;
 use Unicode::UTF8 qw(decode_utf8);
@@ -45,7 +45,13 @@ is($external_ids_ar->[1]->name, 'lccn', 'Krakatit: Get external value name (lccn
 is($external_ids_ar->[1]->value, '3791532', 'Krakatit: Get ICCN number (3791532).');
 is_deeply($ret->illustrators, [], 'Krakatit: Get illustrators.');
 is_deeply($ret->isbns, [], 'Krakatit: Get ISBN-10.');
-is_deeply($ret->krameriuses, [], 'Krakatit: Get Kramerius objects.');
+my $krameriuses_ar = $ret->krameriuses;
+is(@{$krameriuses_ar}, 1, 'Krakatit: Get Krameriuses count (1).');
+is($krameriuses_ar->[0]->kramerius_id, 'mzk', 'Krakatit: Get Kramerius id (mzk).');
+is($krameriuses_ar->[0]->object_id, '26413e90-4eb4-11e8-afec-005056827e51',
+	'Krakatit: Get Kramerius object_id (26413e90-4eb4-11e8-afec-005056827e51).');
+is($krameriuses_ar->[0]->url, 'http://kramerius.mzk.cz/search/handle/uuid:26413e90-4eb4-11e8-afec-005056827e51',
+	'Krakatit: Get Kramerius url (http://kramerius.mzk.cz/search/handle/uuid:26413e90-4eb4-11e8-afec-005056827e51).');
 is_deeply($ret->languages, ['cze'], 'Krakatit: Get language.');
 is($ret->number_of_pages, 377, 'Krakatit: Get number of pages.');
 is($ret->publication_date, 1939, 'Krakatit: Get publication date.');
