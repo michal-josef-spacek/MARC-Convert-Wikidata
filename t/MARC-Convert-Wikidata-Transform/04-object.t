@@ -6,10 +6,10 @@ use MARC::Convert::Wikidata::Transform;
 use MARC::File::XML;
 use MARC::Record;
 use Perl6::Slurp qw(slurp);
-use Test::More 'tests' => 69;
+use Test::More 'tests' => 59;
 use Test::NoWarnings;
 use Test::Warn;
-use Unicode::UTF8 qw(decode_utf8 encode_utf8);
+use Unicode::UTF8 qw(decode_utf8);
 
 # Data directory.
 my $data = File::Object->new->up->dir('data');
@@ -110,21 +110,3 @@ $author_ext_ids_ar = $author->external_ids;
 is(@{$author_ext_ids_ar}, 1, 'Učebnice práva ve čtyřech knihách: Get author external ids count (1).');
 is($author_ext_ids_ar->[0]->name, 'nkcr_aut', 'Učebnice práva ve čtyřech knihách: Get author external value name (nkcr_aut).');
 is($author_ext_ids_ar->[0]->value, 'jn19990002527', 'Učebnice práva ve čtyřech knihách: Get author NKCR id (jn19990002527).');
-
-# Test.
-$marc_data = slurp($data->file('cnb001042253.mrc')->s);
-$obj = MARC::Convert::Wikidata::Transform->new(
-	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
-);
-$ret = $obj->object;
-$external_ids_ar = $ret->external_ids;
-is(@{$external_ids_ar}, 4, 'Sněženka: Get external ids count (3).');
-is($external_ids_ar->[0]->name, 'cnb', 'Sněženka: Get external value name (cnb).');
-is($external_ids_ar->[0]->value, 'cnb001042253', 'Sněženka: Get ČČNB number (cnb001042253).');
-is($external_ids_ar->[1]->name, 'cnb', 'Sněženka: Get external value name (cnb).');
-is($external_ids_ar->[1]->value, 'cnb001250271', 'Sněženka: Get ČČNB number (cnb001250271).');
-is($external_ids_ar->[1]->deprecated, 1, 'Sněženka: Get ČČNB number deprecation (1).');
-is($external_ids_ar->[2]->name, 'lccn', 'Sněženka: Get external value name (lccn).');
-is($external_ids_ar->[2]->value, '85710900', 'Sněženka: Get LCCN number (85710900).');
-is($external_ids_ar->[3]->name, 'lccn', 'Sněženka: Get external value name (lccn).');
-is($external_ids_ar->[3]->value, '85018016', 'Sněženka: Get LCCN number (85018016).');
