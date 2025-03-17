@@ -566,8 +566,8 @@ sub _subfield {
 
 	my @field_values = $self->{'marc_record'}->field($field);
 	foreach my $field_value (@field_values) {
-		my $subfield_value = $field_value->subfield($subfield);
-		if (defined $subfield_value) {
+		my @subfield_values = $field_value->subfield($subfield);
+		foreach my $subfield_value (@subfield_values) {
 			push @ret, $subfield_value;
 		}
 	}

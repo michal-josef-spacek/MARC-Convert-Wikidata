@@ -1,4 +1,5 @@
 0.24
+ - Add support for multiple subfields.
 
 0.23 2025-01-29T13:35:17+01:00
  - Fix MANIFEST file.
