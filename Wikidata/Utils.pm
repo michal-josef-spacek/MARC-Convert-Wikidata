@@ -433,6 +433,7 @@ sub clean_publisher_place {
 		decode_utf8('Třebíč na Moravě') => decode_utf8('Třebíč'),
 		decode_utf8('Třebíči') => decode_utf8('Třebíč'),
 		decode_utf8('Třebíči na Moravě') => decode_utf8('Třebíč'),
+		decode_utf8('Vyškově') => decode_utf8('Vyškov'),
 		# No place.
 		'S.l.' => 'sine loco',
 	};
