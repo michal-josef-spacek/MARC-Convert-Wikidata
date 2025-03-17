@@ -6,7 +6,7 @@ use warnings;
 use Class::Utils qw(set_params);
 use Data::Kramerius;
 use Error::Pure qw(err);
-use List::Util qw(any);
+use List::Util qw(any none);
 use MARC::Convert::Wikidata::Object 0.08;
 use MARC::Convert::Wikidata::Object::ExternalId 0.05;
 use MARC::Convert::Wikidata::Object::ISBN;
@@ -151,7 +151,9 @@ sub _cover {
 			next;
 		}
 		if ($cover eq 'hardback' || $cover eq 'paperback') {
-			push @ret_cover, $cover;
+			if (none { $_ eq $cover } @ret_cover) {
+				push @ret_cover, $cover;
+			}
 		} elsif ($cover eq 'collective') {
 			# nothing
 		} else {
