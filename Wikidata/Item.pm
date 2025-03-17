@@ -26,7 +26,7 @@ Readonly::Hash our %EXT_ID_MAPPING => (
 	'lccn' => 'P243',
 );
 
-our $VERSION = 0.24;
+our $VERSION = 0.25;
 
 # Constructor.
 sub new {
