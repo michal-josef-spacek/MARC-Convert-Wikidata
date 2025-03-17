@@ -434,6 +434,7 @@ sub clean_publisher_place {
 		decode_utf8('Třebíči') => decode_utf8('Třebíč'),
 		decode_utf8('Třebíči na Moravě') => decode_utf8('Třebíč'),
 		decode_utf8('Vyškově') => decode_utf8('Vyškov'),
+		decode_utf8('Zlíně') => decode_utf8('Zlín'),
 		# No place.
 		'S.l.' => 'sine loco',
 	};
@@ -447,7 +448,7 @@ sub clean_publisher_place {
 	# [V Praze]
 	$ret_publisher_place =~ s/^\[(.*?)\]?$/$1/ms;
 
-	$ret_publisher_place =~ s/^[VW]e?\s+//ms;
+	$ret_publisher_place =~ s/^[vVW]e?\s+//ms;
 
 	foreach my $origin (keys %{$dict_hr}) {
 		$ret_publisher_place =~ s/^$origin$/$dict_hr->{$origin}/ms;
