@@ -34,5 +34,5 @@ is_deeply(
 		'ger',
 		'fre',
 	],
-	'Get languages.',
+	'Památky krasopisné: Get languages (cze, ger, fre).',
 );
