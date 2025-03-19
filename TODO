@@ -41,7 +41,7 @@ descriptions.
 48. Object named as to series too.
 49. cnb000993953 for https://en.isabart.org/document/448 is obsoleted by NKC.
 skip? or deprecate?
-50. Multilingual: cnb000651047
+50. Multilingual: cnb000651047, There is h subfield for original language.
 51. Complex item: Q122132179
 52. cnb001781526 je blbe - je tam soubor a ten neumim zpracovavat.
 53. Check to classes like MARC::Convert::Wikidata::Item::AudioBook for MARC data
