@@ -2,6 +2,7 @@
  - Add constructor tests for Transform.
  - Add processing of bad ISBN.
  - Add use case for publication place.
+ - Fix processing of all ČČNB ids.
  - Remove test file, which is similar as another.
 
 0.24 2025-03-17T17:49:03+01:00

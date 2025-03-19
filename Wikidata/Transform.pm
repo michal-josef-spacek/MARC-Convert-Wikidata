@@ -104,8 +104,8 @@ sub _ccnb {
 		);
 	}
 
-	my $depr_ccnb = $self->_subfield('015', 'z');
-	if (defined $depr_ccnb) {
+	my @depr_ccnb = $self->_subfield('015', 'z');
+	foreach my $depr_ccnb (@depr_ccnb) {
 		push @ret, MARC::Convert::Wikidata::Object::ExternalId->new(
 			'deprecated' => 1,
 			'name' => 'cnb',
