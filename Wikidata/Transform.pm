@@ -7,7 +7,7 @@ use Class::Utils qw(set_params);
 use Data::Kramerius;
 use Error::Pure qw(err);
 use List::Util qw(any none);
-use MARC::Convert::Wikidata::Object 0.08;
+use MARC::Convert::Wikidata::Object 0.10;
 use MARC::Convert::Wikidata::Object::ExternalId 0.05;
 use MARC::Convert::Wikidata::Object::ISBN;
 use MARC::Convert::Wikidata::Object::Kramerius;
@@ -237,8 +237,13 @@ sub _isbns {
 	my @ret_isbns;
 	foreach my $isbn_field (@isbn_fields) {
 		my $isbn = $isbn_field->subfield('a');
+		my $valid = 1;
 		if (! defined $isbn) {
-			next;
+			$isbn = $isbn_field->subfield('z');
+			if (! defined $isbn) {
+				next;
+			}
+			$valid = 0;
 		}
 		my @publishers = $isbn_field->subfield('q');
 		my ($publisher, $cover, $collective) = (undef, undef, 0);
@@ -266,6 +271,7 @@ sub _isbns {
 					'name' => clean_publisher_name($publisher),
 				),
 			) : (),
+			'valid' => $valid,
 		);
 		if (defined $isbn_o) {
 			push @ret_isbns, $isbn_o;

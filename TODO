@@ -71,7 +71,6 @@ skip? or deprecate?
 75. Test cnb000750575 - pole 700, dve dila
 76. Test cnb002602952 - pole 020 ma v knize neuvedeno
 77. Test cnb001261581 - anglické knižní vydání, not české
-78. Test cnb003633764 - chybné ISBN
 80. cnb001071946 je soubor, jsou to tri svazky a oclc je na ty svazky, ne na soubor.
 81.
 
@@ -137,3 +136,6 @@ OK [20241125] skim
 79. Test cnb002539102 - field 928 contains nak id.
 Neni exportovano, nejde.
 NONE [20250108] skim
+
+78. Test cnb003633764 - chybné ISBN
+OK [20250319] skim
