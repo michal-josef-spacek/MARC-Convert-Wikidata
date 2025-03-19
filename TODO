@@ -53,7 +53,7 @@ skip? or deprecate?
 55. Example with DML to t/data/.
 56. Move DML to external identifiers.
 57. Tests for Utils::look_for_external_id().
-58. Test cnb002180648
+58. Test cnb002180648 - Process field 300
 59. Test cnb000137865
 60. Implement "soubor", LDR 19 = a
 61. Test cnb001252919 - multiple isbn for multiple publishers
