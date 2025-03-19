@@ -8,6 +8,7 @@ build_requires:
   MARC::File::XML: 0
   MARC::Record: 0
   Perl6::Slurp: 0
+  Test::MockObject: 0
   Test::More: 0
   Test::NoWarnings: 0
   Test::Warn: 0

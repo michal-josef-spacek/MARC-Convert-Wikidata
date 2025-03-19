@@ -1,4 +1,5 @@
 0.25
+ - Add constructor tests for Transform.
  - Add processing of bad ISBN.
  - Add use case for publication place.
  - Remove test file, which is similar as another.
