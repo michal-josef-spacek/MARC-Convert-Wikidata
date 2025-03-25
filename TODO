@@ -73,7 +73,6 @@ skip? or deprecate?
 77. Test cnb001261581 - anglické knižní vydání, not české
 80. cnb001071946 je soubor, jsou to tri svazky a oclc je na ty svazky, ne na soubor.
 81. Test cnb001489741 - CD
-82. Test cnb003591924 - mistake in label - Czech book, instead of Slovak
 83.
 
 Applied
@@ -141,3 +140,6 @@ NONE [20250108] skim
 
 78. Test cnb003633764 - chybné ISBN
 OK [20250319] skim
+
+82. Test cnb003591924 - mistake in label - Czech book, instead of Slovak
+OK [20250325] skim
