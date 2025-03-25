@@ -23,9 +23,9 @@ META.yml
 README
 SIGNATURE
 t/data/cnb000024035.xml
-t/data/cnb000040543.mrc
+t/data/cnb000040543.xml
 t/data/cnb000080974.xml
-t/data/cnb000087983.mrc
+t/data/cnb000087983.xml
 t/data/cnb000103538.mrc
 t/data/cnb000121825.mrc
 t/data/cnb000403605.mrc
