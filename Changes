@@ -1,4 +1,5 @@
 0.26
+ - Add Czech book edition Wikidata description test.
  - Add book edition cleanup use case.
  - Fix Slovak Wikidata description, add tests.
 

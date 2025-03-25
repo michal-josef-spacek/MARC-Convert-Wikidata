@@ -62,7 +62,8 @@ t/MARC-Convert-Wikidata-Item-AudioBook/03-new.t
 t/MARC-Convert-Wikidata-Item-BookEdition/01-use.t
 t/MARC-Convert-Wikidata-Item-BookEdition/02-version.t
 t/MARC-Convert-Wikidata-Item-BookEdition/03-new.t
-t/MARC-Convert-Wikidata-Item-BookEdition/04-wikidata_descriptions-cnb003591924.t
+t/MARC-Convert-Wikidata-Item-BookEdition/04-wikidata_descriptions-cnb000080974.t
+t/MARC-Convert-Wikidata-Item-BookEdition/05-wikidata_descriptions-cnb003591924.t
 t/MARC-Convert-Wikidata-Item-Periodical/01-use.t
 t/MARC-Convert-Wikidata-Item-Periodical/02-version.t
 t/MARC-Convert-Wikidata-Item-Periodical/03-new.t
