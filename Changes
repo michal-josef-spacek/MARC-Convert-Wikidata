@@ -1,4 +1,4 @@
-0.26
+0.26 2025-03-28T17:14:27+01:00
  - Add Czech book edition Wikidata description test.
  - Add book edition cleanup use case.
  - Add test for failing multiple publishers cnb record.
