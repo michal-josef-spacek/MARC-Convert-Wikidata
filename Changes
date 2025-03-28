@@ -1,6 +1,7 @@
 0.26
  - Add Czech book edition Wikidata description test.
  - Add book edition cleanup use case.
+ - Add test for failing multiple publishers cnb record.
  - Add test for multiple 700 field with multiple roles.
  - Fix Slovak Wikidata description, add tests.
  - Move some test data to XML.
