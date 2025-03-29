@@ -1,4 +1,5 @@
 0.27
+ - Remove obsolete module in tests (GH#4, thank Slaven Rezić).
 
 0.26 2025-03-28T17:14:27+01:00
  - Add Czech book edition Wikidata description test.
