@@ -73,7 +73,8 @@ skip? or deprecate?
 77. Test cnb001261581 - anglické knižní vydání, not české
 80. cnb001071946 je soubor, jsou to tri svazky a oclc je na ty svazky, ne na soubor.
 81. Test cnb001489741 - CD
-83.
+83. Process 505 field, there are two examples in data tests.
+84.
 
 Applied
 =======
