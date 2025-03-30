@@ -1,4 +1,5 @@
 0.28
+ - Add test file for field 700 testing.
  - Remove obsolete module in tests (GH#4, thank Slaven Rezić).
 
 0.27 2025-03-29T09:53:02+01:00
