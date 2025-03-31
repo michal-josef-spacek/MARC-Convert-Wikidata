@@ -7,7 +7,7 @@ use Class::Utils qw(set_params);
 use Data::Kramerius;
 use Error::Pure qw(err);
 use List::Util qw(any none);
-use MARC::Convert::Wikidata::Object 0.10;
+use MARC::Convert::Wikidata::Object 0.13;
 use MARC::Convert::Wikidata::Object::ExternalId 0.05;
 use MARC::Convert::Wikidata::Object::ISBN;
 use MARC::Convert::Wikidata::Object::Kramerius;
@@ -140,7 +140,7 @@ sub _construct_kramerius {
 	return;
 }
 
-sub _cover {
+sub _covers {
 	my $self = shift;
 
 	my @cover = $self->_subfield('020', 'q');
@@ -161,13 +161,7 @@ sub _cover {
 		}
 	}
 
-	if (@ret_cover > 1) {
-		err 'Multiple book covers.',
-			'List', (join ',', @ret_cover),
-		;
-	}
-
-	return $ret_cover[0];
+	return @ret_cover;
 }
 
 sub _cycles {
@@ -353,7 +347,7 @@ sub _process_object {
 		'authors_of_afterword' => $self->{'_people'}->{'authors_of_afterword'},
 		'authors_of_introduction' => $self->{'_people'}->{'authors_of_introduction'},
 		'compilers' => $self->{'_people'}->{'compilers'},
-		'cover' => $self->_cover,
+		'covers' => [$self->_covers],
 		'cycles' => [$self->_cycles],
 		'directors' => $self->{'_people'}->{'directors'},
 		$self->_dml ? ('dml' => $self->_dml) : (),

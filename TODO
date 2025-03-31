@@ -74,7 +74,6 @@ skip? or deprecate?
 80. cnb001071946 je soubor, jsou to tri svazky a oclc je na ty svazky, ne na soubor.
 81. Test cnb001489741 - CD
 83. Process 505 field, there are two examples in data tests.
-84. Test cnb000964081 - paperback + hardback
 85.
 
 Applied
@@ -145,3 +144,6 @@ OK [20250319] skim
 
 82. Test cnb003591924 - mistake in label - Czech book, instead of Slovak
 OK [20250325] skim
+
+84. Test cnb000964081 - paperback + hardback
+OK [20250331] skim
