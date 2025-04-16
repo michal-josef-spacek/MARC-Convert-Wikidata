@@ -27,6 +27,7 @@ cnb002341867.mrc - Four ISBNs in two publishing houses with two book covers.
 cnb002467522.mrc - Publisher (264 field). Illustrator (700 field).
 cnb002536669.mrc - Two publishers, two places (264 field). Two ISBNs (020 field). Book series.
 cnb002662450.xml - Three ISBNs (020 field). Two publishing houses and box.
+cnb002835707.xml - 264c has bad date of publication from book, right publication date is in 008, note in 500
 cnb002896853.mrc - Different ČČNB (015 field, z subfield)
 cnb002964680.mrc - Two ISBNs. Book series.
 cnb002981333.mrc - Has OCoLC (035 field).
@@ -36,4 +37,3 @@ cnb003369415.mrc - Has weird format of number of pages (300 field).
 cnb003565872.xml - Has cycle (787 field).
 cnb003591924.xml - Slovak edition.
 cnb003633764.xml - Bad ISBN only.
-

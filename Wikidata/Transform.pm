@@ -18,6 +18,8 @@ use MARC::Convert::Wikidata::Utils qw(clean_cover clean_date clean_edition_numbe
 	clean_issn clean_number_of_pages clean_oclc clean_publication_date
 	clean_publisher_name clean_publisher_place clean_series_name clean_series_ordinal
 	clean_subtitle clean_title);
+use MARC::Field008;
+use MARC::Leader 0.05;
 use Readonly;
 use Scalar::Util qw(blessed);
 use URI;
@@ -62,6 +64,9 @@ sub new {
 	}
 
 	$self->{'_kramerius'} = Data::Kramerius->new;
+
+	$self->_process_leader;
+	$self->_process_field008;
 
 	# Process people in 100, 700.
 	$self->{'_people'} = {
@@ -328,6 +333,28 @@ sub _number_of_pages {
 	return $number_of_pages;
 }
 
+sub _process_field008 {
+	my $self = shift;
+
+	my $field008_string = $self->{'marc_record'}->field('008')->as_string;
+
+	$self->{'_field008'} = MARC::Field008->new(
+		'leader' => $self->{'_leader'},
+	)->parse($field008_string);
+
+	return;
+}
+
+sub _process_leader {
+	my $self = shift;
+
+	my $leader_string = $self->{'marc_record'}->leader;
+
+	$self->{'_leader'} = MARC::Leader->new->parse($leader_string);
+
+	return;
+}
+
 sub _process_object {
 	my $self = shift;
 
@@ -508,13 +535,17 @@ sub _process_publisher_field {
 sub _publication_date {
 	my $self = shift;
 
-	my $publication_date = $self->_subfield('264', 'c');
-	if (! $publication_date) {
-		$publication_date = $self->_subfield('260', 'c');
+	my $publication_date = $self->{'_field008'}->date1;
+	if ($self->{'_field008'}->date2 ne '    ') {
+		$publication_date .= '-'.$self->{'_field008'}->date2;
 	}
+#	my $publication_date = $self->_subfield('264', 'c');
+#	if (! $publication_date) {
+#		$publication_date = $self->_subfield('260', 'c');
+#	}
 
 	my $option;
-	($publication_date, $option) = clean_publication_date($publication_date);
+#	($publication_date, $option) = clean_publication_date($publication_date);
 
 	return wantarray ? ($publication_date, $option) : $publication_date;
 }

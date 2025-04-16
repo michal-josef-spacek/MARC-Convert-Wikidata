@@ -76,7 +76,9 @@ skip? or deprecate?
 83. Process 505 field, there are two examples in data tests.
 85. Test cnb001191657 - another corporation.
 86. Test cnb000886884 - edition number
-87.
+87. What about XXX cnb003591924 in code?
+88. What about 260c/264c parsing?
+89.
 
 Applied
 =======
