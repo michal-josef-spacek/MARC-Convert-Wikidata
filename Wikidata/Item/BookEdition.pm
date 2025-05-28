@@ -77,7 +77,11 @@ sub _description {
 		} elsif (@lang == 1 && $lang[0] eq 'slo') {
 			$ret = decode_utf8('slovenské');
 		} elsif (@lang > 1) {
-			err "Multiple language description isn't supported.";
+			if (@lang == 2 && $lang[0] eq 'cze' && $lang[1] eq 'slo') {
+				$ret = decode_utf8('česko-slovenské');
+			} else {
+				err "Multiple language description isn't supported.";
+			}
 		} else {
 			err "Description for language '$lang[0]' isn't supported.";
 		}
@@ -118,7 +122,11 @@ sub _description {
 		} elsif (@lang == 1 && $lang[0] eq 'slo') {
 			$ret .= 'Slovak';
 		} elsif (@lang > 1) {
-			err "Multiple language description isn't supported.";
+			if (@lang == 2 && $lang[0] eq 'cze' && $lang[1] eq 'slo') {
+				$ret .= 'Czech-Slovak';
+			} else {
+				err "Multiple language description isn't supported.";
+			}
 		} else {
 			err "Description for language '$lang[0]' isn't supported.";
 		}
