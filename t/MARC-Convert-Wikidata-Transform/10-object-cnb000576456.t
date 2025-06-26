@@ -15,6 +15,8 @@ my $data = File::Object->new->up->dir('data');
 # Test.
 my $marc_data = slurp($data->file('cnb000576456.mrc')->s);
 my $obj = MARC::Convert::Wikidata::Transform->new(
+	# XXX
+	'ignore_data_errors' => 1,
 	'marc_record' => MARC::Record->new_from_usmarc($marc_data),
 );
 my $ret = $obj->object;
