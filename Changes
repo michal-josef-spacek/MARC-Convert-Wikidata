@@ -1,5 +1,6 @@
 0.29
  - Add support for cze/slo book editions in description.
+ - Add tests for field 008 dates.
  - Rewrite processing of covers.
  - Rewrite processing of publication date to 008 field.
 

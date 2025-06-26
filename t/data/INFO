@@ -2,6 +2,7 @@ INFO
 ====
 cnb000024035.xml - Author of introduction without NKCR AUT ID (700 field).
 cnb000040543.xml - Multiple people roles (700 field).
+cnb000065206.xml - Field 008 with q (Questionable date) = 1969-1991
 cnb000080974.xml - Book series with ISSN (490 field).
 cnb000087983.xml - Translator (700 field).
 cnb000103538.xml - Multiple publishers (710 field).
@@ -38,3 +39,4 @@ cnb003369415.mrc - Has weird format of number of pages (300 field).
 cnb003565872.xml - Has cycle (787 field).
 cnb003591924.xml - Slovak edition.
 cnb003633764.xml - Bad ISBN only.
+
