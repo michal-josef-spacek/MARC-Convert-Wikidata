@@ -47,6 +47,9 @@ sub new {
 	# Retrieved date.
 	$self->{'date_retrieved'} = undef;
 
+	# Ignore data errors.
+	$self->{'ignore_data_errors'} = 0;
+
 	# MARC::Record object.
 	$self->{'marc_record'} = undef;
 
@@ -60,6 +63,7 @@ sub new {
 	check_isa($self, 'marc_record', 'MARC::Record');
 
 	$self->{'_transform_object'} = MARC::Convert::Wikidata::Transform->new(
+		'ignore_data_errors' => $self->{'ignore_data_errors'},
 		'marc_record' => $self->{'marc_record'},
 	)->object;
 

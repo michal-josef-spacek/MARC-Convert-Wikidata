@@ -18,7 +18,7 @@ use MARC::Convert::Wikidata::Utils qw(clean_cover clean_date clean_edition_numbe
 	clean_issn clean_number_of_pages clean_oclc clean_publication_date
 	clean_publisher_name clean_publisher_place clean_series_name clean_series_ordinal
 	clean_subtitle clean_title);
-use MARC::Field008;
+use MARC::Field008 0.03;
 use MARC::Leader 0.05;
 use Readonly;
 use Scalar::Util qw(blessed);
@@ -47,6 +47,9 @@ sub new {
 
 	# Create object.
 	my $self = bless {}, $class;
+
+	# Ignore data errors.
+	$self->{'ignore_data_errors'} = 0;
 
 	# MARC::Record object.
 	$self->{'marc_record'} = undef;
@@ -339,6 +342,7 @@ sub _process_field008 {
 	my $field008_string = $self->{'marc_record'}->field('008')->as_string;
 
 	$self->{'_field008'} = MARC::Field008->new(
+		'ignore_data_errors' => $self->{'ignore_data_errors'},
 		'leader' => $self->{'_leader'},
 	)->parse($field008_string);
 

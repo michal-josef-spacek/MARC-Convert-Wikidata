@@ -1,4 +1,5 @@
 0.29
+ - Add 'ignore_data_errors' parameter.
  - Add support for cze/slo book editions in description.
  - Add tests for field 008 dates.
  - Rewrite processing of covers.
