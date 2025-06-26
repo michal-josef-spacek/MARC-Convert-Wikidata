@@ -1,4 +1,4 @@
-0.29
+0.29 2025-06-26T18:45:09+02:00
  - Add 'ignore_data_errors' parameter.
  - Add support for cze/slo book editions in description.
  - Add tests for field 008 dates.
