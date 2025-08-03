@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use Unicode::UTF8 qw(decode_utf8);
-use Wikibase::Datatype::Item;
+use Wikibase::Datatype::Item 0.39;
 use Wikibase::Datatype::Snak;
 use Wikibase::Datatype::Statement;
 use Wikibase::Datatype::Value::Item;

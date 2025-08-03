@@ -15,6 +15,7 @@ use Unicode::UTF8 qw(decode_utf8);
 use Wikibase::Datatype::Reference;
 use Wikibase::Datatype::Snak;
 use Wikibase::Datatype::Statement;
+use Wikibase::Datatype::Term;
 use Wikibase::Datatype::Value::Item;
 use Wikibase::Datatype::Value::Monolingual;
 use Wikibase::Datatype::Value::Quantity;
@@ -121,11 +122,11 @@ sub wikidata_descriptions {
 
 	return (
 		'descriptions' => [
-			Wikibase::Datatype::Value::Monolingual->new(
+			Wikibase::Datatype::Term->new(
 				'language' => 'cs',
 				'value' => $self->_description('cs'),
 			),
-			Wikibase::Datatype::Value::Monolingual->new(
+			Wikibase::Datatype::Term->new(
 				'language' => 'en',
 				'value' => $self->_description('en'),
 			),
@@ -406,7 +407,7 @@ sub wikidata_labels {
 
 	return (
 		'labels' => [
-			Wikibase::Datatype::Value::Monolingual->new(
+			Wikibase::Datatype::Term->new(
 				'language' => 'mul',
 				'value' => $self->{'transform_object'}->full_name,
 			),
