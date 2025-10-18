@@ -528,6 +528,8 @@ sub clean_series_ordinal {
 	$ret_series_ordinal =~ s/^$c\s*//ms;
 	$c = decode_utf8('(Výstava|Výst)');
 	$ret_series_ordinal =~ s/$c\.?\s*//ms;
+	$c = decode_utf8('(kniha|kn)');
+	$ret_series_ordinal =~ s/$c\.?\s*//ms;
 
 	$ret_series_ordinal =~ s/^(\d+)\.$/$1/ms;
 
