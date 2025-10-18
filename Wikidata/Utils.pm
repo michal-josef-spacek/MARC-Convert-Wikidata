@@ -530,6 +530,10 @@ sub clean_series_ordinal {
 	$ret_series_ordinal =~ s/$c\.?\s*//ms;
 	$c = decode_utf8('(kniha|kn)');
 	$ret_series_ordinal =~ s/$c\.?\s*//ms;
+	$c = decode_utf8('(díl)');
+	$ret_series_ordinal =~ s/$c\.?\s*//ms;
+
+	$ret_series_ordinal =~ s/(\d+),\s*(\d+)/$1-$2/ms;
 
 	$ret_series_ordinal =~ s/^(\d+)\.$/$1/ms;
 
