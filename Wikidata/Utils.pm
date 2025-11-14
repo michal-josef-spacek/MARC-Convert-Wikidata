@@ -546,6 +546,9 @@ sub clean_series_ordinal {
 			my $first_addition = substr $first, 0, ($first_len - $second_len);
 			$ret_series_ordinal = $first.'-'.$first_addition.$second;
 		}
+	} else {
+		# XXX Remove all other characters.
+		$ret_series_ordinal =~ s/^(\d+).*$/$1/ms;
 	}
 
 	return $ret_series_ordinal;
