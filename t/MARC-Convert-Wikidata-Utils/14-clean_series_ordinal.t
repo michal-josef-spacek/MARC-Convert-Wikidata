@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use MARC::Convert::Wikidata::Utils qw(clean_series_ordinal);
-use Test::More 'tests' => 20;
+use Test::More 'tests' => 21;
 use Test::NoWarnings;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
 
@@ -100,3 +100,8 @@ is($ret, 'I', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup.
 $input_series_ordinal = decode_utf8('2 (X. vyd.)');
 $ret = clean_series_ordinal($input_series_ordinal);
 is($ret, '2', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup."));
+
+# Test
+$input_series_ordinal = decode_utf8('vol. 27');
+$ret = clean_series_ordinal($input_series_ordinal);
+is($ret, '27', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup."));

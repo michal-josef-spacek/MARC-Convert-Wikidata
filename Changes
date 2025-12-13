@@ -1,4 +1,5 @@
 0.33
+ - Add use case for clean_serial_order().
  - Remove all other characters than number from series ordinal.
  - Use NKP Kramerius as Czech Digital Library.
 
