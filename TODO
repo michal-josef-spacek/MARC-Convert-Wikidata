@@ -80,7 +80,8 @@ skip? or deprecate?
 88. What about 260c/264c parsing?
 89. Test cnb000792386 - series, only one from two. Series ordinal number is bad.
 90. Test cnb001211716 - pbl people.
-91.
+91. Test cnb000144384 - spoluvydavatelstvi
+92.
 
 Applied
 =======
