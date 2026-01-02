@@ -246,6 +246,9 @@ sub clean_edition_number {
 	# Remove :
 	$ret_edition_number =~ s/\s*:\s*//ms;
 
+	# Detect first number.
+	$ret_edition_number =~ s/^(\d+).*$/$1/ms;
+
 	# Rename roman to arabic
 	if (isroman($ret_edition_number)) {
 		$ret_edition_number = arabic($ret_edition_number);
