@@ -82,7 +82,8 @@ skip? or deprecate?
 90. Test cnb001211716 - pbl people.
 91. Test cnb000144384 - spoluvydavatelstvi
 92. V pripade cnb000157436 se dela reconcilation na SELECT ?item WHERE { ?item wdt:P31 wd:Q5153359.  ?item wdt:P1448 'Bratislava'@cs. }, ale to je na Slovensku.
-93.
+93. Test cnb002564059, not insert date2 = 9999
+94.
 
 Applied
 =======
