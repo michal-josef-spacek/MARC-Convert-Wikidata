@@ -337,7 +337,13 @@ sub _number_of_pages {
 sub _process_field008 {
 	my $self = shift;
 
-	my $field008_string = $self->{'marc_record'}->field('008')->as_string;
+	my $field008 = $self->{'marc_record'}->field('008');
+	if (! defined $field008) {
+		err "Field 008 isn't present.",
+			'MARC', $self->{'marc_record'}->as_formatted,
+		;
+	}
+	my $field008_string = $field008->as_string;
 
 	$self->{'_field008'} = MARC::Field008->new(
 		'ignore_data_errors' => $self->{'ignore_data_errors'},
