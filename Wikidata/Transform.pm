@@ -20,6 +20,7 @@ use MARC::Convert::Wikidata::Utils qw(clean_cover clean_date clean_edition_numbe
 	clean_subtitle clean_title);
 use MARC::Field008 0.03;
 use MARC::Leader 0.05;
+use Mo::utils 0.08 qw(check_isa check_required);
 use Readonly;
 use Scalar::Util qw(blessed);
 use URI;
@@ -57,14 +58,9 @@ sub new {
 	# Process parameters.
 	set_params($self, @params);
 
-	if (! defined $self->{'marc_record'}) {
-		err "Parameter 'marc_record' is required.";
-	}
-	if (! blessed($self->{'marc_record'})
-		|| ! $self->{'marc_record'}->isa('MARC::Record')) {
-
-		err "Parameter 'marc_record' must be a MARC::Record object.";
-	}
+	# Check 'marc_record'.
+	check_required($self, 'marc_record');
+	check_isa($self, 'marc_record', 'MARC::Record');
 
 	$self->{'_kramerius'} = Data::Kramerius->new;
 
