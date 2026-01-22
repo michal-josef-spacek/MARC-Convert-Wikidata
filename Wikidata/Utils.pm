@@ -129,7 +129,6 @@ sub clean_edition_number {
 
 	# Remove special meanings.
 	$ret_edition_number =~ s/,//msg;
-	$ret_edition_number =~ s/\s+a\s+//ms;
 
 	# Edition.
 	my $v1 = decode_utf8('Vydání');
@@ -247,7 +246,7 @@ sub clean_edition_number {
 	$ret_edition_number =~ s/\s*:\s*//ms;
 
 	# Detect first number.
-	$ret_edition_number =~ s/^(\d+).*$/$1/ms;
+	$ret_edition_number =~ s/^(\d+)(?!.*\d).*$/$1/ms;
 
 	# Rename roman to arabic
 	if (isroman($ret_edition_number)) {
