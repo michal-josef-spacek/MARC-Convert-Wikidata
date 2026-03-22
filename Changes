@@ -6,6 +6,7 @@
  - Remove all other characters than number from series ordinal.
  - Rewrite check for 'marc_record' parameter in Transform to Mo::utils.
  - Use NKP Kramerius as Czech Digital Library.
+ - Update copyright years.
 
 0.32 2025-10-21T13:17:51+02:00
  - Add 'series_ordinal_raw' parameter to Series object.
