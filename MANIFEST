@@ -104,7 +104,8 @@ t/MARC-Convert-Wikidata-Transform/18-object-cnb002031137.t
 t/MARC-Convert-Wikidata-Transform/19-object-cnb002662450.t
 t/MARC-Convert-Wikidata-Transform/20-object-cnb002835707.t
 t/MARC-Convert-Wikidata-Transform/21-object-cnb003565872.t
-t/MARC-Convert-Wikidata-Transform/22-object-cnb003633764.t
+t/MARC-Convert-Wikidata-Transform/22-object-cnb003591924.t
+t/MARC-Convert-Wikidata-Transform/23-object-cnb003633764.t
 t/MARC-Convert-Wikidata-Utils/01-use.t
 t/MARC-Convert-Wikidata-Utils/02-version.t
 t/MARC-Convert-Wikidata-Utils/03-clean_cover.t

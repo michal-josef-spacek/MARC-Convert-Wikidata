@@ -3,6 +3,7 @@
  - Add example (cnb000144384).
  - Add use case for clean_serial_order().
  - Data file cnb000121825 to XML.
+ - Fix situation with 008 field and type of date = t.
  - Not create 9999 in end_time.
  - Remove all other characters than number from edition number.
  - Remove all other characters than number from series ordinal.

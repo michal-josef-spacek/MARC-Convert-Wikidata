@@ -76,7 +76,6 @@ skip? or deprecate?
 83. Process 505 field, there are two examples in data tests.
 85. Test cnb001191657 - another corporation.
 86. Test cnb000886884 - edition number
-87. What about XXX cnb003591924 in code?
 88. What about 260c/264c parsing?
 89. Test cnb000792386 - series, only one from two. Series ordinal number is bad.
 90. Test cnb001211716 - pbl people.
@@ -158,4 +157,7 @@ OK [20250325] skim
 OK [20250331] skim
 
 93. Test cnb002564059, not insert date2 = 9999
+OK [20260322] skim
+
+87. What about XXX cnb003591924 in code?
 OK [20260322] skim

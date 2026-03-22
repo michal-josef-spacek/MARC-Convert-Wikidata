@@ -544,7 +544,11 @@ sub _publication_date {
 	my $self = shift;
 
 	my $publication_date = $self->{'_field008'}->date1;
-	if ($self->{'_field008'}->date2 ne '    ') {
+	if ($self->{'_field008'}->date2 ne '    '
+
+		# Copyright date.
+		&& $self->{'_field008'}->type_of_date ne 't') {
+
 		$publication_date .= '-'.$self->{'_field008'}->date2;
 	}
 #	my $publication_date = $self->_subfield('264', 'c');
