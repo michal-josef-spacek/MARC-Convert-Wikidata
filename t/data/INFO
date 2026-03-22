@@ -31,6 +31,7 @@ cnb002341867.mrc - Four ISBNs in two publishing houses with two book covers.
                    Titles of separate works (505 field).
 cnb002467522.mrc - Publisher (264 field). Illustrator (700 field).
 cnb002536669.mrc - Two publishers, two places (264 field). Two ISBNs (020 field). Book series.
+cnb002564059.xml - 9999 in 008 field.
 cnb002662450.xml - Three ISBNs (020 field). Two publishing houses and box.
 cnb002835707.xml - 264c has bad date of publication from book, right publication date is in 008, note in 500
 cnb002896853.mrc - Different ČČNB (015 field, z subfield)

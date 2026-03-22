@@ -52,6 +52,7 @@ t/data/cnb002276974.mrc
 t/data/cnb002341867.mrc
 t/data/cnb002467522.mrc
 t/data/cnb002536669.mrc
+t/data/cnb002564059.xml
 t/data/cnb002662450.xml
 t/data/cnb002835707.xml
 t/data/cnb002896853.mrc
@@ -76,6 +77,8 @@ t/MARC-Convert-Wikidata-Item-BookEdition/06-wikidata_descriptions-cnb003591924.t
 t/MARC-Convert-Wikidata-Item-Periodical/01-use.t
 t/MARC-Convert-Wikidata-Item-Periodical/02-version.t
 t/MARC-Convert-Wikidata-Item-Periodical/03-new.t
+t/MARC-Convert-Wikidata-Item-Periodical/04-wikidata_descriptions-cnb002564059.t
+t/MARC-Convert-Wikidata-Item-Periodical/05-wikidata_end_date-cnb002564059.t
 t/MARC-Convert-Wikidata-Item/01-use.t
 t/MARC-Convert-Wikidata-Item/02-version.t
 t/MARC-Convert-Wikidata-Item/03-new.t

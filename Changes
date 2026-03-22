@@ -1,6 +1,7 @@
 0.33
  - Add error if field 008 isn't present.
  - Add use case for clean_serial_order().
+ - Not create 9999 in end_time.
  - Remove all other characters than number from edition number.
  - Remove all other characters than number from series ordinal.
  - Rewrite check for 'marc_record' parameter in Transform to Mo::utils.

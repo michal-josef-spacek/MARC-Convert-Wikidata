@@ -189,7 +189,11 @@ sub wikidata_editors {
 sub wikidata_end_time {
 	my $self = shift;
 
-	if (! defined $self->{'transform_object'}->end_time) {
+	if (! defined $self->{'transform_object'}->end_time
+
+		# Unfinished periodical.
+		|| $self->{'transform_object'}->end_time eq '9999') {
+
 		return;
 	}
 
