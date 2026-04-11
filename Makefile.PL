@@ -23,6 +23,7 @@ requires 'Data::Kramerius' => 0;
 requires 'DateTime' => 0;
 requires 'English' => 0;
 requires 'Error::Pure' => 0;
+requires 'List::Util' => 1.33;
 requires 'MARC::Convert::Wikidata::Object' => 0.13;
 requires 'MARC::Convert::Wikidata::Object::ExternalId' => 0;
 requires 'MARC::Convert::Wikidata::Object::ISBN' => 0.07;

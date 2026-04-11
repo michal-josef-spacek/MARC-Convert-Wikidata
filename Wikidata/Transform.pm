@@ -6,7 +6,7 @@ use warnings;
 use Class::Utils qw(set_params);
 use Data::Kramerius;
 use Error::Pure qw(err);
-use List::Util qw(any none);
+use List::Util 1.33 qw(any none);
 use MARC::Convert::Wikidata::Object 0.13;
 use MARC::Convert::Wikidata::Object::ExternalId 0.05;
 use MARC::Convert::Wikidata::Object::ISBN;
