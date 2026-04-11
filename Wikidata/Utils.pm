@@ -555,6 +555,11 @@ sub clean_series_ordinal {
 
 	$ret_series_ordinal =~ s/^(\d+)\.$/$1/ms;
 
+	# Rename roman to arabic
+	if (isroman($ret_series_ordinal)) {
+		$ret_series_ordinal = arabic($ret_series_ordinal);
+	}
+
 	if ($ret_series_ordinal =~ m/^(\d+)-(\d+)$/ms) {
 		my $first = $1;
 		my $second = $2;

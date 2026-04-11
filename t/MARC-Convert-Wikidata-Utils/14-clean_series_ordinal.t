@@ -94,7 +94,7 @@ is($ret, '71-72', encode_utf8("Series ordinal '$input_series_ordinal' after clea
 # Test
 $input_series_ordinal = decode_utf8('díl. I');
 $ret = clean_series_ordinal($input_series_ordinal);
-is($ret, 'I', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup."));
+is($ret, '1', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup."));
 
 # Test
 $input_series_ordinal = decode_utf8('2 (X. vyd.)');
@@ -114,4 +114,4 @@ is($ret, '34', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup
 # Test.
 $input_series_ordinal = decode_utf8('sešit III');
 $ret = clean_series_ordinal($input_series_ordinal);
-is($ret, 'III', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup."));
+is($ret, '3', encode_utf8("Series ordinal '$input_series_ordinal' after cleanup."));
