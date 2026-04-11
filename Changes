@@ -1,4 +1,4 @@
-0.33
+0.33 2026-04-11T14:26:15+02:00
  - Add error if field 008 isn't present.
  - Add example (cnb000144384).
  - Add use case for clean_serial_order().
