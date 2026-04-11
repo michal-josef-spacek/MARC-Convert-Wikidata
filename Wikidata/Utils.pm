@@ -539,6 +539,8 @@ sub clean_series_ordinal {
 
 	my $c = decode_utf8('(č|Č)');
 	$ret_series_ordinal =~ s/^$c\.\s*//ms;
+	$c = decode_utf8('seš');
+	$ret_series_ordinal =~ s/^$c\.\s*//ms;
 	$c = decode_utf8('(č|Č)íslo');
 	$ret_series_ordinal =~ s/^$c\s*//ms;
 	$c = decode_utf8('(Výstava|Výst)');
