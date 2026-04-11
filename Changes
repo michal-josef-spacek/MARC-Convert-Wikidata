@@ -1,4 +1,5 @@
 0.34
+ - Add use case for series_ordinal.
 
 0.33 2026-04-11T14:26:15+02:00
  - Add error if field 008 isn't present.
