@@ -4,7 +4,7 @@ use base qw(Exporter);
 use strict;
 use warnings;
 
-use List::Util qw(none);
+use List::Util 1.33 qw(none sum);
 use Readonly;
 use Roman;
 use Unicode::UTF8 qw(decode_utf8 encode_utf8);
@@ -311,10 +311,23 @@ sub clean_number_of_pages {
 	}
 
 	my $ret_number_of_pages = $number_of_pages;
-	$ret_number_of_pages =~ s/^\[(\d+)\]/$1/ms;
-	$ret_number_of_pages =~ s/^(\d+)\s*(s\.|stran).*$/$1/ms;
-	# XXX First number.
-	$ret_number_of_pages =~ s/^(\d+)\s*,\s*.*/$1/ms;
+
+	# Remove []
+	$ret_number_of_pages =~ s/\[(\d+)\]/$1/msg;
+
+	# Remove text informations.
+	my $pril = decode_utf8('příl');
+	my $neci = decode_utf8('nečíslovaných');
+	$ret_number_of_pages =~ s/\s*(stran|s|$pril|$neci|l|barev|obr)\.*\s*//msg;
+
+	# Remove other characters like ':' and ';'.
+	$ret_number_of_pages =~ s/[:;]//msg;
+
+	# TODO Support roman numbers.
+	if ($ret_number_of_pages =~ m/^[\ \d,]+$/ms) {
+		my @numbers = split m/\s*,\s*/ms, $ret_number_of_pages;
+		$ret_number_of_pages = sum(@numbers);
+	}
 
 	if ($ret_number_of_pages !~ m/^\d+$/ms) {
 		if ($DEBUG) {

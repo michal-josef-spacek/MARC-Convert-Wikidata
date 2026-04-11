@@ -60,7 +60,6 @@ skip? or deprecate?
 62. Test cnb000497695, ted to propojuje na spatne BLOK nakladatelstvi
 63. Test cnb000542208 - Series has p subfield.
 64. Test cnb001702561 - Series in Czech and English
-65. Test cnb002162963 - Spatny pocet stranek, spatne titulek.
 66. Test cnb002633747 - Jenom jedno isbn
 68. Test cnb001242078 - specialni formy, krouzkova vazba
 69. When publisher is not identified, add unknown + subject named as.
@@ -161,3 +160,6 @@ OK [20260322] skim
 
 87. What about XXX cnb003591924 in code?
 OK [20260322] skim
+
+65. Test cnb002162963 - Spatny pocet stranek, spatne titulek.
+OK [20260411] skim
