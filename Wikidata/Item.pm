@@ -537,10 +537,16 @@ sub wikidata_people {
 	}
 
 	my @people_qids;
+	my @people_strings;
 	foreach my $people (@{$self->{'transform_object'}->$people_method}) {
 		my $people_qid = $self->{'callback_people'}->($people);
 		if (defined $people_qid) {
-			push @people_qids, $people_qid;
+			# -1 is error, not process
+			if ($people_qid ne '-1') {
+				push @people_qids, $people_qid;
+			}
+		} else {
+			push @people_strings, $people->name.' '.$people->surname;
 		}
 	}
 
@@ -559,6 +565,22 @@ sub wikidata_people {
 				'property' => $people_property,
 			),
 		),
+	}
+
+	foreach my $people_string (@people_strings) {
+		push @people, Wikibase::Datatype::Statement->new(
+			defined $property_snaks_ar ? (
+				'property_snaks' => $property_snaks_ar,
+			) : (),
+			'references' => [$self->wikidata_reference],
+			'snak' => Wikibase::Datatype::Snak->new(
+				'datatype' => 'string',
+				'datavalue' => Wikibase::Datatype::Value::String->new(
+					'value' => $people_string,
+				),
+				'property' => 'P2093',
+			),
+		);
 	}
 
 	return @people;

@@ -1,5 +1,6 @@
 0.34
  - Add use case for series_ordinal.
+ - Process author name without qid.
  - Rewrite roman number in series ordinal to arabic.
 
 0.33 2026-04-11T14:26:15+02:00
