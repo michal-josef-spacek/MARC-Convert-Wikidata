@@ -467,7 +467,9 @@ sub wikidata_krameriuses {
 	foreach my $k (@{$self->{'transform_object'}->krameriuses}) {
 
 		# Rewriting to Czech Digital Library
-		if ($k->kramerius_id eq 'mzk' || $k->kramerius_id eq 'nkp') {
+		if ($k->kramerius_id eq 'mzk' || $k->kramerius_id eq 'nkp'
+			|| $k->kramerius_id eq 'ndk') {
+
 			push @krameriuses, Wikibase::Datatype::Statement->new(
 				'references' => [$self->wikidata_reference],
 				'snak' => Wikibase::Datatype::Snak->new(

@@ -1,5 +1,6 @@
 0.34
  - Add use case for series_ordinal.
+ - NDK Kramerius to Czech Digital Library.
  - Process author name without qid.
  - Rewrite roman number in series ordinal to arabic.
 
