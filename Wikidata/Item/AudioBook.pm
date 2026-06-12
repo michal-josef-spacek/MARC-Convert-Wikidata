@@ -24,7 +24,7 @@ sub wikidata {
 				'snak' => Wikibase::Datatype::Snak->new(
 					'datatype' => 'wikibase-item',
 					'datavalue' => Wikibase::Datatype::Value::Item->new(
-						'value' => 'Q3331189',
+						'value' => 'Q122731938',
 					),
 					'property' => 'P31',
 				),
