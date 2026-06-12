@@ -10,7 +10,7 @@ use Wikibase::Datatype::Snak;
 use Wikibase::Datatype::Statement;
 use Wikibase::Datatype::Value::Item;
 
-our $VERSION = 0.34;
+our $VERSION = 0.35;
 
 sub wikidata {
 	my $self = shift;
