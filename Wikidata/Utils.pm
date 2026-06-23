@@ -555,6 +555,9 @@ sub clean_series_ordinal {
 
 	$ret_series_ordinal =~ s/^(\d+)\.$/$1/ms;
 
+	# Remove dot after roman number.
+	$ret_series_ordinal =~ s/([MDCLVI]+)\./$1/ms;
+
 	# Rename roman to arabic
 	if (isroman($ret_series_ordinal)) {
 		$ret_series_ordinal = arabic($ret_series_ordinal);
